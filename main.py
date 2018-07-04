@@ -18,7 +18,7 @@ features_all = pd.read_table('./OpportunityUCIDataset/dataset/S1-ADL1.dat', sep=
 labels_all = pd.read_table('./OpportunityUCIDataset/dataset/S1-ADL1.dat', sep="\s+", header=None, usecols=idx_labels)
 
 print('\nImported data:\n\n', features_all.head())
-
+print('\nImported data:\n\n', labels_all.head())
 
 # interpolation
 # os.system("interpolation.py")
@@ -29,16 +29,19 @@ print('\nImported data:\n\n', features_all.head())
 # parameters
 batch_size, seq_length, n_channels = 1, 50, 113
 stride = 25
+activity_label = 1
+labels = labels_all.iloc[:,activity_label]
 
-print("Batch size: ", batch_size, "\nSequence length: ", seq_length)
+print("\nBatch size: ", batch_size, "\nSequence length: ", seq_length)
+print("\nLabels:\n", labels.head())
 
 # placeholders
 X = tf.placeholder(tf.float32, shape=[None, seq_length, n_channels], name='input')
 y = tf.placeholder(tf.float32, shape=[None, 1], name='label')
 
 # layers
-conv1 = tf.layers.conv1d(inputs=X, filters=18, kernel_size=5, activation=tf.nn.relu)
-max_pool_1 = tf.layers.max_pooling1d(inputs=conv1, pool_size=2, strides=2, padding='same')
+conv_1 = tf.layers.conv1d(inputs=X, filters=64, kernel_size=2, activation=tf.nn.relu)
+max_pool_1 = tf.layers.max_pooling1d(inputs=conv_1, pool_size=2, strides=2, padding='same')
 dropout_1 = tf.layers.dropout(inputs=max_pool_1, rate=0.3)
 
 conv_2 = tf.layers.conv1d(inputs=dropout_1, filters=36, kernel_size=1, activation=tf.nn.relu)
