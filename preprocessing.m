@@ -1,4 +1,4 @@
-%% HDA-PROJECT name = "S1-ADL1.dat";
+%% HDA-PROJECT
 
 clear; clc;
 root = ".\OpportunityUCIDataset\dataset\";
@@ -46,3 +46,8 @@ end
 
 %% CHECK NaNs
 m = mean(filled_features);
+plot(1:1:45810, labels(:,1))
+
+%% CLASSIFICATION
+
+
