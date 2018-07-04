@@ -30,7 +30,7 @@ for subject = 1:4
         filled_features = filled_features(start:stop,:);
         labels = labels(start:stop,:);
 
-        output = "S" + int2str(subject);
+        output = "data_temp\S" + int2str(subject);
         
         if session < 6
             output = output + "-ADL" + int2str(session) + ".mat";
@@ -38,7 +38,7 @@ for subject = 1:4
             output = output + "-Drill" + ".mat";
         end
         
-        save(output, 'features', 'labels')
+        save(output, 'filled_features', 'labels')
         
     end
 end
