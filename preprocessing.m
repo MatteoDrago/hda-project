@@ -3,6 +3,8 @@
 clear; clc;
 root = ".\OpportunityUCIDataset\dataset\";
 
+%% import ADL sessions
+
 for subject = 1:4
     for session = 1:5
         filename = root + "S" + int2str(subject);
@@ -43,6 +45,17 @@ for subject = 1:4
     end
 end
 
+%% import Drill sessions
+
+for subject = 1:4
+    filename = root + "S" + int2str(subject) + "-Drill.dat";
+    data = load(filename);
+    features = data(:,[2:46 51:59 64:72 77:85 90:98 103:134]);
+    labels = data(:,[244:250]);
+    filled_features = fillmissing(features,'spline');
+    output = "data_temp\S" + int2str(subject) + "-Drill.mat";
+    save(output, 'filled_features', 'labels')
+end
 
 %% CHECK NaNs
 m = isnan(filled_features);
