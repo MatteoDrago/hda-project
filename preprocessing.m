@@ -45,8 +45,9 @@ end
 
 
 %% CHECK NaNs
-m = mean(filled_features);
-plot(1:1:45810, labels(:,1))
+m = isnan(filled_features);
+ms = sum(m)
+find(ms)
 
 %% CLASSIFICATION
 
