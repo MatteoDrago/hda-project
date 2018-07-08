@@ -42,7 +42,7 @@ def loadData(subject, folder="./"):
 
     return (data1, data2, data3, data4, data5, data6)
 
-def prepareData(X, Y, window_size=15, stride=15):
+def prepareData(X, Y, window_size=15, stride=15, shuffle=True):
     """ Prepare data in windows to be passed to the CNN. """
 
     samples, features = X.shape
@@ -61,12 +61,16 @@ def prepareData(X, Y, window_size=15, stride=15):
           "\nLabels have shape:   ", Y_out.shape,\
           "\nFraction of labels:  ", np.sum(Y_out, axis=0) / Y_out.shape[0])
 
+    if shuffle:
+        X_out_shuffled = np.random.permutation(X_out)
+
     return (X_out, Y_out)
 
 def Model1D(input_shape, classes):
     """ 
     Arguments:
     input_shape -- shape of the images of the dataset
+    classes -- number of classes
 
     Returns: 
     model -- a Model() instance in Keras
