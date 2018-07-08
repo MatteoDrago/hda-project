@@ -1,7 +1,24 @@
 %% HDA-PROJECT
 
 clear; clc;
-root = ".\OpportunityUCIDataset\dataset\";
+base = "../OpportunityUCIDataset/dataset/";
+
+for subject = 1:4
+    
+    % training set
+    sadl1 = load(base+"S1-ADL1.dat");
+    sadl2 = load([base 'S1-ADL2.dat']);
+    sadl3 = load([base 'S1-ADL3.dat']);
+    sdrill = load([base 'S1-Drill.dat']);
+    
+    % test set
+    sadl4 = load([base 'S1-ADL4.dat']);
+    sadl5 = load([base 'S1-ADL5.dat']);
+    
+    
+end
+
+
 
 %% import ADL sessions
 
@@ -18,8 +35,8 @@ for subject = 1:4
         features = data(:,[2:46 51:59 64:72 77:85 90:98 103:134]);
         labels = data(:,[244:250]);
 
-        filled_features = fillmissing(features,'spline');
-
+        plot(data(:,1), labels(:,1))
+        
         idx = zeros(2,7);
         for i = 1:7
             idx(1,i) = find(labels(:,i) ~= 0, 1, 'first');
@@ -29,8 +46,11 @@ for subject = 1:4
         start = min(idx(1,:));
         stop = max(idx(2,:));
 
-        filled_features = filled_features(start:stop,:);
+        features = features(start:stop,:);
         labels = labels(start:stop,:);
+        filled_features = fillmissing(features,'spline');
+
+        plot(1:1:length(features(:,1)), normalize(filled_features))
 
         output = "data_temp\S" + int2str(subject);
         
