@@ -1,14 +1,15 @@
 %% HDA-PROJECT - Preprocessing
 
-% Starting from the original dataset, this routine preserve all features
-% cutting out head and tail, given that we assume them as useless
-% transient.
+% Starting from the original dataset, this routine cuts out head and tail, 
+% given that we assume them as useless transient. Moreover we reduce the
+% three values given by the accelerometers to one unique value; in this way
+% we reduce also the dimensionality of the feature space.
 
 % pick up data 
 clear; clc;
 
 file.root = "..\OpportunityUCIDataset\dataset\";
-file.dest = "data\";
+file.dest = "data\reduced_nozero\";
 
 params.num_subjects = 4;
 params.num_sessions = 6;
@@ -39,29 +40,29 @@ for subject = 1:4
         labels_temp = data(:,index.labels);
         
         % cut head and tail of sessions, where ALL labels are 0
-        % TRY ALSO WITH NaN in tail
-        idx = zeros(2,7);
-        for i = 1:7
-            if numel(find(labels_temp(:,i) ~= 0)) ~= 0
-                idx(1,i) = find(labels_temp(:,i) ~= 0, 1, 'first');
-                idx(2,i) = find(labels_temp(:,i) ~= 0, 1, 'last');
-            else
-                idx(1,i) = NaN;
-                idx(2,i) = NaN;
-            end
-        end
-        start = min(idx(1,:));
-        stop = max(idx(2,:));
-        disp("Cutting samples from "+int2str(start)+" to "+int2str(stop))
-        features = features_temp(start:stop,:);
-        labels = labels_temp(start:stop,:);
+        
+        features_temp(labels_temp(:,1) == 0,:) = [];
+        labels_temp(labels_temp(:,1) == 0,:) = [];
+        
+        features_full = features_temp;
+        labels = labels_temp;
 
         % interpolate with cubic splines
-        missing = sum(sum(isnan(features)));
+        missing = sum(sum(isnan(features_full)));
         disp("Interpolating " + int2str(missing) + " NaN values")
-        features = fillmissing(features,'spline');
-        missing = sum(sum(isnan(features)));
-
+        features_full = fillmissing(features_full,'spline');
+        missing = sum(sum(isnan(features_full)));
+        
+        features = zeros(size(features_full,1),55);
+        j = 1;
+        for i=1:3:81-3
+            features(:,j) = sqrt(features_full(:,i).^2 + features_full(:,i+1).^2 + features_full(:,i+2).^2);
+            j = j + 1;
+        end
+        
+        features(:,j:end) = features_full(:,82:end);
+        
+        % store to output
         file.out = file.dest + file.file + ".mat";
         save(file.out, 'features', 'labels')
         disp("Stored at " + file.out)
