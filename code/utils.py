@@ -18,27 +18,27 @@ with warnings.catch_warnings():
 def loadData(subject, folder="./"):
     """ Import ADL1 to ADL5 and Drill .mat files for a subject. """
     
-    filename_1 = folder + "S" + str(subject) + "-ADL1.mat"
-    filename_2 = folder + "S" + str(subject) + "-ADL2.mat"
-    filename_3 = folder + "S" + str(subject) + "-ADL3.mat"
-    filename_4 = folder + "S" + str(subject) + "-ADL4.mat"
-    filename_5 = folder + "S" + str(subject) + "-ADL5.mat"
-    filename_6 = folder + "S" + str(subject) + "-Drill.mat"
+    filename_1 = folder + "S" + str(subject) + "-ADL1"
+    filename_2 = folder + "S" + str(subject) + "-ADL2"
+    filename_3 = folder + "S" + str(subject) + "-ADL3"
+    filename_4 = folder + "S" + str(subject) + "-ADL4"
+    filename_5 = folder + "S" + str(subject) + "-ADL5"
+    filename_6 = folder + "S" + str(subject) + "-Drill"
 
-    data1 = scipy.io.loadmat(filename_1, mdict={'features':'features', 'labels':'labels'})
-    data2 = scipy.io.loadmat(filename_2, mdict={'features':'features', 'labels':'labels'})
-    data3 = scipy.io.loadmat(filename_3, mdict={'features':'features', 'labels':'labels'})
-    data4 = scipy.io.loadmat(filename_4, mdict={'features':'features', 'labels':'labels'})
-    data5 = scipy.io.loadmat(filename_5, mdict={'features':'features', 'labels':'labels'})
-    data6 = scipy.io.loadmat(filename_6, mdict={'features':'features', 'labels':'labels'})
+    data1 = scipy.io.loadmat(filename_1, mdict={'features_interp':'features', 'labels_cut':'labels'})
+    data2 = scipy.io.loadmat(filename_2, mdict={'features_interp':'features', 'labels_cut':'labels'})
+    data3 = scipy.io.loadmat(filename_3, mdict={'features_interp':'features', 'labels_cut':'labels'})
+    data4 = scipy.io.loadmat(filename_4, mdict={'features_interp':'features', 'labels_cut':'labels'})
+    data5 = scipy.io.loadmat(filename_5, mdict={'features_interp':'features', 'labels_cut':'labels'})
+    data6 = scipy.io.loadmat(filename_6, mdict={'features_interp':'features', 'labels_cut':'labels'})
 
     print("\nSession shapes:")
-    print("ADL1:  ", data1['features'].shape)
-    print("ADL2:  ", data2['features'].shape)
-    print("ADL3:  ", data3['features'].shape)
-    print("ADL4:  ", data4['features'].shape)
-    print("ADL5:  ", data5['features'].shape)
-    print("Drill: ", data6['features'].shape)
+    print("ADL1:  ", data1['features_interp'].shape)
+    print("ADL2:  ", data2['features_interp'].shape)
+    print("ADL3:  ", data3['features_interp'].shape)
+    print("ADL4:  ", data4['features_interp'].shape)
+    print("ADL5:  ", data5['features_interp'].shape)
+    print("Drill: ", data6['features_interp'].shape)
 
     return (data1, data2, data3, data4, data5, data6)
 
