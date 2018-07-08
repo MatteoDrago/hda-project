@@ -63,11 +63,14 @@ def prepareData(X, Y, window_size=15, stride=15, shuffle=True, null_class=True):
         X_out = X_out[non_null]
         Y_out_new = Y_out[non_null][:,1:]
         Y_out = Y_out_new
+    
+    print(type(X_out), X_out.shape, type(Y_out), Y_out.shape)
 
     if shuffle:
-        perm = np.random.permutation(Y_out.shape[0])
-        X_out = np.random.permutation(perm)
-        Y_out = np.random.permutation(perm)
+        np.random.seed(42)
+        np.random.shuffle(X_out)
+        np.random.shuffle(Y_out)
+        print(type(X_out), type(Y_out))
 
     print("\nFeatures have shape: ", X_out.shape,\
           "\nLabels have shape:   ", Y_out.shape,\
