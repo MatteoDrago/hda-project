@@ -83,7 +83,7 @@ def Model1D(input_shape, classes):
                     padding='same',
                     input_shape = input_shape))
     model.add(BatchNormalization())
-    model.add(Activation('relu'))
+    model.add(LeakyReLU(alpha=0.3))
     model.add(MaxPooling1D(pool_size=2,
                           strides=2,
                           padding='same'))
@@ -93,7 +93,7 @@ def Model1D(input_shape, classes):
                     strides=1,
                     padding='same'))
     model.add(BatchNormalization())
-    model.add(Activation('relu'))
+    model.add(LeakyReLU(alpha=0.3))
     model.add(MaxPooling1D(pool_size=2,
                           strides=2,
                           padding='same'))
@@ -105,7 +105,7 @@ def Model1D(input_shape, classes):
                     strides=1,
                     padding='same'))
     model.add(BatchNormalization())
-    model.add(Activation('relu'))
+    model.add(LeakyReLU(alpha=0.3))
     model.add(MaxPooling1D(pool_size=2,
                           strides=2,
                           padding='same'))
@@ -123,7 +123,7 @@ def Model1D(input_shape, classes):
     model.add(Flatten())
     
     model.add(Dense(64, kernel_regularizer=regularizers.l2(0.01)))
-    model.add(Activation('relu'))
+    model.add(LeakyReLU(alpha=0.3))
     
     model.add(Dropout(0.4))
 
