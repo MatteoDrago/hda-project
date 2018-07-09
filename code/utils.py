@@ -134,6 +134,65 @@ def Model1D(input_shape, classes):
     
     return model
 
+def Model2D(input_shape, classes):
+    """ 
+    Arguments:
+    input_shape -- shape of the images of the dataset
+
+    Returns: 
+    model -- a Model() instance in Keras
+    """
+    
+    model = Sequential()
+    model.add(Conv2D(filters = 18,
+                    kernel_size=(5,5),
+                    strides=(1,3),
+                    padding='same',
+                    input_shape = input_shape))
+    model.add(BatchNormalization())
+    model.add(LeakyReLU(alpha=0.3))
+    model.add(MaxPooling2D(pool_size=(2,2),
+                          strides=2,
+                          padding='same'))
+    
+    model.add(Conv2D(filters = 36,
+                    kernel_size=(5,5),
+                    strides=(1,3),
+                    padding='same',
+                    input_shape = input_shape))
+    model.add(BatchNormalization())
+    model.add(LeakyReLU(alpha=0.3))
+    model.add(MaxPooling2D(pool_size=(2,2),
+                          strides=2,
+                          padding='same'))
+    
+    model.add(Dropout(0.2))
+    
+    model.add(Conv2D(filters = 72,
+              kernel_size=(5,5),
+              strides=(1,3),
+              padding='same',
+              input_shape = input_shape))
+    model.add(BatchNormalization())
+    model.add(LeakyReLU(alpha=0.3))
+    model.add(MaxPooling2D(pool_size=(2,2),
+                          strides=2,
+                          padding='same'))
+    
+    model.add(Flatten())
+    
+    model.add(Dense(64, kernel_regularizer=regularizers.l2(0.01)))
+    model.add(LeakyReLU(alpha=0.3))
+    
+    model.add(Dropout(0.4))
+
+    model.add(Dense(classes))
+    model.add(Activation('softmax'))
+    
+    model.summary()
+    
+    return model
+
 def AUC(y_true, y_pred, classes):
     """ Compute the Area Under the Curve of ROC metric. """
 

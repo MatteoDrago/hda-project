@@ -1,14 +1,10 @@
 %% HDA-PROJECT - Preprocessing
 
-% Starting from the original dataset, this routine preserve all features
-% cutting out head and tail, given that we assume them as useless
-% transient.
-
 % pick up data 
 clear; clc;
 
 file.root = "..\OpportunityUCIDataset\dataset\";
-file.dest = "data\";
+file.dest = "data\full\";
 
 params.num_subjects = 4;
 params.num_sessions = 6;
@@ -35,16 +31,16 @@ for subject = 1:4
         
         % load data and keep desired columns
         data = load(file.name);
-        features_temp = data(:,index.features);
-        labels_temp = data(:,index.labels);
+        features = data(:,index.features);
+        labels = data(:,index.labels);
         
         % cut head and tail of sessions, where ALL labels are 0
         % TRY ALSO WITH NaN in tail
         idx = zeros(2,7);
         for i = 1:7
-            if numel(find(labels_temp(:,i) ~= 0)) ~= 0
-                idx(1,i) = find(labels_temp(:,i) ~= 0, 1, 'first');
-                idx(2,i) = find(labels_temp(:,i) ~= 0, 1, 'last');
+            if numel(find(labels(:,i) ~= 0)) ~= 0
+                idx(1,i) = find(labels(:,i) ~= 0, 1, 'first');
+                idx(2,i) = find(labels(:,i) ~= 0, 1, 'last');
             else
                 idx(1,i) = NaN;
                 idx(2,i) = NaN;
@@ -53,17 +49,24 @@ for subject = 1:4
         start = min(idx(1,:));
         stop = max(idx(2,:));
         disp("Cutting samples from "+int2str(start)+" to "+int2str(stop))
-        features = features_temp(start:stop,:);
-        labels = labels_temp(start:stop,:);
+        features_cut = features(start:stop,:);
+        labels_cut = labels(start:stop,:);
+
+%         % visualize channels
+%         figure; plot(data(:,1), (features(:,1:3)));
+%         hold on; plot(data(:,1), labels(:,1));
 
         % interpolate with cubic splines
-        missing = sum(sum(isnan(features)));
+        missing = sum(sum(isnan(features_cut)));
         disp("Interpolating " + int2str(missing) + " NaN values")
-        features = fillmissing(features,'spline');
-        missing = sum(sum(isnan(features)));
+        features_interp = fillmissing(features_cut,'spline');
+        missing = sum(sum(isnan(features_interp)));
+            
+%         % patch interpolated data to data with NaN in tail
+%         features(start:stop,:) = features_interp;
 
         file.out = file.dest + file.file + ".mat";
-        save(file.out, 'features', 'labels')
+        save(file.out, 'features_interp', 'labels_cut')
         disp("Stored at " + file.out)
     end
 end
