@@ -15,7 +15,7 @@ with warnings.catch_warnings():
     import keras.backend as K
 
 
-def loadData(subject, folder="./"):
+def loadSubjectData(subject, folder="./"):
     """ Import ADL1 to ADL5 and Drill .mat files for a subject. """
     
     filename_1 = folder + "S" + str(subject) + "-ADL1"
@@ -48,7 +48,7 @@ def prepareData(X, Y, window_size=15, stride=15, shuffle=True, null_class=True):
     samples, features = X.shape
     classes = Y.shape[1]
     # shape output
-    windows = int(samples // stride) - 1
+    windows = int(np.ceil((samples - window_size) / stride)) # number of windows that are entirely included in the sample length
     X_out = np.zeros([windows, window_size, features])
     Y_out = np.zeros([windows, classes])
     # write output
@@ -56,7 +56,7 @@ def prepareData(X, Y, window_size=15, stride=15, shuffle=True, null_class=True):
         index = int(i * stride)
         X_out[i, :, :] = X[index:index+window_size, :].reshape((window_size,features))
         temp = Y[index:index+window_size, :]
-        Y_out[i, np.argmax(np.sum(temp, axis=0))] = 1 # hard version      CHECK!
+        Y_out[i, np.argmax(np.sum(temp, axis=0))] = 1 # one hot encoded, hard version
 
     if not(null_class):
         non_null = (Y_out[:,0] == 0) # samples 0-labeled (Y_out[:,0] is the first column of Y_out)
@@ -211,10 +211,15 @@ def AUC(y_true, y_pred, classes):
     fpr = dict()
     tpr = dict()
     roc_auc = dict()
+    accumulator = 0
+
     for i in range(classes):
         fpr[i], tpr[i], _ = roc_curve(y_true[:, i], y_pred[:, i])
         roc_auc[i] = auc(fpr[i], tpr[i])
+        print("Class ", i, ":  AUC = ", roc_auc[i])
+        accumulator = accumulator + roc_auc[i]
 
+    print("Average AUC: ", accumulator / classes)
     return roc_auc
 
 def plot_confusion_matrix(cm, classes, normalize=False, title='Confusion matrix', cmap=plt.cm.Blues):
@@ -244,7 +249,7 @@ def plot_confusion_matrix(cm, classes, normalize=False, title='Confusion matrix'
     plt.xlabel('Predicted label')
 
 def unwindowLabels(Y_s, window_size, stride):
-    """ Stretch labels for each window for each temporal sample. """
+    """ Stretch labels of each window for each temporal sample. """
     
     Y = np.zeros(())
     Y_s.shape[0]
