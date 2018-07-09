@@ -42,7 +42,7 @@ def loadData(subject, folder="./"):
 
     return (data1, data2, data3, data4, data5, data6)
 
-def prepareData(X, Y, window_size=15, stride=15, shuffle=True):
+def prepareData(X, Y, window_size=15, stride=15, shuffle=True, null_class=True):
     """ Prepare data in windows to be passed to the CNN. """
 
     samples, features = X.shape
@@ -57,12 +57,24 @@ def prepareData(X, Y, window_size=15, stride=15, shuffle=True):
         X_out[i, :, :] = X[index:index+window_size, :].reshape((window_size,features))
         temp = Y[index:index+window_size, :]
         Y_out[i, np.argmax(np.sum(temp, axis=0))] = 1 # hard version      CHECK!
+
+    if not(null_class):
+        non_null = (Y_out[:,0] == 0) # samples 0-labeled (Y_out[:,0] is the first column of Y_out)
+        X_out = X_out[non_null]
+        Y_out_new = Y_out[non_null][:,1:]
+        Y_out = Y_out_new
+    
+    print(type(X_out), X_out.shape, type(Y_out), Y_out.shape)
+
+    if shuffle:
+        np.random.seed(42)
+        np.random.shuffle(X_out)
+        np.random.shuffle(Y_out)
+        print(type(X_out), type(Y_out))
+
     print("\nFeatures have shape: ", X_out.shape,\
           "\nLabels have shape:   ", Y_out.shape,\
           "\nFraction of labels:  ", np.sum(Y_out, axis=0) / Y_out.shape[0])
-
-    if shuffle:
-        X_out_shuffled = np.random.permutation(X_out)
 
     return (X_out, Y_out)
 
@@ -231,3 +243,10 @@ def plot_confusion_matrix(cm, classes, normalize=False, title='Confusion matrix'
     plt.ylabel('True label')
     plt.xlabel('Predicted label')
 
+def unwindowLabels(Y_s, window_size, stride):
+    """ Stretch labels for each window for each temporal sample. """
+    
+    Y = np.zeros(())
+    Y_s.shape[0]
+
+    return Y
