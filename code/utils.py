@@ -184,3 +184,10 @@ def plot_confusion_matrix(cm, classes, normalize=False, title='Confusion matrix'
     plt.ylabel('True label')
     plt.xlabel('Predicted label')
 
+def unwindowLabels(Y_s, window_size, stride):
+    """ Stretch labels for each window for each temporal sample. """
+    
+    Y = np.zeros(())
+    Y_s.shape[0]
+
+    return Y
