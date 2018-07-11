@@ -196,6 +196,45 @@ def Model2D(input_shape, classes):
     model.add(Dense(64, kernel_regularizer=regularizers.l2(0.01)))
     model.add(LeakyReLU(alpha=0.3))
     
+    #model.add(Dropout(0.4))
+
+    model.add(Dense(classes))
+    model.add(Activation('softmax'))
+    
+    model.summary()
+    
+    return model
+
+def MixedModel(input_shape, classes):
+
+    
+    model = Sequential()
+    model.add(Conv2D(filters = 20,
+                    kernel_size = (1,10),
+                    strides = (1,1),
+                    padding = 'same',
+                    input_shape = input_shape))
+    model.add(BatchNormalization())
+    #model.add(LeakyReLU(alpha=0.3))
+    #model.add(MaxPooling1D(pool_size=2,
+    #                      strides=2,
+    #                      padding='same'))
+    
+    model.add(Conv2D(filters = 40,
+                    kernel_size=(3,10),
+                    strides=(1,3),
+                    padding='same'))
+    model.add(BatchNormalization())
+    model.add(LeakyReLU(alpha=0.3))
+    model.add(MaxPooling2D(pool_size=(2,2),
+                          strides=2,
+                          padding='same'))
+    
+    model.add(Flatten())
+    
+    model.add(Dense(64, kernel_regularizer=regularizers.l2(0.01)))
+    model.add(LeakyReLU(alpha=0.3))
+    
     model.add(Dropout(0.4))
 
     model.add(Dense(classes))
@@ -204,6 +243,7 @@ def Model2D(input_shape, classes):
     model.summary()
     
     return model
+
 
 def AUC(y_true, y_pred, classes):
     """ Compute the Area Under the Curve of ROC metric. """
