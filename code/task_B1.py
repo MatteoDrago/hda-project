@@ -6,14 +6,15 @@ from keras.optimizers import Adam
 
 # PARAMETERS #####################################################################
 subject = 1
-folder = "./data/"
+folder = "./data/full/"
 label_col = 6     # default for task B1
 window_size = 15
-stride = 15
+stride = 5
+make_binary = True
 ##################################################################################
 
 # import all sessions for a subject
-(data1, data2, data3, data4, data5, data6) = utils.loadData(subject, folder=folder)
+(data1, data2, data3, data4, data5, data6) = utils.loadSubjectData(subject, folder=folder)
 
 # create training set and test set
 X_train = np.concatenate((data1['features_interp'],\
@@ -47,8 +48,9 @@ X_train =scaler.transform(X_train)
 X_test = scaler.transform(X_test)
 
 # make the problem binary
-Y_train[Y_train != 0] = 1
-Y_test[Y_test != 0] = 1
+if make_binary:
+    Y_train[Y_train != 0] = 1
+    Y_test[Y_test != 0] = 1
 
 # switch to one hot encoded labels
 onehot_encoder = OneHotEncoder(sparse=False)
@@ -76,7 +78,7 @@ Y_pred_s = model_unidim.predict(X_test_s)
 Y_test_hard = np.argmax(Y_test_s, axis=1)
 Y_pred_hard = np.argmax(Y_pred_s, axis=1)
 print("F1-measure: ", utils.f1_score(Y_test_hard, Y_pred_hard, average='weighted'))
-print("AUC w.r. to each class: ", utils.AUC(Y_test_s, Y_pred_s, classes))
+utils.AUC(Y_test_s, Y_pred_s, classes)
 # Compute and plot confusion matrix
 cnf_matrix = utils.confusion_matrix(Y_test_hard, Y_pred_hard)
 np.set_printoptions(precision=2)
