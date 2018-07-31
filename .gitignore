@@ -6,3 +6,6 @@
 /code/data/*
 /papers/*
 
+code/.floydexpt
+code/floyd.yml
+code/.floydignore

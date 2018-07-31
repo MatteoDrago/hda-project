@@ -157,20 +157,22 @@ def Model2D(input_shape, classes):
     
     model = Sequential()
     model.add(Conv2D(filters = 18,
-                    kernel_size=(5,5),
-                    strides=(1,3),
+                    kernel_size=(10,10),
+                    strides=(5,5),
                     padding='same',
+                     data_format = 'channels_first',
                     input_shape = input_shape))
     model.add(BatchNormalization())
     model.add(LeakyReLU(alpha=0.3))
-    model.add(MaxPooling2D(pool_size=(2,2),
-                          strides=2,
-                          padding='same'))
+    #model.add(MaxPooling2D(pool_size=(2,2),
+    #                      strides=2,
+    #                      padding='same'))
     
     model.add(Conv2D(filters = 36,
                     kernel_size=(5,5),
-                    strides=(1,3),
+                    strides=(2,2),
                     padding='same',
+                     data_format = 'channels_first',
                     input_shape = input_shape))
     model.add(BatchNormalization())
     model.add(LeakyReLU(alpha=0.3))
@@ -182,8 +184,9 @@ def Model2D(input_shape, classes):
     
     model.add(Conv2D(filters = 72,
               kernel_size=(5,5),
-              strides=(1,3),
+              strides=(1,1),
               padding='same',
+              data_format = 'channels_first',
               input_shape = input_shape))
     model.add(BatchNormalization())
     model.add(LeakyReLU(alpha=0.3))
@@ -213,6 +216,7 @@ def MixedModel(input_shape, classes):
                     kernel_size = (1,10),
                     strides = (1,1),
                     padding = 'same',
+                     data_format = 'channels_first',
                     input_shape = input_shape))
     model.add(BatchNormalization())
     #model.add(LeakyReLU(alpha=0.3))
