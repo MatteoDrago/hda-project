@@ -2,7 +2,7 @@
 
 import numpy as np
 import scipy.io
-from sklearn.metrics import f1_score, roc_curve, auc, confusion_matrix
+from sklearn.metrics import f1_score, roc_curve, auc, confusion_matrix, accuracy_score
 import matplotlib.pyplot as plt
 import itertools
 import warnings
@@ -48,7 +48,7 @@ def prepareData(X, Y, window_size=15, stride=15, shuffle=True, null_class=True):
     samples, features = X.shape
     classes = Y.shape[1]
     # shape output
-    windows = int(samples // stride) - 1
+    windows = int(samples // stride) - int(window_size // stride) 
     X_out = np.zeros([windows, window_size, features])
     Y_out = np.zeros([windows, classes])
     # write output
@@ -77,177 +77,6 @@ def prepareData(X, Y, window_size=15, stride=15, shuffle=True, null_class=True):
           "\nFraction of labels:  ", np.sum(Y_out, axis=0) / Y_out.shape[0])
 
     return (X_out, Y_out)
-
-def Model1D(input_shape, classes):
-    """ 
-    Arguments:
-    input_shape -- shape of the images of the dataset
-    classes -- number of classes
-
-    Returns: 
-    model -- a Model() instance in Keras
-    """
-    
-    model = Sequential()
-    model.add(Conv1D(filters = 18,
-                    kernel_size=5,
-                    strides=1,
-                    padding='same',
-                    input_shape = input_shape))
-    model.add(BatchNormalization())
-    model.add(LeakyReLU(alpha=0.3))
-    model.add(MaxPooling1D(pool_size=2,
-                          strides=2,
-                          padding='same'))
-    
-    model.add(Conv1D(filters = 36,
-                    kernel_size=7,
-                    strides=1,
-                    padding='same'))
-    model.add(BatchNormalization())
-    model.add(LeakyReLU(alpha=0.3))
-    model.add(MaxPooling1D(pool_size=2,
-                          strides=2,
-                          padding='same'))
-    
-    model.add(Dropout(0.2))
-    
-    model.add(Conv1D(filters = 72,
-                    kernel_size=7,
-                    strides=1,
-                    padding='same'))
-    model.add(BatchNormalization())
-    model.add(LeakyReLU(alpha=0.3))
-    model.add(MaxPooling1D(pool_size=2,
-                          strides=2,
-                          padding='same'))
-    
-    #model.add(Conv1D(filters = 144,
-    #                kernel_size=7,
-    #                strides=1,
-    #                padding='same'))
-    #model.add(BatchNormalization())
-    #model.add(Activation('relu'))
-    #model.add(MaxPooling1D(pool_size=2,
-    #                      strides=2,
-    #                      padding='same'))
-    
-    model.add(Flatten())
-    
-    model.add(Dense(64, kernel_regularizer=regularizers.l2(0.01)))
-    model.add(LeakyReLU(alpha=0.3))
-    
-    model.add(Dropout(0.4))
-
-    model.add(Dense(classes))
-    model.add(Activation('softmax'))
-    
-    model.summary()
-    
-    return model
-
-def Model2D(input_shape, classes):
-    """ 
-    Arguments:
-    input_shape -- shape of the images of the dataset
-
-    Returns: 
-    model -- a Model() instance in Keras
-    """
-    
-    model = Sequential()
-    model.add(Conv2D(filters = 18,
-                    kernel_size=(10,10),
-                    strides=(5,5),
-                    padding='same',
-                     data_format = 'channels_first',
-                    input_shape = input_shape))
-    model.add(BatchNormalization())
-    model.add(LeakyReLU(alpha=0.3))
-    #model.add(MaxPooling2D(pool_size=(2,2),
-    #                      strides=2,
-    #                      padding='same'))
-    
-    model.add(Conv2D(filters = 36,
-                    kernel_size=(5,5),
-                    strides=(2,2),
-                    padding='same',
-                     data_format = 'channels_first',
-                    input_shape = input_shape))
-    model.add(BatchNormalization())
-    model.add(LeakyReLU(alpha=0.3))
-    model.add(MaxPooling2D(pool_size=(2,2),
-                          strides=2,
-                          padding='same'))
-    
-    model.add(Dropout(0.2))
-    
-    model.add(Conv2D(filters = 72,
-              kernel_size=(5,5),
-              strides=(1,1),
-              padding='same',
-              data_format = 'channels_first',
-              input_shape = input_shape))
-    model.add(BatchNormalization())
-    model.add(LeakyReLU(alpha=0.3))
-    model.add(MaxPooling2D(pool_size=(2,2),
-                          strides=2,
-                          padding='same'))
-    
-    model.add(Flatten())
-    
-    model.add(Dense(64, kernel_regularizer=regularizers.l2(0.01)))
-    model.add(LeakyReLU(alpha=0.3))
-    
-    #model.add(Dropout(0.4))
-
-    model.add(Dense(classes))
-    model.add(Activation('softmax'))
-    
-    model.summary()
-    
-    return model
-
-def MixedModel(input_shape, classes):
-
-    
-    model = Sequential()
-    model.add(Conv2D(filters = 20,
-                    kernel_size = (1,10),
-                    strides = (1,1),
-                    padding = 'same',
-                     data_format = 'channels_first',
-                    input_shape = input_shape))
-    model.add(BatchNormalization())
-    #model.add(LeakyReLU(alpha=0.3))
-    #model.add(MaxPooling1D(pool_size=2,
-    #                      strides=2,
-    #                      padding='same'))
-    
-    model.add(Conv2D(filters = 40,
-                    kernel_size=(3,10),
-                    strides=(1,3),
-                    padding='same'))
-    model.add(BatchNormalization())
-    model.add(LeakyReLU(alpha=0.3))
-    model.add(MaxPooling2D(pool_size=(2,2),
-                          strides=2,
-                          padding='same'))
-    
-    model.add(Flatten())
-    
-    model.add(Dense(64, kernel_regularizer=regularizers.l2(0.01)))
-    model.add(LeakyReLU(alpha=0.3))
-    
-    model.add(Dropout(0.4))
-
-    model.add(Dense(classes))
-    model.add(Activation('softmax'))
-    
-    model.summary()
-    
-    return model
-
 
 def AUC(y_true, y_pred, classes):
     """ Compute the Area Under the Curve of ROC metric. """
