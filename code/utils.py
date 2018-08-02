@@ -2,8 +2,11 @@
 
 import numpy as np
 import scipy.io
-from sklearn.metrics import f1_score, roc_curve, auc, confusion_matrix, accuracy_score
 import matplotlib.pyplot as plt
+
+from sklearn.preprocessing import OneHotEncoder, StandardScaler
+from sklearn.metrics import f1_score, roc_curve, auc, confusion_matrix, accuracy_score
+
 import itertools
 import warnings
 with warnings.catch_warnings():
@@ -42,7 +45,7 @@ def loadData(subject, folder="./"):
 
     return (data1, data2, data3, data4, data5, data6)
 
-def prepareData(X, Y, window_size=15, stride=15, shuffle=True, null_class=True):
+def prepareData(X, Y, window_size=15, stride=15, null_class=True):
     """ Prepare data in windows to be passed to the CNN. """
 
     samples, features = X.shape
@@ -64,19 +67,82 @@ def prepareData(X, Y, window_size=15, stride=15, shuffle=True, null_class=True):
         Y_out_new = Y_out[non_null][:,1:]
         Y_out = Y_out_new
     
-    print(type(X_out), X_out.shape, type(Y_out), Y_out.shape)
+    #print(type(X_out), X_out.shape, type(Y_out), Y_out.shape)
 
-    if shuffle:
-        np.random.seed(42)
-        np.random.shuffle(X_out)
-        np.random.shuffle(Y_out)
-        print(type(X_out), type(Y_out))
+    #if shuffle:
+    #    np.random.seed(42)
+    #    np.random.shuffle(X_out)
+    #    np.random.shuffle(Y_out)
+    #    print(type(X_out), type(Y_out))
 
-    print("\nFeatures have shape: ", X_out.shape,\
+    print("Features have shape: ", X_out.shape,\
           "\nLabels have shape:   ", Y_out.shape,\
           "\nFraction of labels:  ", np.sum(Y_out, axis=0) / Y_out.shape[0])
 
     return (X_out, Y_out)
+
+def preprocessing(subject, 
+                folder="./",
+                label=0,
+                window_size=15, 
+                stride=15, 
+                null_class=True):
+
+    if(null_class):
+        n_classes = 5
+        classes = [0,1,2,4,5]
+    else:
+        n_classes = 4
+        classes = [1,2,4,5]
+
+    # import all sessions for a subject
+    (data1, data2, data3, data4, data5, data6) = loadData(subject, folder=folder)
+
+    # create training set and test set
+    X_train = np.concatenate((data1['features_interp'],\
+                          data2['features_interp'],\
+                          data3['features_interp'],\
+                          data6['features_interp']), axis=0)
+
+    Y_train = np.concatenate((data1['labels_cut'][:,label],\
+                          data2['labels_cut'][:,label],\
+                          data3['labels_cut'][:,label],\
+                          data6['labels_cut'][:,label]), axis=0)
+
+    X_test = np.concatenate((data4['features_interp'],\
+                         data5['features_interp']), axis=0)
+
+    Y_test = np.concatenate((data4['labels_cut'][:,label],\
+                         data5['labels_cut'][:,label]))
+
+    features = X_test.shape[1]
+
+    print("Training samples: ", X_train.shape[0],\
+      "\nTest samples:      ", X_test.shape[0],\
+      "\nFeatures:            ", features)
+
+    # decision to overcome the problem of entire missing columns
+    X_train = np.nan_to_num(X_train)
+    X_test = np.nan_to_num(X_test)
+
+    # features normalization
+    scaler = StandardScaler().fit(X_train)
+    X_train =scaler.transform(X_train)
+    X_test = scaler.transform(X_test)
+
+    # switch to one hot encoded labels
+    onehot_encoder = OneHotEncoder(sparse=False)
+    Y_train_oh = onehot_encoder.fit_transform(Y_train.reshape(-1, 1))
+    Y_test_oh = onehot_encoder.fit_transform(Y_test.reshape(-1, 1))
+    #print("Classes in training set: ", Y_train_oh.shape[1],\
+    #  "\nClasses in test set:     ", Y_test_oh.shape[1])
+
+    print("TRAINING SET:")
+    X_train_s, Y_train_s = prepareData(X_train, Y_train_oh, window_size, stride, null_class)
+    print("TEST SET:")
+    X_test_s, Y_test_s = prepareData(X_test, Y_test_oh, window_size, stride, null_class)
+    
+    return (X_train_s, Y_train_s, X_test_s, Y_test_s)
 
 def AUC(y_true, y_pred, classes):
     """ Compute the Area Under the Curve of ROC metric. """
