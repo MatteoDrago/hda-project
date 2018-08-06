@@ -32,8 +32,8 @@ def Hybrid(input_shape, classes, withSoftmax = True):
     model.add(MaxPooling2D(pool_size=(2,1)))
     
     # Layer 3
-    model.add(Reshape((model.layers[2].output_shape[1],model.layers[2].output_shape[2] * model.layers[2].output_shape[3])))
-    #model.add(Reshape((27,5500)))
+    # This layer dimension are automatically scanned in order to avoid updating by hand each time
+    model.add(Reshape((model.layers[2].output_shape[1],model.layers[2].output_shape[2] * model.layers[2].output_shape[3])))  
 
     # Layer 4
     model.add(LSTM(300,
