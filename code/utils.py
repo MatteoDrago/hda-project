@@ -81,12 +81,7 @@ def prepareData(X, Y, window_size=15, stride=15, null_class=True):
 
     return (X_out, Y_out)
 
-def preprocessing(subject, 
-                folder="./",
-                label=0,
-                window_size=15, 
-                stride=15, 
-                null_class=True):
+def preprocessing(subject, folder="./", label=0, window_size=15, stride=15, null_class=True):
 
     if(null_class):
         n_classes = 5
@@ -142,7 +137,7 @@ def preprocessing(subject,
     print("TEST SET:")
     X_test_s, Y_test_s = prepareData(X_test, Y_test_oh, window_size, stride, null_class)
     
-    return (X_train_s, Y_train_s, X_test_s, Y_test_s)
+    return (X_train_s, Y_train_s, X_test_s, Y_test_s, n_classes)
 
 def AUC(y_true, y_pred, classes):
     """ Compute the Area Under the Curve of ROC metric. """
