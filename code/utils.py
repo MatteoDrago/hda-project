@@ -18,7 +18,7 @@ with warnings.catch_warnings():
     import keras.backend as K
 
 
-def loadData(subject, folder="./"):
+def loadData(subject, folder="./",  printInfo = True):
     """ Import ADL1 to ADL5 and Drill .mat files for a subject. """
     
     filename_1 = folder + "S" + str(subject) + "-ADL1"
@@ -35,17 +35,18 @@ def loadData(subject, folder="./"):
     data5 = scipy.io.loadmat(filename_5, mdict={'features_interp':'features', 'labels_cut':'labels'})
     data6 = scipy.io.loadmat(filename_6, mdict={'features_interp':'features', 'labels_cut':'labels'})
 
-    print("\nSession shapes:")
-    print("ADL1:  ", data1['features_interp'].shape)
-    print("ADL2:  ", data2['features_interp'].shape)
-    print("ADL3:  ", data3['features_interp'].shape)
-    print("ADL4:  ", data4['features_interp'].shape)
-    print("ADL5:  ", data5['features_interp'].shape)
-    print("Drill: ", data6['features_interp'].shape)
+    if (printInfo):
+        print("\nSession shapes:")
+        print("ADL1:  ", data1['features_interp'].shape)
+        print("ADL2:  ", data2['features_interp'].shape)
+        print("ADL3:  ", data3['features_interp'].shape)
+        print("ADL4:  ", data4['features_interp'].shape)
+        print("ADL5:  ", data5['features_interp'].shape)
+        print("Drill: ", data6['features_interp'].shape)
 
     return (data1, data2, data3, data4, data5, data6)
 
-def prepareData(X, Y, window_size=15, stride=15, null_class=True):
+def prepareData(X, Y, window_size=15, stride=15, null_class=True, printInfo = True):
     """ Prepare data in windows to be passed to the CNN. """
 
     samples, features = X.shape
@@ -66,18 +67,44 @@ def prepareData(X, Y, window_size=15, stride=15, null_class=True):
         X_out = X_out[non_null]
         Y_out_new = Y_out[non_null][:,1:]
         Y_out = Y_out_new
-    
-    #print(type(X_out), X_out.shape, type(Y_out), Y_out.shape)
 
-    #if shuffle:
-    #    np.random.seed(42)
-    #    np.random.shuffle(X_out)
-    #    np.random.shuffle(Y_out)
-    #    print(type(X_out), type(Y_out))
+    if (printInfo):
+        print("Features have shape: ", X_out.shape,\
+            "\nLabels have shape:   ", Y_out.shape,\
+            "\nFraction of labels:  ", np.sum(Y_out, axis=0) / Y_out.shape[0])
 
-    print("Features have shape: ", X_out.shape,\
-          "\nLabels have shape:   ", Y_out.shape,\
-          "\nFraction of labels:  ", np.sum(Y_out, axis=0) / Y_out.shape[0])
+    return (X_out, Y_out)
+
+def prepareDataDFT(X, Y, window_size=15, stride=15, null_class=True, infoDFT='angle', printInfo = True):
+    """ Prepare data in windows to be passed to the CNN. """
+
+    samples, features = X.shape
+    classes = Y.shape[1]
+    # shape output
+    windows = int(samples // stride) - int(window_size // stride) 
+    X_out = np.zeros([windows, window_size, features])
+    Y_out = np.zeros([windows, classes])
+    # write output
+    for i in range(windows):
+        index = int(i * stride)
+        input_train = np.fft.fft2(X[index:index+window_size, :].reshape((window_size,features)))
+        if (infoDFT == 'angle'):
+            X_out[i, :, :] = np.angle(X[index:index+window_size, :].reshape((window_size,features)))
+        else: 
+            X_out[i, :, :] = np.abs(X[index:index+window_size, :].reshape((window_size,features)))
+        temp = Y[index:index+window_size, :]
+        Y_out[i, np.argmax(np.sum(temp, axis=0))] = 1 # hard version      CHECK!
+
+    if not(null_class):
+        non_null = (Y_out[:,0] == 0) # samples 0-labeled (Y_out[:,0] is the first column of Y_out)
+        X_out = X_out[non_null]
+        Y_out_new = Y_out[non_null][:,1:]
+        Y_out = Y_out_new
+
+    if (printInfo):
+        print("Features have shape: ", X_out.shape,\
+            "\nLabels have shape:   ", Y_out.shape,\
+            "\nFraction of labels:  ", np.sum(Y_out, axis=0) / Y_out.shape[0])
 
     return (X_out, Y_out)
 
