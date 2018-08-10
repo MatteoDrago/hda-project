@@ -18,7 +18,7 @@ with warnings.catch_warnings():
     import keras.backend as K
 
 
-def loadData(subject, folder="./",  printInfo = True):
+def loadData(subject, folder="./",  printInfo = False):
     """ Import ADL1 to ADL5 and Drill .mat files for a subject. """
     
     filename_1 = folder + "S" + str(subject) + "-ADL1"
@@ -46,7 +46,7 @@ def loadData(subject, folder="./",  printInfo = True):
 
     return (data1, data2, data3, data4, data5, data6)
 
-def prepareData(X, Y, window_size=15, stride=15, null_class=True, printInfo = True):
+def prepareData(X, Y, window_size=15, stride=15, printInfo = True, null_class = True):
     """ Prepare data in windows to be passed to the CNN. """
 
     samples, features = X.shape
@@ -69,13 +69,13 @@ def prepareData(X, Y, window_size=15, stride=15, null_class=True, printInfo = Tr
         Y_out = Y_out_new
 
     if (printInfo):
-        print("Features have shape: ", X_out.shape,\
-            "\nLabels have shape:   ", Y_out.shape,\
+        print("Dataset of Images have shape: ", X_out.shape,\
+            "\nDataset of Labels have shape:   ", Y_out.shape,\
             "\nFraction of labels:  ", np.sum(Y_out, axis=0) / Y_out.shape[0])
 
     return (X_out, Y_out)
 
-def prepareDataDFT(X, Y, window_size=15, stride=15, null_class=True, infoDFT='angle', printInfo = True):
+def prepareDataDFT(X, Y, window_size=15, stride=15, infoDFT='angle', printInfo = True, null_class = True):
     """ Prepare data in windows to be passed to the CNN. """
 
     samples, features = X.shape
@@ -108,14 +108,10 @@ def prepareDataDFT(X, Y, window_size=15, stride=15, null_class=True, infoDFT='an
 
     return (X_out, Y_out)
 
-def preprocessing(subject, folder="./", label=0, window_size=15, stride=15, null_class=True):
+def preprocessing(subject, folder="./", label=0, window_size=15, stride=15, make_binary=False, null_class=True):
 
-    if(null_class):
-        n_classes = 5
-        classes = [0,1,2,4,5]
-    else:
-        n_classes = 4
-        classes = [1,2,4,5]
+    n_classes = 5
+    classes = [0,1,2,4,5]
 
     # import all sessions for a subject
     (data1, data2, data3, data4, data5, data6) = loadData(subject, folder=folder)
@@ -152,6 +148,10 @@ def preprocessing(subject, folder="./", label=0, window_size=15, stride=15, null
     X_train =scaler.transform(X_train)
     X_test = scaler.transform(X_test)
 
+    if (make_binary):
+        Y_train[Y_train != 0] = 1
+        Y_test[Y_test != 0] = 1
+
     # switch to one hot encoded labels
     onehot_encoder = OneHotEncoder(sparse=False)
     Y_train_oh = onehot_encoder.fit_transform(Y_train.reshape(-1, 1))
@@ -160,9 +160,9 @@ def preprocessing(subject, folder="./", label=0, window_size=15, stride=15, null
     #  "\nClasses in test set:     ", Y_test_oh.shape[1])
 
     print("TRAINING SET:")
-    X_train_s, Y_train_s = prepareData(X_train, Y_train_oh, window_size, stride, null_class)
+    X_train_s, Y_train_s = prepareData(X_train, Y_train_oh, window_size, stride, null_class = null_class)
     print("TEST SET:")
-    X_test_s, Y_test_s = prepareData(X_test, Y_test_oh, window_size, stride, null_class)
+    X_test_s, Y_test_s = prepareData(X_test, Y_test_oh, window_size, stride, null_class = null_class)
     
     return (X_train_s, Y_train_s, X_test_s, Y_test_s, n_classes)
 
