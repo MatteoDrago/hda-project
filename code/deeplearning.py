@@ -13,19 +13,17 @@ from keras.layers.recurrent import LSTM
 from keras.layers.wrappers import Bidirectional
 
 
-#-------------------------------------------------------------------------------------------------------
-# Hybrid: define a batch normalization + convolutional/max-pooling + 2 LSTM layers DNN
-#-------------------------------------------------------------------------------------------------------
-def Hybrid(input_shape, classes, withSoftmax = True):
+def MotionDetection(input_shape, classes, withSoftmax = True):
     
     model = Sequential()
   
-  	# Layer 0
+    # Layer 0
     model.add(BatchNormalization(input_shape = input_shape))
 
     # Layer 1
     model.add(Conv2D(filters = 50,
-                    kernel_size = (11,1),
+                    kernel_size = (11,3),
+                    strides=(1,1),
                     activation='relu'))
     
     # Layer 2
@@ -36,21 +34,78 @@ def Hybrid(input_shape, classes, withSoftmax = True):
     model.add(Reshape((model.layers[2].output_shape[1],model.layers[2].output_shape[2] * model.layers[2].output_shape[3])))  
 
     # Layer 4
-    model.add(LSTM(300,
+    model.add(LSTM(20,
                   return_sequences=True))
     
     # Layer 5 
-    model.add(LSTM(300))
+    model.add(LSTM(20))
    
-   	# Layer 6
+    # Layer 6
     model.add(Dense(512,activation = 'relu'))
     
     if (withSoftmax):
-    	# Layer 7
+        # Layer 7
         model.add(Dense(classes, activation = 'softmax'))
     
     return model
 
+#-------------------------------------------------------------------------------------------------------
+# MotionClassification: define a batch normalization + convolutional/max-pooling + 2 LSTM layers DNN
+#-------------------------------------------------------------------------------------------------------
+def MotionClassification(input_shape, classes, withSoftmax = True):
+    
+    model = Sequential()
+  
+    # Layer 0
+    model.add(BatchNormalization(input_shape = input_shape))
+
+    # Layer 1
+    model.add(Conv2D(filters = 50,
+                    kernel_size = (11,1),
+                    activation='relu'))
+    
+    #model.add(MaxPooling2D(pool_size=(2,1)))
+
+    # Layer 2
+    model.add(BatchNormalization())
+
+    # Layer 3
+    model.add(Conv2D(filters = 50,
+                    kernel_size = (11,1),
+                    activation='relu'))
+    
+    # Layer 4
+    model.add(MaxPooling2D(pool_size=(2,1)))
+    
+    # Layer 5
+    model.add(BatchNormalization())
+    
+    # Layer 6
+    # This layer dimension are automatically scanned in order to avoid updating by hand each time
+    model.add(Reshape((model.layers[5].output_shape[1],model.layers[5].output_shape[2] * model.layers[5].output_shape[3])))  
+
+    # Layer 7
+    model.add(LSTM(300,
+                  return_sequences=True))
+    
+    # Layer 8 
+    model.add(LSTM(300))
+   
+    # Layer 9
+    model.add(Dropout(0.5))
+
+    # Layer 10
+    model.add(Dense(512,activation = 'relu'))
+
+    # Layer 11
+    model.add(Dropout(0.5))
+    
+    if (withSoftmax):
+        # Layer 12
+        model.add(Dense(classes, activation = 'softmax'))
+    
+    return model
+    
 def extractFeatures(model, x_train, x_test, featureSize, batchSize = 600):
 
 	trainingShape =  x_train.shape
