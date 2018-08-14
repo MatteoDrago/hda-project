@@ -49,10 +49,51 @@ def MotionDetection(input_shape, classes, withSoftmax = True):
     
     return model
 
-#-------------------------------------------------------------------------------------------------------
-# MotionClassification: define a batch normalization + convolutional/max-pooling + 2 LSTM layers DNN
-#-------------------------------------------------------------------------------------------------------
 def MotionClassification(input_shape, classes, withSoftmax = True):
+    
+    model = Sequential()
+  
+    # Layer 0
+    model.add(BatchNormalization(input_shape = input_shape))
+
+    # Layer 1
+    model.add(Conv2D(filters = 50,
+                    kernel_size = (11,1),
+                    activation='relu'))
+    
+    # Layer 2
+    model.add(MaxPooling2D(pool_size=(2,1)))
+        
+    # Layer 3
+    # This layer dimension are automatically scanned in order to avoid updating by hand each time
+    model.add(Reshape((model.layers[2].output_shape[1],model.layers[2].output_shape[2] * model.layers[2].output_shape[3])))  
+
+    # Layer 4
+    model.add(LSTM(300,
+                  return_sequences=True))
+    
+    # Layer 5 
+    model.add(LSTM(300))
+   
+    # Layer 6
+    model.add(Dropout(0.5))
+
+    # Layer 7
+    model.add(Dense(512,activation = 'relu'))
+
+    # Layer 8
+    model.add(Dropout(0.5))
+    
+    if (withSoftmax):
+        # Layer 9
+        model.add(Dense(classes, activation = 'softmax'))
+    
+    return model
+
+#-------------------------------------------------------------------------------------------------------
+# MotionClassificationDeep: define a batch normalization + convolutional/max-pooling + 2 LSTM layers DNN
+#-------------------------------------------------------------------------------------------------------
+def MotionClassificationDeep(input_shape, classes, withSoftmax = True):
     
     model = Sequential()
   
@@ -105,7 +146,7 @@ def MotionClassification(input_shape, classes, withSoftmax = True):
         model.add(Dense(classes, activation = 'softmax'))
     
     return model
-    
+
 def extractFeatures(model, x_train, x_test, featureSize, batchSize = 600):
 
 	trainingShape =  x_train.shape
