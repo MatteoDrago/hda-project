@@ -4,12 +4,8 @@
 /data_temp/*.*
 /prep/*
 /code/data/*
-/papers/*<<<<<<< HEAD
-/papers/*
-=======
 /papers/*
 
 code/.floydexpt
 code/floyd.yml
 code/.floydignore
->>>>>>> Matteo
