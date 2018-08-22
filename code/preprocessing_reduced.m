@@ -1,6 +1,5 @@
 %% HDA-PROJECT - Preprocessing
 
-% pick up data 
 clear; clc;
 
 file.root = "..\OpportunityUCIDataset\dataset\";
@@ -14,7 +13,7 @@ index.labels = 244:250;
 
 %% import sessions
 
-for subject = [1]
+for subject = 1:4
     disp("Importing data for subject " + int2str(subject))
     
     for session = 1:6

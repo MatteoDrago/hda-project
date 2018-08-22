@@ -1,6 +1,5 @@
 %% HDA-PROJECT - Preprocessing
 
-% pick up data 
 clear; clc;
 
 file.root = "..\OpportunityUCIDataset\dataset\";
@@ -14,7 +13,6 @@ index.labels = 244:250;
 
 %% import sessions
 
-% subject=1;session=1;
 for subject = 1:4
     disp("Importing data for subject " + int2str(subject))
     
@@ -51,10 +49,6 @@ for subject = 1:4
         disp("Cutting samples from "+int2str(start)+" to "+int2str(stop))
         features_cut = features(start:stop,:);
         labels_cut = labels(start:stop,:);
-
-%         % visualize channels
-%         figure; plot(data(:,1), (features(:,1:3)));
-%         hold on; plot(data(:,1), labels(:,1));
 
         % interpolate with cubic splines
         missing = sum(sum(isnan(features_cut)));
