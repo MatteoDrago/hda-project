@@ -2,8 +2,11 @@
 
 import numpy as np
 import scipy.io
-from sklearn.metrics import f1_score, roc_curve, auc, confusion_matrix
 import matplotlib.pyplot as plt
+
+from sklearn.preprocessing import OneHotEncoder, StandardScaler
+from sklearn.metrics import f1_score, roc_curve, auc, confusion_matrix, accuracy_score
+
 import itertools
 import warnings
 with warnings.catch_warnings():
@@ -15,7 +18,7 @@ with warnings.catch_warnings():
     import keras.backend as K
 
 
-def loadSubjectData(subject, folder="./"):
+def loadData(subject, folder="./",  printInfo = False):
     """ Import ADL1 to ADL5 and Drill .mat files for a subject. """
     
     filename_1 = folder + "S" + str(subject) + "-ADL1"
@@ -32,23 +35,24 @@ def loadSubjectData(subject, folder="./"):
     data5 = scipy.io.loadmat(filename_5, mdict={'features_interp':'features', 'labels_cut':'labels'})
     data6 = scipy.io.loadmat(filename_6, mdict={'features_interp':'features', 'labels_cut':'labels'})
 
-    print("\nSession shapes:")
-    print("ADL1:  ", data1['features_interp'].shape)
-    print("ADL2:  ", data2['features_interp'].shape)
-    print("ADL3:  ", data3['features_interp'].shape)
-    print("ADL4:  ", data4['features_interp'].shape)
-    print("ADL5:  ", data5['features_interp'].shape)
-    print("Drill: ", data6['features_interp'].shape)
+    if (printInfo):
+        print("\nSession shapes:")
+        print("ADL1:  ", data1['features_interp'].shape)
+        print("ADL2:  ", data2['features_interp'].shape)
+        print("ADL3:  ", data3['features_interp'].shape)
+        print("ADL4:  ", data4['features_interp'].shape)
+        print("ADL5:  ", data5['features_interp'].shape)
+        print("Drill: ", data6['features_interp'].shape)
 
     return (data1, data2, data3, data4, data5, data6)
 
-def prepareData(X, Y, window_size=15, stride=15, shuffle=True, null_class=True):
+def prepareData(X, Y, window_size=15, stride=15, printInfo = True, null_class = True):
     """ Prepare data in windows to be passed to the CNN. """
 
     samples, features = X.shape
     classes = Y.shape[1]
     # shape output
-    windows = int(np.ceil((samples - window_size) / stride)) # number of windows that are entirely included in the sample length
+    windows = int(samples // stride) - int(window_size // stride) 
     X_out = np.zeros([windows, window_size, features])
     Y_out = np.zeros([windows, classes])
     # write output
@@ -56,154 +60,111 @@ def prepareData(X, Y, window_size=15, stride=15, shuffle=True, null_class=True):
         index = int(i * stride)
         X_out[i, :, :] = X[index:index+window_size, :].reshape((window_size,features))
         temp = Y[index:index+window_size, :]
-        Y_out[i, np.argmax(np.sum(temp, axis=0))] = 1 # one hot encoded, hard version
+        Y_out[i, np.argmax(np.sum(temp, axis=0))] = 1 # hard version      CHECK!
 
     if not(null_class):
         non_null = (Y_out[:,0] == 0) # samples 0-labeled (Y_out[:,0] is the first column of Y_out)
         X_out = X_out[non_null]
         Y_out_new = Y_out[non_null][:,1:]
         Y_out = Y_out_new
-    
-    print(type(X_out), X_out.shape, type(Y_out), Y_out.shape)
 
-    if shuffle:
-        np.random.seed(42)
-        np.random.shuffle(X_out)
-        np.random.shuffle(Y_out)
-        print(type(X_out), type(Y_out))
-
-    print("\nFeatures have shape: ", X_out.shape,\
-          "\nLabels have shape:   ", Y_out.shape,\
-          "\nFraction of labels:  ", np.sum(Y_out, axis=0) / Y_out.shape[0])
+    if (printInfo):
+        print("Dataset of Images have shape: ", X_out.shape,\
+            "\nDataset of Labels have shape:   ", Y_out.shape,\
+            "\nFraction of labels:  ", np.sum(Y_out, axis=0) / Y_out.shape[0])
 
     return (X_out, Y_out)
 
-def Model1D(input_shape, classes):
-    """ 
-    Arguments:
-    input_shape -- shape of the images of the dataset
-    classes -- number of classes
+def prepareDataDFT(X, Y, window_size=15, stride=15, infoDFT='angle', printInfo = True, null_class = True):
+    """ Prepare data in windows to be passed to the CNN. """
 
-    Returns: 
-    model -- a Model() instance in Keras
-    """
-    
-    model = Sequential()
-    model.add(Conv1D(filters = 18,
-                    kernel_size=5,
-                    strides=1,
-                    padding='same',
-                    input_shape = input_shape))
-    model.add(BatchNormalization())
-    model.add(LeakyReLU(alpha=0.3))
-    model.add(MaxPooling1D(pool_size=2,
-                          strides=2,
-                          padding='same'))
-    
-    model.add(Conv1D(filters = 36,
-                    kernel_size=7,
-                    strides=1,
-                    padding='same'))
-    model.add(BatchNormalization())
-    model.add(LeakyReLU(alpha=0.3))
-    model.add(MaxPooling1D(pool_size=2,
-                          strides=2,
-                          padding='same'))
-    
-    model.add(Dropout(0.2))
-    
-    model.add(Conv1D(filters = 72,
-                    kernel_size=7,
-                    strides=1,
-                    padding='same'))
-    model.add(BatchNormalization())
-    model.add(LeakyReLU(alpha=0.3))
-    model.add(MaxPooling1D(pool_size=2,
-                          strides=2,
-                          padding='same'))
-    
-    #model.add(Conv1D(filters = 144,
-    #                kernel_size=7,
-    #                strides=1,
-    #                padding='same'))
-    #model.add(BatchNormalization())
-    #model.add(Activation('relu'))
-    #model.add(MaxPooling1D(pool_size=2,
-    #                      strides=2,
-    #                      padding='same'))
-    
-    model.add(Flatten())
-    
-    model.add(Dense(64, kernel_regularizer=regularizers.l2(0.01)))
-    model.add(LeakyReLU(alpha=0.3))
-    
-    model.add(Dropout(0.4))
+    samples, features = X.shape
+    classes = Y.shape[1]
+    # shape output
+    windows = int(samples // stride) - int(window_size // stride) 
+    X_out = np.zeros([windows, window_size, features])
+    Y_out = np.zeros([windows, classes])
+    # write output
+    for i in range(windows):
+        index = int(i * stride)
+        input_train = np.fft.fft2(X[index:index+window_size, :].reshape((window_size,features)))
+        if (infoDFT == 'angle'):
+            X_out[i, :, :] = np.angle(X[index:index+window_size, :].reshape((window_size,features)))
+        else: 
+            X_out[i, :, :] = np.abs(X[index:index+window_size, :].reshape((window_size,features)))
+        temp = Y[index:index+window_size, :]
+        Y_out[i, np.argmax(np.sum(temp, axis=0))] = 1 # hard version      CHECK!
 
-    model.add(Dense(classes))
-    model.add(Activation('softmax'))
-    
-    model.summary()
-    
-    return model
+    if not(null_class):
+        non_null = (Y_out[:,0] == 0) # samples 0-labeled (Y_out[:,0] is the first column of Y_out)
+        X_out = X_out[non_null]
+        Y_out_new = Y_out[non_null][:,1:]
+        Y_out = Y_out_new
 
-def Model2D(input_shape, classes):
-    """ 
-    Arguments:
-    input_shape -- shape of the images of the dataset
+    if (printInfo):
+        print("Features have shape: ", X_out.shape,\
+            "\nLabels have shape:   ", Y_out.shape,\
+            "\nFraction of labels:  ", np.sum(Y_out, axis=0) / Y_out.shape[0])
 
-    Returns: 
-    model -- a Model() instance in Keras
-    """
-    
-    model = Sequential()
-    model.add(Conv2D(filters = 18,
-                    kernel_size=(5,5),
-                    strides=(1,3),
-                    padding='same',
-                    input_shape = input_shape))
-    model.add(BatchNormalization())
-    model.add(LeakyReLU(alpha=0.3))
-    model.add(MaxPooling2D(pool_size=(2,2),
-                          strides=2,
-                          padding='same'))
-    
-    model.add(Conv2D(filters = 36,
-                    kernel_size=(5,5),
-                    strides=(1,3),
-                    padding='same',
-                    input_shape = input_shape))
-    model.add(BatchNormalization())
-    model.add(LeakyReLU(alpha=0.3))
-    model.add(MaxPooling2D(pool_size=(2,2),
-                          strides=2,
-                          padding='same'))
-    
-    model.add(Dropout(0.2))
-    
-    model.add(Conv2D(filters = 72,
-              kernel_size=(5,5),
-              strides=(1,3),
-              padding='same',
-              input_shape = input_shape))
-    model.add(BatchNormalization())
-    model.add(LeakyReLU(alpha=0.3))
-    model.add(MaxPooling2D(pool_size=(2,2),
-                          strides=2,
-                          padding='same'))
-    
-    model.add(Flatten())
-    
-    model.add(Dense(64, kernel_regularizer=regularizers.l2(0.01)))
-    model.add(LeakyReLU(alpha=0.3))
-    
-    model.add(Dropout(0.4))
+    return (X_out, Y_out)
 
-    model.add(Dense(classes))
-    model.add(Activation('softmax'))
+def preprocessing(subject, folder="./", label=0, window_size=15, stride=15, make_binary=False, null_class=True):
+
+    n_classes = 5
+    classes = [0,1,2,4,5]
+
+    # import all sessions for a subject
+    (data1, data2, data3, data4, data5, data6) = loadData(subject, folder=folder)
+
+    # create training set and test set
+    X_train = np.concatenate((data1['features_interp'],\
+                          data2['features_interp'],\
+                          data3['features_interp'],\
+                          data6['features_interp']), axis=0)
+
+    Y_train = np.concatenate((data1['labels_cut'][:,label],\
+                          data2['labels_cut'][:,label],\
+                          data3['labels_cut'][:,label],\
+                          data6['labels_cut'][:,label]), axis=0)
+
+    X_test = np.concatenate((data4['features_interp'],\
+                         data5['features_interp']), axis=0)
+
+    Y_test = np.concatenate((data4['labels_cut'][:,label],\
+                         data5['labels_cut'][:,label]))
+
+    features = X_test.shape[1]
+
+    print("Training samples: ", X_train.shape[0],\
+      "\nTest samples:      ", X_test.shape[0],\
+      "\nFeatures:            ", features)
+
+    # decision to overcome the problem of entire missing columns
+    X_train = np.nan_to_num(X_train)
+    X_test = np.nan_to_num(X_test)
+
+    # features normalization
+    scaler = StandardScaler().fit(X_train)
+    X_train =scaler.transform(X_train)
+    X_test = scaler.transform(X_test)
+
+    if (make_binary):
+        Y_train[Y_train != 0] = 1
+        Y_test[Y_test != 0] = 1
+
+    # switch to one hot encoded labels
+    onehot_encoder = OneHotEncoder(sparse=False)
+    Y_train_oh = onehot_encoder.fit_transform(Y_train.reshape(-1, 1))
+    Y_test_oh = onehot_encoder.fit_transform(Y_test.reshape(-1, 1))
+    #print("Classes in training set: ", Y_train_oh.shape[1],\
+    #  "\nClasses in test set:     ", Y_test_oh.shape[1])
+
+    print("TRAINING SET:")
+    X_train_s, Y_train_s = prepareData(X_train, Y_train_oh, window_size, stride, null_class = null_class)
+    print("TEST SET:")
+    X_test_s, Y_test_s = prepareData(X_test, Y_test_oh, window_size, stride, null_class = null_class)
     
-    model.summary()
-    
-    return model
+    return (X_train_s, Y_train_s, X_test_s, Y_test_s, n_classes)
 
 def AUC(y_true, y_pred, classes):
     """ Compute the Area Under the Curve of ROC metric. """
@@ -211,15 +172,10 @@ def AUC(y_true, y_pred, classes):
     fpr = dict()
     tpr = dict()
     roc_auc = dict()
-    accumulator = 0
-
     for i in range(classes):
         fpr[i], tpr[i], _ = roc_curve(y_true[:, i], y_pred[:, i])
         roc_auc[i] = auc(fpr[i], tpr[i])
-        print("Class ", i, ":  AUC = ", roc_auc[i])
-        accumulator = accumulator + roc_auc[i]
 
-    print("Average AUC: ", accumulator / classes)
     return roc_auc
 
 def plot_confusion_matrix(cm, classes, normalize=False, title='Confusion matrix', cmap=plt.cm.Blues):
@@ -249,7 +205,7 @@ def plot_confusion_matrix(cm, classes, normalize=False, title='Confusion matrix'
     plt.xlabel('Predicted label')
 
 def unwindowLabels(Y_s, window_size, stride):
-    """ Stretch labels of each window for each temporal sample. """
+    """ Stretch labels for each window for each temporal sample. """
     
     Y = np.zeros(())
     Y_s.shape[0]
