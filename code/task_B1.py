@@ -27,7 +27,7 @@ stride = 5
                                                                                 null_class=True)
 
 # MODEL
-classification_model = deeplearning.MotionClassification((window_size,n_features,1), n_classes)
+classification_model = deeplearning.MotionClassification2((window_size,n_features,1), n_classes)
 classification_model.summary() # model visualization
 
 classification_model.compile(optimizer = Adam(lr=0.01),
