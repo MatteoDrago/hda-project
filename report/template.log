@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6630 64-bit) (preloaded format=pdflatex 2018.6.21)  23 AUG 2018 09:27
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6630 64-bit) (preloaded format=pdflatex 2018.6.21)  23 AUG 2018 15:36
 entering extended mode
 **./template.tex
 (template.tex
@@ -849,12 +849,16 @@ File: omsptm.fd
 LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <8> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 65.
  (Intro.tex
-Underfull \hbox (badness 10000) in paragraph at lines 6--7
+
+LaTeX Warning: Citation `bibid' on page 1 undefined on input line 11.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 14--15
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 15--15
+Underfull \hbox (badness 10000) in paragraph at lines 23--23
 
  []
 
@@ -863,18 +867,25 @@ Underfull \hbox (badness 10000) in paragraph at lines 6--8
 
  []
 
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [1{C:/Users/Riccardo/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}
+
+
+]
 LaTeX Font Info:    Try loading font information for OT1+pcr on input line 8.
+
 ("C:\Program Files\MiKTeX 2.9\tex\latex\psnfss\ot1pcr.fd"
 File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
 )
 
-LaTeX Warning: Citation `Zargham-2011' on page 1 undefined on input line 10.
-
-[1{C:/Users/Riccardo/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}
+LaTeX Warning: Citation `Zargham-2011' on page 2 undefined on input line 10.
 
 
-])
-(model.tex) (results.tex) (conclusions.tex
+LaTeX Warning: Citation `Sadler-2006' on page 2 undefined on input line 10.
+
+) (model.tex) (results.tex) (conclusions.tex
 Underfull \hbox (badness 10000) in paragraph at lines 8--9
 
  []
@@ -889,7 +900,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 10--11
 
  []
 
-) (template.bbl)
+) (template.bbl [2])
 
 ** Conference Paper **
 Before submitting the final camera ready copy, remember to:
@@ -902,19 +913,19 @@ Before submitting the final camera ready copy, remember to:
  process uses the appropriate paper size.
 
 - LAST -
-Extra skip:49.448pt
-Left:672.0pt/0.0pt
-Right:549.53987pt/1.73193pt
-Output:531.19229pt
-[2] (template.aux)
+Extra skip:32.84999pt
+Left:71.84999pt/1.73193pt
+Right:39.0pt/1.73193pt
+Output:71.92499pt
+[3] (template.aux)
 
 LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
  17661 strings out of 493305
- 305715 string characters out of 3138865
- 374929 words of memory out of 3000000
+ 305709 string characters out of 3138865
+ 360935 words of memory out of 3000000
  20982 multiletter control sequences out of 15000+200000
  574222 words of font info for 115 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -927,9 +938,9 @@ urier/ucrr8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/times/utmb8a.pfb>
 <C:/Program Files/MiKTeX 2.9/fonts/type1/urw/times/utmbi8a.pfb><C:/Program File
 s/MiKTeX 2.9/fonts/type1/urw/times/utmr8a.pfb><C:/Program Files/MiKTeX 2.9/font
 s/type1/urw/times/utmri8a.pfb>
-Output written on template.pdf (2 pages, 103647 bytes).
+Output written on template.pdf (3 pages, 105045 bytes).
 PDF statistics:
- 42 PDF objects out of 1000 (max. 8388607)
+ 45 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

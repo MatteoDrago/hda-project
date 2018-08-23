@@ -6,7 +6,7 @@ from sklearn.svm import LinearSVC
 
 from keras.models import Sequential
 from keras.layers import Dense, Dropout, Flatten, Activation, Merge, Add, merge
-from keras.layers import Conv2D, MaxPooling2D, UpSampling2D
+from keras.layers import Conv1D, Conv2D, MaxPooling2D, UpSampling2D
 from keras.layers.normalization import BatchNormalization
 from keras.layers.core import Reshape
 from keras.layers.recurrent import LSTM
@@ -202,3 +202,47 @@ def SVMLayer(C, y_train, trainingDnnFeatures, testingDnnFeatures):
 
 	return estimatedLabels
 
+#-------------------------------------------------------------------------------------------------------
+# MotionClassification Riccardo: use Conv1D
+#-------------------------------------------------------------------------------------------------------
+
+def MotionClassification2(input_shape, classes, withSoftmax = True):
+    
+    model = Sequential()
+  
+    # Layer 0
+    model.add(BatchNormalization(input_shape = input_shape))
+
+    # Layer 1
+    model.add(Conv1D(filters = 50,
+                    kernel_size = 5,
+                    activation='relu'))
+    
+    # Layer 2
+    #model.add(MaxPooling2D(pool_size=(2,1)))
+        
+    # Layer 3
+    # This layer dimension are automatically scanned in order to avoid updating by hand each time
+    model.add(Reshape((model.layers[2].output_shape[1],model.layers[2].output_shape[2] * model.layers[2].output_shape[3])))  
+
+    # Layer 4
+    model.add(LSTM(300,
+                  return_sequences=True))
+    
+    # Layer 5 
+    model.add(LSTM(300))
+   
+    # Layer 6
+    model.add(Dropout(0.5))
+
+    # Layer 7
+    model.add(Dense(512,activation = 'relu'))
+
+    # Layer 8
+    model.add(Dropout(0.5))
+    
+    if (withSoftmax):
+        # Layer 9
+        model.add(Dense(classes, activation = 'softmax'))
+    
+    return model

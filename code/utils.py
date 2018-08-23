@@ -53,7 +53,7 @@ def prepareData(X, Y, window_size=15, stride=15, printInfo = False, null_class =
     classes = Y.shape[1]
     # shape output
     windows = int(samples // stride) - int(window_size // stride) 
-    X_out = np.zeros([windows, window_size, features])
+    X_out = np.zeros([windows, window_size, features]) # add one extra dimension to 1 for Keras
     Y_out = np.zeros([windows, classes])
     # write output
     for i in range(windows):
@@ -131,12 +131,12 @@ def preprocessing(subject, folder="./", label=0, window_size=15, stride=15, make
     Y_test = np.concatenate((data4['labels_cut'][:,label],\
                              data5['labels_cut'][:,label]))
 
-    features = X_test.shape[1]
+    n_features = X_test.shape[1]
 
     if printInfo:
         print("Training samples: ", X_train.shape[0],\
-          "\nTest samples:      ", X_test.shape[0],\
-          "\nFeatures:            ", features)
+            "\nTest samples:      ", X_test.shape[0],\
+            "\nFeatures:            ", n_features)
 
     # decision to overcome the problem of entire missing columns
     X_train = np.nan_to_num(X_train)
@@ -158,7 +158,8 @@ def preprocessing(subject, folder="./", label=0, window_size=15, stride=15, make
     #print("Classes in training set: ", Y_train_oh.shape[1],\
     #  "\nClasses in test set:     ", Y_test_oh.shape[1])
 
-    n_classes = Y_test_oh.shape[1]
+    n_classes = Y_train_oh.shape[1]
+    print("Classes:", n_classes)
 
     if printInfo:
         print("\nTRAINING SET:")
@@ -167,7 +168,7 @@ def preprocessing(subject, folder="./", label=0, window_size=15, stride=15, make
         print("\nTEST SET:")
     X_test_s, Y_test_s = prepareData(X_test, Y_test_oh, window_size, stride, printInfo=printInfo, null_class = null_class)
     
-    return (X_train_s, Y_train_s, X_test_s, Y_test_s, n_classes)
+    return (X_train_s, Y_train_s, X_test_s, Y_test_s, n_features, n_classes)
 
 def AUC(y_true, y_pred, classes):
     """ Compute the Area Under the Curve of ROC metric. """
