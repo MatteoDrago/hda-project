@@ -1,15 +1,5 @@
 \begin{thebibliography}{1}
 
-\bibitem{Zargham-2011}
-M.~Zargham, A.~Ribeiro, A.~Ozdaglar, and A.~Jadbabaie, ``{Accelerated dual
-  descent for network optimization},'' in {\em {American Control Conference}},
-  ({San Francisco, CA, US}), June 2011.
-
-\bibitem{Sadler-2006}
-C.~M. Sadler and M.~Martonosi, ``{Data compression algorithms for
-  energy-constrained devices in delay tolerant networks},'' in {\em {ACM
-  SenSys}}, ({Boulder, CO, US}), Oct. 2006.
-
 \bibitem{Shannon-1948}
 C.~E. Shannon, ``A mathematical theory of communication,'' {\em {The Bell
   System Technical Journal}}, vol.~27, pp.~379--423, July 1948.
