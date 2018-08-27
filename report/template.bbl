@@ -1,5 +1,16 @@
 \begin{thebibliography}{1}
 
+\bibitem{HAR-2013}
+O.~D. Lara and M.~A. Labrador, ``A survey on human activity recognition using
+  wearable sensors,'' {\em IEEE Communications Surveys Tutorials}, vol.~15,
+  pp.~1192--1209, Third 2013.
+
+\bibitem{Chavarriaga2013}
+R.~Chavarriaga, H.~Sagha, A.~Calatroni, S.~T. Digumarti, G.~Tr{\"{o}}ster,
+  J.~del R.~Mill{\'{a}}n, and D.~Roggen, ``The opportunity challenge: A
+  benchmark database for on-body sensor-based activity recognition,'' {\em
+  Pattern Recognition Letters}, 2013.
+
 \bibitem{Zargham-2011}
 M.~Zargham, A.~Ribeiro, A.~Ozdaglar, and A.~Jadbabaie, ``{Accelerated dual
   descent for network optimization},'' in {\em {American Control Conference}},
