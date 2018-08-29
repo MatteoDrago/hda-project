@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.99996 (MiKTeX 2.9.6210 64-bit) (preloaded format=xelatex 2017.11.6)  26 AUG 2018 16:34
+This is XeTeX, Version 3.14159265-2.6-0.99996 (MiKTeX 2.9.6210 64-bit) (preloaded format=xelatex 2017.11.6)  29 AUG 2018 15:17
 entering extended mode
 **./template.tex
 (template.tex
@@ -180,6 +180,18 @@ LaTeX Info: Redefining \] on input line 2818.
 ("C:\Program Files\MiKTeX 2.9\tex\latex\amsfonts\amssymb.sty"
 Package: amssymb 2013/01/14 v3.01 AMS font symbols
 )
+("C:\Program Files\MiKTeX 2.9\tex\latex\base\fontenc.sty"
+Package: fontenc 2017/01/24 v2.0c Standard LaTeX package
+
+("C:\Program Files\MiKTeX 2.9\tex\latex\base\t1enc.def"
+File: t1enc.def 2017/01/24 v2.0c Standard LaTeX file
+LaTeX Font Info:    Redeclaring font encoding T1 on input line 48.
+)
+LaTeX Font Info:    Try loading font information for T1+ptm on input line 105.
+
+("C:\Program Files\MiKTeX 2.9\tex\latex\psnfss\t1ptm.fd"
+File: t1ptm.fd 2001/06/04 font definitions for T1/ptm.
+))
 ("C:\Program Files\MiKTeX 2.9\tex\latex\base\inputenc.sty"
 Package: inputenc 2015/03/17 v1.2c Input encoding file
 \inpenc@prehook=\toks24
@@ -693,89 +705,108 @@ sep char (CT)
 \@centerbox=\box65
 \c@ROWcellindex@=\count291
 )
-** ATTENTION: Overriding command lockouts (line 61).
+** ATTENTION: Overriding command lockouts (line 65).
 (template.aux)
 \openout1 = `template.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 63.
-LaTeX Font Info:    ... okay on input line 63.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 63.
-LaTeX Font Info:    ... okay on input line 63.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 63.
-LaTeX Font Info:    ... okay on input line 63.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 63.
-LaTeX Font Info:    ... okay on input line 63.
-LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 63.
-LaTeX Font Info:    ... okay on input line 63.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 63.
-LaTeX Font Info:    ... okay on input line 63.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 63.
-LaTeX Font Info:    ... okay on input line 63.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 67.
+LaTeX Font Info:    ... okay on input line 67.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 67.
+LaTeX Font Info:    ... okay on input line 67.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 67.
+LaTeX Font Info:    ... okay on input line 67.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 67.
+LaTeX Font Info:    ... okay on input line 67.
+LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 67.
+LaTeX Font Info:    ... okay on input line 67.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 67.
+LaTeX Font Info:    ... okay on input line 67.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 67.
+LaTeX Font Info:    ... okay on input line 67.
+LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <5> not available
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 67.
+LaTeX Font Info:    Font shape `T1/ptm/bx/it' in size <5> not available
+(Font)              Font shape `T1/ptm/b/it' tried instead on input line 67.
+LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <7> not available
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 67.
+LaTeX Font Info:    Font shape `T1/ptm/bx/it' in size <7> not available
+(Font)              Font shape `T1/ptm/b/it' tried instead on input line 67.
+LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <8> not available
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 67.
+LaTeX Font Info:    Font shape `T1/ptm/bx/it' in size <8> not available
+(Font)              Font shape `T1/ptm/b/it' tried instead on input line 67.
+LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <9> not available
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 67.
+LaTeX Font Info:    Font shape `T1/ptm/bx/it' in size <9> not available
+(Font)              Font shape `T1/ptm/b/it' tried instead on input line 67.
+LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <10> not available
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 67.
+LaTeX Font Info:    Font shape `T1/ptm/bx/it' in size <10> not available
+(Font)              Font shape `T1/ptm/b/it' tried instead on input line 67.
+LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <11> not available
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 67.
+LaTeX Font Info:    Font shape `T1/ptm/bx/it' in size <11> not available
+(Font)              Font shape `T1/ptm/b/it' tried instead on input line 67.
+LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <12> not available
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 67.
+LaTeX Font Info:    Font shape `T1/ptm/bx/it' in size <12> not available
+(Font)              Font shape `T1/ptm/b/it' tried instead on input line 67.
+LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <17> not available
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 67.
+LaTeX Font Info:    Font shape `T1/ptm/bx/it' in size <17> not available
+(Font)              Font shape `T1/ptm/b/it' tried instead on input line 67.
+LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <20> not available
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 67.
+LaTeX Font Info:    Font shape `T1/ptm/bx/it' in size <20> not available
+(Font)              Font shape `T1/ptm/b/it' tried instead on input line 67.
+LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <24> not available
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 67.
+LaTeX Font Info:    Font shape `T1/ptm/bx/it' in size <24> not available
+(Font)              Font shape `T1/ptm/b/it' tried instead on input line 67.
 
 -- Lines per column: 56 (exact).
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: End \AtBeginDocument code.
-LaTeX Font Info:    Calculating math sizes for size <11> on input line 65.
-LaTeX Font Info:    Try loading font information for U+msa on input line 65.
+LaTeX Font Info:    Calculating math sizes for size <11> on input line 69.
+LaTeX Font Info:    Try loading font information for U+msa on input line 69.
 ("C:\Program Files\MiKTeX 2.9\tex\latex\amsfonts\umsa.fd"
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 65.
+LaTeX Font Info:    Try loading font information for U+msb on input line 69.
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\amsfonts\umsb.fd"
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-LaTeX Font Info:    Try loading font information for U+rsfs on input line 65.
+LaTeX Font Info:    Try loading font information for U+rsfs on input line 69.
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\jknappen\ursfs.fd"
 File: ursfs.fd 1998/03/24 rsfs font definition file (jk)
 )
-Underfull \hbox (badness 10000) in paragraph at lines 65--65
-[][][]$[]$\TU/ptm/bx/it/8 Department of Information Engineering, email: {mat-
+Underfull \hbox (badness 10000) in paragraph at lines 69--69
+[][][]$[]$\T1/ptm/m/n/8 Department of In-for-ma-tion En-gi-neer-ing, email: {ma
+t-
  []
 
-(Intro.tex
-
-LaTeX Font Warning: Font shape `TU/ptm/m/sc' undefined
-(Font)              using `TU/ptm/m/n' instead on input line 3.
+(Intro.tex) [1
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 6--7
+] (related.tex
 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 21--21
-
- []
-
-) (related.tex
-Underfull \hbox (badness 10000) in paragraph at lines 6--8
-
- []
-
-[1
+LaTeX Warning: Citation `Roggen2010' on page 2 undefined on input line 5.
 
 
-]
-LaTeX Font Info:    Try loading font information for TU+pcr on input line 8.
-LaTeX Font Info:    No file TUpcr.fd. on input line 8.
+LaTeX Warning: Citation `Chavarriaga2015' on page 2 undefined on input line 5.
 
-
-LaTeX Font Warning: Font shape `TU/pcr/m/n' undefined
-(Font)              using `TU/lmr/m/n' instead on input line 8.
-
-) (model.tex) (results.tex) (conclusions.tex
-Underfull \hbox (badness 10000) in paragraph at lines 8--9
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 10--11
-
- []
-
-) (template.bbl [2])
+) (model.tex) (results.tex) (conclusions.tex) (template.bbl
+Invalid UTF-8 byte or sequence at line 15 replaced by U+FFFD.
+Missing character: There is no � in font ptmr8t!
+Invalid UTF-8 byte or sequence at line 20 replaced by U+FFFD.
+Invalid UTF-8 byte or sequence at line 20 replaced by U+FFFD.
+Missing character: There is no � in font ptmr8t!
+Missing character: There is no � in font ptmr8t!
+Invalid UTF-8 byte or sequence at line 23 replaced by U+FFFD.
+Missing character: There is no � in font ptmr8t!
+)
 
 ** Conference Paper **
 Before submitting the final camera ready copy, remember to:
@@ -788,22 +819,25 @@ Before submitting the final camera ready copy, remember to:
  process uses the appropriate paper size.
 
 - LAST -
-Extra skip:0.36pt
-Left:93.0pt/1.99998pt
-Right:93.0pt/1.63998pt
-Output:93.5pt
-[3] (template.aux)
+Extra skip:17.38512pt
+Left:261.89993pt/2.16492pt
+Right:246.59981pt/0.07993pt
+Output:259.62485pt
+[2] (template.aux)
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
+
+LaTeX Warning: There were undefined references.
+
  ) 
 Here is how much of TeX's memory you used:
- 15419 strings out of 427899
- 268970 string characters out of 3153117
- 330830 words of memory out of 3000000
- 19170 multiletter control sequences out of 15000+200000
- 538975 words of font info for 70 fonts, out of 3000000 for 9000
+ 15712 strings out of 427899
+ 271557 string characters out of 3153117
+ 326550 words of memory out of 3000000
+ 19452 multiletter control sequences out of 15000+200000
+ 610353 words of font info for 111 fonts, out of 3000000 for 9000
  1328 hyphenation exceptions out of 8191
- 36i,10n,38p,10382b,316s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 36i,10n,38p,10382b,323s stack positions out of 5000i,500n,10000p,200000b,50000s
 
-Output written on template.pdf (3 pages).
+Output written on template.pdf (2 pages).

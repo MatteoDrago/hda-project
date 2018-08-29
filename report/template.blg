@@ -1,3 +1,10 @@
 This is BibTeX, Version 0.99dThe top-level auxiliary file: template.aux
 The style file: ieeetr.bst
 Database file #1: biblio.bib
+I was expecting an "="---line 47 of file biblio.bib
+ :  article 
+ :          NUMBER = {679},
+I'm skipping whatever remains of this entry
+Warning--I didn't find a database entry for "Roggen2010"
+Warning--I didn't find a database entry for "Chavarriaga2015"
+(There was 1 error message)

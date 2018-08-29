@@ -11,29 +11,17 @@ R.~Chavarriaga, H.~Sagha, A.~Calatroni, S.~T. Digumarti, G.~Tr{\"{o}}ster,
   benchmark database for on-body sensor-based activity recognition,'' {\em
   Pattern Recognition Letters}, 2013.
 
-\bibitem{Zargham-2011}
-M.~Zargham, A.~Ribeiro, A.~Ozdaglar, and A.~Jadbabaie, ``{Accelerated dual
-  descent for network optimization},'' in {\em {American Control Conference}},
-  ({San Francisco, CA, US}), June 2011.
+\bibitem{HAR-COMP2018}
+F.~Li, K.~Shirahama, M.~A. Nisar, L.~Köping, and M.~Grzegorzek, ``Comparison of
+  feature learning methods for human activity recognition using wearable
+  sensors,'' {\em Sensors}, vol.~18, no.~2, 2018.
 
-\bibitem{Sadler-2006}
-C.~M. Sadler and M.~Martonosi, ``{Data compression algorithms for
-  energy-constrained devices in delay tolerant networks},'' in {\em {ACM
-  SenSys}}, ({Boulder, CO, US}), Oct. 2006.
-
-\bibitem{Shannon-1948}
-C.~E. Shannon, ``A mathematical theory of communication,'' {\em {The Bell
-  System Technical Journal}}, vol.~27, pp.~379--423, July 1948.
-
-\bibitem{Boyd-2011}
-S.~Boyd, N.~Parikh, E.~Chu, and B.~P.~J. Eckstein, ``{Distributed Optimization
-  and Statistical Learning via the Alternating Direction Method of
-  Multipliers},'' {\em {Foundations and Trends in Machine Learning}}, vol.~3,
-  pp.~1--122, Jan. 2011.
-
-\bibitem{Zordan-2014}
-D.~Zordan, B.~Martinez, I.~Vilajosana, and M.~Rossi, ``{On the Performance of
-  Lossy Compression Schemes for Energy Constrained Sensor Networking},'' {\em
-  {ACM Transactions on Sensor Networks}}, vol.~11, pp.~15:1--15:34, Aug. 2014.
+\bibitem{ComplexAct-2010}
+D.~Roggen, A.~Calatroni, M.~Rossi, T.~Holleczek, K.~Förster, G.~Tröster,
+  P.~Lukowicz, D.~Bannach, G.~Pirkl, A.~Ferscha, J.~Doppler, C.~Holzmann,
+  M.~Kurz, G.~Holl, R.~Chavarriaga, H.~Sagha, H.~Bayati, M.~Creatura, and
+  J.~d.~R.~Millàn, ``Collecting complex activity datasets in highly rich
+  networked sensor environments,'' in {\em 2010 Seventh International
+  Conference on Networked Sensing Systems (INSS)}, pp.~233--240, June 2010.
 
 \end{thebibliography}

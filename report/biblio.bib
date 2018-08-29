@@ -36,6 +36,21 @@
 	abstract = {There is a growing interest on using ambient and wearable sensors for human activity recognition, fostered by several application domains and wider availability of sensing technologies. This has triggered increasing attention on the development of robust machine learning techniques that exploits multimodal sensor setups. However, unlike other applications, there are no established benchmarking problems for this field. As a matter of fact, methods are usually tested on custom datasets acquired in very specific experimental setups. Furthermore, data is seldom shared between different groups. Our goal is to address this issue by introducing a versatile human activity dataset recorded in a sensor-rich environment. This database was the basis of an open challenge on activity recognition. We report here the outcome of this challenge, as well as baseline performance using different classification techniques. We expect this benchmarking database will motivate other researchers to replicate and outperform the presented results, thus contributing to further advances in the state-of-the-art of activity recognition methods.}
 }
 
+
+@article{HAR-COMP2018,
+	AUTHOR = {Li, Frédéric and Shirahama, Kimiaki and Nisar, Muhammad Adeel and Köping, Lukas and Grzegorzek, Marcin},
+	TITLE = {Comparison of Feature Learning Methods for Human Activity Recognition Using Wearable Sensors},
+	JOURNAL = {Sensors},
+	VOLUME = {18},
+	YEAR = {2018},
+	NUMBER = {2},
+	ARTICLE NUMBER = {679},
+	URL = {http://www.mdpi.com/1424-8220/18/2/679},
+	ISSN = {1424-8220},
+	ABSTRACT = {Getting a good feature representation of data is paramount for Human Activity Recognition (HAR) using wearable sensors. An increasing number of feature learning approaches?in particular deep-learning based?have been proposed to extract an effective feature representation by analyzing large amounts of data. However, getting an objective interpretation of their performances faces two problems: the lack of a baseline evaluation setup, which makes a strict comparison between them impossible, and the insufficiency of implementation details, which can hinder their use. In this paper, we attempt to address both issues: we firstly propose an evaluation framework allowing a rigorous comparison of features extracted by different methods, and use it to carry out extensive experiments with state-of-the-art feature learning approaches. We then provide all the codes and implementation details to make both the reproduction of the results reported in this paper and the re-use of our framework easier for other researchers. Our studies carried out on the OPPORTUNITY and UniMiB-SHAR datasets highlight the effectiveness of hybrid deep-learning architectures involving convolutional and Long-Short-Term-Memory (LSTM) to obtain features characterising both short- and long-term time dependencies in the data.},
+	DOI = {10.3390/s18020679}
+}
+
 @inproceedings{Zargham-2011,
 	Author = {M. Zargham and A. Ribeiro and A. Ozdaglar and A. Jadbabaie},
 	Title = {{Accelerated dual descent for network optimization}},
@@ -54,35 +69,3 @@
 	Year = {2006}
 	}
 	
-@article{Shannon-1948,
-	Author = {C. E. Shannon},
-	Title = {A mathematical theory of communication},
-	Journal = {{The Bell System Technical Journal}},
-	Volume = {27},
-	Number = {3},
-	Month = jul,
-	Pages = {379-423},
-	Year = {1948}
-	}
-	
-@article{Boyd-2011,
-	Author = {Stephen Boyd and Neal Parikh and Eric Chu and Borja Peleato and Jonathan Eckstein},
-	Title = {{Distributed Optimization and Statistical Learning via the Alternating Direction Method of Multipliers}},
-	Journal = {{Foundations and Trends in Machine Learning}},
-	Volume = {3},
-	Number = {1},
-	Month = jan,
-	Pages = {1--122},
-	Year = {2011}
-	}
-
-@article{Zordan-2014,
-	Author = {Zordan, Davide and Martinez, Borja and Vilajosana, Ignasi and Rossi, Michele},
-	Title = {{On the Performance of Lossy Compression Schemes for Energy Constrained Sensor Networking}},
-	Journal = {{ACM Transactions on Sensor Networks}},
-	Volume = {11},
-	Number = {1},
-	Pages = {15:1--15:34},
-	Month = aug,
-	Year = {2014}
-	}

@@ -1,4 +1,4 @@
-\documentclass[10pt, conference, letterpaper]{IEEEtran}
+\documentclass[10pt, conference, journal]{IEEEtran}
 
 \usepackage{algorithm}
 \usepackage{algorithmicx}
@@ -6,6 +6,7 @@
 \usepackage{amsfonts}
 \usepackage{amsmath}
 \usepackage{amssymb}
+\usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc} % need UTF-8 encoding if you're under windows or you use TeX Studio
 \usepackage{xcolor}
 \usepackage{mathtools}
@@ -40,8 +41,11 @@
 \newcommand{\tab}[1]{Tab.~\ref{#1}}
 \newcommand{\secref}[1]{Section~\ref{#1}}
 
-\newcommand\MR[1]{\textcolor{blue}{#1}}
-\newcommand\red[1]{\textcolor{red}{#1}}
+\newcommand{\RomanNumeralCaps}[1]
+{\MakeUppercase{\romannumeral #1}}
+
+\newcommand\MD[1]{\textcolor{blue}{#1}}
+\newcommand\RL[1]{\textcolor{red}{#1}}
 
 %\renewcommand{\baselinestretch}{0.98}
 % \renewcommand{\bottomfraction}{0.8}
@@ -65,7 +69,11 @@
 \maketitle
 
 \begin{abstract}
-\MR{This is a sample abstract, just to show as an abstract should be. It is 204 words long, I would say an abstract should not be longer than 250 words. Here, you should briefly state: 1) technical scenario and its importance, 2) what you do in the report / paper and why it is important, 3) if possible, summarize the main results. The abstract should be written in a way that motivates the reader to delve into the paper, but at the same time it should contain enough information to deliver the main message about the paper, so that the reader will now what can be found within the paper even without reading it (as it is the case most of the times). The abstract is a mini-paper on its own and, as such, is a major endeavor to write.}
+	
+With the increasing interest in deep learning techniques and its applications, also Human Activity Recognition (HAR) saw significant improvements; before neural networks were put into practice, most of the research activities on the field relied on hand-crafted features which, however, couldn't represent nor distinguish well enough complex and articulated movements. Moreover, the use of smart devices and wearable sensors brought the challenge to another level: having to deal with high-dimensional and noisy time series while assuring optimal performances, requires a detailed study and most of all a considerable computational effort.
+
+In our paper we present the design of an HAR architecture which implements convolutional layers in order to extract significant features from windows of samples, along with Long-Short Term Memory (LSTM) layers, suitable to exploit time dependencies among consecutive samples. For our study, we designed the system in order to minimize the collection of layers per network and so the amount of parameters to train, which could be of great advantage in real time application. In addition, we also decided to study how performances change if we split the process in two distinct phases: the first one that performs \textit{activity detection} while the last one \text{activity classification}. The dataset that we used to assess the efficiency of our architecture is the OPPORTUNITY dataset.
+
 \end{abstract}
 
 \IEEEkeywords
