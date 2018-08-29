@@ -24,4 +24,18 @@ D.~Roggen, A.~Calatroni, M.~Rossi, T.~Holleczek, K.~Förster, G.~Tröster,
   networked sensor environments,'' in {\em 2010 Seventh International
   Conference on Networked Sensing Systems (INSS)}, pp.~233--240, June 2010.
 
+\bibitem{cao2012integrated}
+H.~Cao, M.~N. Nguyen, C.~Phua, S.~Krishnaswamy, and X.~Li, ``An integrated
+  framework for human activity classification.,'' in {\em UbiComp},
+  pp.~331--340, 2012.
+
+\bibitem{japkowicz2002class}
+N.~Japkowicz and S.~Stephen, ``The class imbalance problem: A systematic
+  study,'' {\em Intelligent data analysis}, vol.~6, no.~5, pp.~429--449, 2002.
+
+\bibitem{hearst1998support}
+M.~A. Hearst, S.~T. Dumais, E.~Osuna, J.~Platt, and B.~Scholkopf, ``Support
+  vector machines,'' {\em IEEE Intelligent Systems and their applications},
+  vol.~13, no.~4, pp.~18--28, 1998.
+
 \end{thebibliography}
