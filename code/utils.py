@@ -75,6 +75,35 @@ def prepareData(X, Y, window_size=15, stride=15, printInfo = False, null_class =
 
     return (X_out, Y_out)
 
+def prepareData1D(X, Y, window_size=15, stride=15, printInfo = False, null_class = True):
+    """ Prepare data in windows to be passed to the model. """
+
+    samples, features = X.shape
+    classes = Y.shape[1]
+    # shape output
+    windows = int(samples // stride) - int(window_size // stride) 
+    X_out = np.zeros([windows, window_size, features]) # add one extra dimension to 1 for Keras
+    Y_out = np.zeros([windows, classes])
+    # write output
+    for i in range(windows):
+        index = int(i * stride)
+        X_out[i, :, :] = X[index:index+window_size, :].reshape((window_size,features))
+        temp = Y[index:index+window_size, :]
+        Y_out[i, np.argmax(np.sum(temp, axis=0))] = 1 # hard version      CHECK!
+
+    if not(null_class):
+        non_null = (Y_out[:,0] == 0) # samples 0-labeled (Y_out[:,0] is the first column of Y_out)
+        X_out = X_out[non_null]
+        Y_out_new = Y_out[non_null][:,1:]
+        Y_out = Y_out_new
+
+    if (printInfo):
+        print("Dataset of Images have shape: ", X_out.shape,\
+            "\nDataset of Labels have shape:   ", Y_out.shape,\
+            "\nFraction of labels:  ", np.sum(Y_out, axis=0) / Y_out.shape[0])
+
+    return (X_out, Y_out)
+
 def prepareDataDFT(X, Y, window_size=15, stride=15, infoDFT='angle', printInfo = True, null_class = True):
     """ Prepare data in windows to be passed to the CNN. """
 
@@ -144,7 +173,7 @@ def preprocessing(subject, folder="./", label=0, window_size=15, stride=15, make
 
     # features normalization
     scaler = StandardScaler().fit(X_train)
-    X_train =scaler.transform(X_train)
+    X_train = scaler.transform(X_train)
     X_test = scaler.transform(X_test)
 
     if (make_binary):
