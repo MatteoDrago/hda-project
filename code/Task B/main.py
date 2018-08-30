@@ -16,14 +16,14 @@ stride = 5
 ##################################################################################
 
 # PREPROCESSING
-X_train, Y_train, X_test, Y_test, n_features, n_classes = preprocessing.loadData(subject=subject,
-                                                                                 label=label,
-                                                                                 folder=folder,
-                                                                                 window_size=window_size,
-                                                                                 stride=stride,
-                                                                                 make_binary=False,
-                                                                                 null_class=True,
-                                                                                 print_info=True)
+X_train, Y_train, X_test, Y_test, n_features, n_classes, class_weights = preprocessing.loadData(subject=subject,
+                                                                                                label=label,
+                                                                                                folder=folder,
+                                                                                                window_size=window_size,
+                                                                                                stride=stride,
+                                                                                                make_binary=False,
+                                                                                                null_class=True,
+                                                                                                print_info=True)
 
 # MODEL
 detection_model = models.MotionDetection((window_size, n_features), n_classes)

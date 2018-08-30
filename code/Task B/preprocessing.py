@@ -43,7 +43,7 @@ def shapeData(X, Y, window_size=15, stride=15, null_class = True, printInfo = Fa
     n_classes = Y.shape[1]
 
     # format output shape
-    n_windows = int(n_samples // stride) - int(window_size // stride) + 2  # try also +1
+    n_windows = int(n_samples // stride) - int(window_size // stride) + 1
     X_out = np.zeros([n_windows, window_size, n_features])
     Y_out = np.zeros([n_windows, n_classes])
 
