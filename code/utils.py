@@ -19,7 +19,7 @@ with warnings.catch_warnings():
 
 
 def loadData(subject, folder="./",  printInfo = False):
-    """ Import ADL1 to ADL5 and Drill .mat files for a subject. """
+    """ Load ADL1 to ADL5 and Drill .mat files for a subject. """
     
     filename_1 = folder + "S" + str(subject) + "-ADL1"
     filename_2 = folder + "S" + str(subject) + "-ADL2"
@@ -46,14 +46,14 @@ def loadData(subject, folder="./",  printInfo = False):
 
     return (data1, data2, data3, data4, data5, data6)
 
-def prepareData(X, Y, window_size=15, stride=15, printInfo = True, null_class = True):
-    """ Prepare data in windows to be passed to the CNN. """
+def prepareData(X, Y, window_size=15, stride=15, printInfo = False, null_class = True):
+    """ Prepare data in windows to be passed to the model. """
 
     samples, features = X.shape
     classes = Y.shape[1]
     # shape output
     windows = int(samples // stride) - int(window_size // stride) 
-    X_out = np.zeros([windows, window_size, features])
+    X_out = np.zeros([windows, window_size, features]) # add one extra dimension to 1 for Keras
     Y_out = np.zeros([windows, classes])
     # write output
     for i in range(windows):
@@ -108,36 +108,35 @@ def prepareDataDFT(X, Y, window_size=15, stride=15, infoDFT='angle', printInfo =
 
     return (X_out, Y_out)
 
-def preprocessing(subject, folder="./", label=0, window_size=15, stride=15, make_binary=False, null_class=True):
-
-    n_classes = 5
-    classes = [0,1,2,4,5]
+def preprocessing(subject, folder="./", label=0, window_size=15, stride=15, make_binary=False, null_class = True, printInfo = False):
+    """Load, concatenate and prepare sessions of a single subject to be passed to the model."""
 
     # import all sessions for a subject
     (data1, data2, data3, data4, data5, data6) = loadData(subject, folder=folder)
 
     # create training set and test set
     X_train = np.concatenate((data1['features_interp'],\
-                          data2['features_interp'],\
-                          data3['features_interp'],\
-                          data6['features_interp']), axis=0)
+                              data2['features_interp'],\
+                              data3['features_interp'],\
+                              data6['features_interp']), axis=0)
 
     Y_train = np.concatenate((data1['labels_cut'][:,label],\
-                          data2['labels_cut'][:,label],\
-                          data3['labels_cut'][:,label],\
-                          data6['labels_cut'][:,label]), axis=0)
+                              data2['labels_cut'][:,label],\
+                              data3['labels_cut'][:,label],\
+                              data6['labels_cut'][:,label]), axis=0)
 
     X_test = np.concatenate((data4['features_interp'],\
-                         data5['features_interp']), axis=0)
+                             data5['features_interp']), axis=0)
 
     Y_test = np.concatenate((data4['labels_cut'][:,label],\
-                         data5['labels_cut'][:,label]))
+                             data5['labels_cut'][:,label]))
 
-    features = X_test.shape[1]
+    n_features = X_test.shape[1]
 
-    print("Training samples: ", X_train.shape[0],\
-      "\nTest samples:      ", X_test.shape[0],\
-      "\nFeatures:            ", features)
+    if printInfo:
+        print("Training samples: ", X_train.shape[0],\
+            "\nTest samples:      ", X_test.shape[0],\
+            "\nFeatures:            ", n_features)
 
     # decision to overcome the problem of entire missing columns
     X_train = np.nan_to_num(X_train)
@@ -159,12 +158,17 @@ def preprocessing(subject, folder="./", label=0, window_size=15, stride=15, make
     #print("Classes in training set: ", Y_train_oh.shape[1],\
     #  "\nClasses in test set:     ", Y_test_oh.shape[1])
 
-    print("TRAINING SET:")
-    X_train_s, Y_train_s = prepareData(X_train, Y_train_oh, window_size, stride, null_class = null_class)
-    print("TEST SET:")
-    X_test_s, Y_test_s = prepareData(X_test, Y_test_oh, window_size, stride, null_class = null_class)
+    n_classes = Y_train_oh.shape[1]
+    print("Classes:", n_classes)
+
+    if printInfo:
+        print("\nTRAINING SET:")
+    X_train_s, Y_train_s = prepareData(X_train, Y_train_oh, window_size, stride, printInfo=printInfo, null_class = null_class)
+    if printInfo:
+        print("\nTEST SET:")
+    X_test_s, Y_test_s = prepareData(X_test, Y_test_oh, window_size, stride, printInfo=printInfo, null_class = null_class)
     
-    return (X_train_s, Y_train_s, X_test_s, Y_test_s, n_classes)
+    return (X_train_s, Y_train_s, X_test_s, Y_test_s, n_features, n_classes)
 
 def AUC(y_true, y_pred, classes):
     """ Compute the Area Under the Curve of ROC metric. """
