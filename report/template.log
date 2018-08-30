@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6630 64-bit) (preloaded format=pdflatex 2018.6.21)  24 AUG 2018 13:52
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6630 64-bit) (preloaded format=pdflatex 2018.6.21)  30 AUG 2018 11:39
 entering extended mode
 **./template.tex
 (template.tex
@@ -904,7 +904,15 @@ LaTeX Warning: Citation `Zargham-2011' on page 2 undefined on input line 13.
 
 LaTeX Warning: Citation `Sadler-2006' on page 2 undefined on input line 13.
 
-) (model.tex) (results.tex) (conclusions.tex [2]
+) (model.tex
+
+LaTeX Warning: Citation `Roggen2010' on page 2 undefined on input line 18.
+
+
+LaTeX Warning: Citation `Chavarriaga2015' on page 2 undefined on input line 18.
+
+
+[2]) (results.tex) (conclusions.tex
 Underfull \hbox (badness 10000) in paragraph at lines 8--9
 
  []
@@ -932,20 +940,20 @@ Before submitting the final camera ready copy, remember to:
  process uses the appropriate paper size.
 
 - LAST -
-Extra skip:20.98299pt
-Left:183.14996pt/2.16492pt
-Right:162.59996pt/1.73193pt
-Output:186.87495pt
+Extra skip:13.143pt
+Left:672.0pt/0.0pt
+Right:546.53987pt/1.73193pt
+Output:440.54492pt
 [3] (template.aux)
 
 LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
- 17666 strings out of 493305
- 305776 string characters out of 3138865
- 359935 words of memory out of 3000000
- 20987 multiletter control sequences out of 15000+200000
+ 17670 strings out of 493305
+ 305830 string characters out of 3138865
+ 371965 words of memory out of 3000000
+ 20991 multiletter control sequences out of 15000+200000
  574222 words of font info for 115 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  41i,10n,63p,2109b,316s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -957,7 +965,7 @@ urier/ucrr8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/times/utmb8a.pfb>
 <C:/Program Files/MiKTeX 2.9/fonts/type1/urw/times/utmbi8a.pfb><C:/Program File
 s/MiKTeX 2.9/fonts/type1/urw/times/utmr8a.pfb><C:/Program Files/MiKTeX 2.9/font
 s/type1/urw/times/utmri8a.pfb>
-Output written on template.pdf (3 pages, 106408 bytes).
+Output written on template.pdf (3 pages, 110559 bytes).
 PDF statistics:
  45 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)

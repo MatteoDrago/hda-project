@@ -16,7 +16,7 @@ stride = 5
 ##################################################################################
 
 # PREPROCESSING
-X_train, Y_train, X_test, Y_test, n_features, n_classes, class_weights = preprocessing.loadDataMultiple(label=label,
+X_train, Y_train, X_test, Y_test, n_features, n_classes, class_weights = preprocessing.loadData(subject=subject, label=label,
                                                                                                         folder=folder,
                                                                                                         window_size=window_size,
                                                                                                         stride=stride,
