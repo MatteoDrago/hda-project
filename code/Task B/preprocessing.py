@@ -132,9 +132,10 @@ def loadData(subject, label, folder="./", window_size=15, stride=15, make_binary
                                                           printInfo=print_info)
 
     # class weights
-    Y_train = np.argmax(Y_train_s, axis=1)
-    class_weights = class_weight.compute_class_weight('balanced', np.arange(n_classes), Y_train)
-    Y_train_s = onehot_encoder.fit_transform(Y_train.reshape(-1, 1))
+    Y_train_s = np.argmax(Y_train_s, axis=1)
+    class_weights = class_weight.compute_class_weight('balanced', np.arange(n_classes), Y_train_s)
+    #Y_train_s = onehot_encoder.fit_transform(Y_train_s.reshape(-1, 1))
+    Y_test_s = np.argmax(Y_test_s, axis=1)
 
     return (X_train_s, Y_train_s, X_test_s, Y_test_s, n_features, n_classes, class_weights)
 

@@ -134,7 +134,7 @@ def Classifier(input_shape, n_classes, with_softmax = True):
 
     return model
 
-def MotionDetection(input_shape, n_classes, with_softmax = True):
+def MotionDetection(input_shape, n_classes, print_info = False):
     
     model = Sequential()
   
@@ -161,11 +161,11 @@ def MotionDetection(input_shape, n_classes, with_softmax = True):
     model.add(Dense(512))
     model.add(LeakyReLU(alpha=0.3))
     
-    if (with_softmax):
-        # Layer 5
-        model.add(Dense(n_classes, activation = 'softmax'))
+    # Layer 5
+    model.add(Dense(n_classes, activation = 'softmax'))
     
-    model.summary()
+    if print_info:
+        model.summary()
 
     return model
 
