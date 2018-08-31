@@ -1,3 +1,5 @@
+# The functions are here organised in three levels because higher levels make use of lower levels functions.
+
 import numpy as np
 from scipy.io import loadmat
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
@@ -43,7 +45,7 @@ def shapeData(X, Y, window_size=15, stride=15, null_class = True, printInfo = Fa
     n_classes = Y.shape[1]
 
     # format output shape
-    n_windows = int(n_samples // stride) - int(window_size // stride) + 2  # try also +1
+    n_windows = int(n_samples // stride) - int(window_size // stride) + 1
     X_out = np.zeros([n_windows, window_size, n_features])
     Y_out = np.zeros([n_windows, n_classes])
 
@@ -132,21 +134,22 @@ def loadData(subject, label, folder="./", window_size=15, stride=15, make_binary
                                                           printInfo=print_info)
 
     # class weights
-    Y_train = np.argmax(Y_train_s, axis=1)
-    class_weights = class_weight.compute_class_weight('balanced', np.arange(n_classes), Y_train)
-    Y_train_s = onehot_encoder.fit_transform(Y_train.reshape(-1, 1))
+    Y_train_s = np.argmax(Y_train_s, axis=1)
+    class_weights = class_weight.compute_class_weight('balanced', np.arange(n_classes), Y_train_s)
+    #Y_train_s = onehot_encoder.fit_transform(Y_train_s.reshape(-1, 1))
+    Y_test_s = np.argmax(Y_test_s, axis=1)
 
     return (X_train_s, Y_train_s, X_test_s, Y_test_s, n_features, n_classes, class_weights)
 
 
 # high level methods
 
-def loadDataMultiple(label, folder="./", window_size=15, stride=15, make_binary=False, null_class=True, print_info=False):
-    """Process data of a list of subjects to be ready for classification models."""
+def loadDataAll(label, folder="./", window_size=15, stride=15, make_binary=False, null_class=True, print_info=False):
+    """Process data all subjects to be ready for classification models."""
 
     print("\nProcessing data from subject 1")
-    X_train_1, Y_train_1, X_test_1, Y_test_1 = loadData(subject=1, label=label, folder=folder, window_size=window_size, stride=stride,
-                                                        make_binary=make_binary, null_class=null_class, print_info=print_info)[0:4]
+    X_train_1, Y_train_1, X_test_1, Y_test_1, n_features, n_classes = loadData(subject=1, label=label, folder=folder, window_size=window_size, stride=stride,
+                                                                               make_binary=make_binary, null_class=null_class, print_info=print_info)[0:6]
     print("\nProcessing data from subject 2")
     X_train_2, Y_train_2, X_test_2, Y_test_2 = loadData(subject=2, label=label, folder=folder, window_size=window_size, stride=stride,
                                                         make_binary=make_binary, null_class=null_class, print_info=print_info)[0:4]
@@ -185,14 +188,59 @@ def loadDataMultiple(label, folder="./", window_size=15, stride=15, make_binary=
               "\nX_test: ", X_test.shape,
               "\nY_test: ", Y_test.shape)
 
-    n_features = X_test.shape[2]
-    n_classes = Y_test.shape[1]
+    # class weights
+    class_weights = class_weight.compute_class_weight('balanced', np.arange(n_classes), Y_train)
+    if print_info:
+        print("\nClass weights:\n", class_weights)
+
+    return X_train, Y_train, X_test, Y_test, n_features, n_classes, class_weights
+
+def loadDataMultiple(label, folder="./", window_size=15, stride=15, make_binary=False, null_class=True, print_info=False):
+    """Process data of a list of subjects to be ready for classification models."""
+
+    print("\nProcessing data from subject 1")
+    X_train_1, Y_train_1, X_test_1, Y_test_1, n_features, n_classes = loadData(subject=1, label=label, folder=folder, window_size=window_size, stride=stride,
+                                                                               make_binary=make_binary, null_class=null_class, print_info=print_info)[0:6]
+    print("\nProcessing data from subject 2")
+    X_train_2, Y_train_2, X_test_2, Y_test_2 = loadData(subject=2, label=label, folder=folder, window_size=window_size, stride=stride,
+                                                        make_binary=make_binary, null_class=null_class, print_info=print_info)[0:4]
+    print("\nProcessing data from subject 3")
+    X_train_3, Y_train_3, X_test_3, Y_test_3 = loadData(subject=3, label=label, folder=folder, window_size=window_size, stride=stride,
+                                                        make_binary=make_binary, null_class=null_class, print_info=print_info)[0:4]
+    print("\nProcessing data from subject 4")
+    X_train_4, Y_train_4, X_test_4, Y_test_4 = loadData(subject=4, label=label, folder=folder, window_size=window_size, stride=stride,
+                                                        make_binary=make_binary, null_class=null_class, print_info=print_info)[0:4]
+
+    # create training set and test set
+    X_train = np.concatenate((X_train_1,\
+                              X_train_2,\
+                              X_train_3,\
+                              X_train_4,\
+                              X_test_1,\
+                              X_test_4), axis=0)
+
+    Y_train = np.concatenate((Y_train_1,\
+                              Y_train_2,\
+                              Y_train_3,\
+                              Y_train_4,\
+                              Y_test_1,\
+                              Y_test_4), axis=0)
+
+    X_test = np.concatenate((X_test_2,\
+                             X_test_3), axis=0)
+
+    Y_test = np.concatenate((Y_test_2,\
+                             Y_test_3), axis=0)
+
+    if print_info:
+        print("\nShapes:",
+              "\nX_train: ", X_train.shape,
+              "\nY_train: ", Y_train.shape,
+              "\nX_test: ", X_test.shape,
+              "\nY_test: ", Y_test.shape)
 
     # class weights
-    Y_train = np.argmax(Y_train, axis=1)
     class_weights = class_weight.compute_class_weight('balanced', np.arange(n_classes), Y_train)
-    onehot_encoder = OneHotEncoder(sparse=False)
-    Y_train = onehot_encoder.fit_transform(Y_train.reshape(-1, 1))
     if print_info:
         print("\nClass weights:\n", class_weights)
 

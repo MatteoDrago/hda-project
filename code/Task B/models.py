@@ -1,5 +1,6 @@
 from keras.models import Sequential
-from keras.layers import Dense, Dropout, Flatten, Activation, Merge, Add, merge, Conv1D, Conv2D, MaxPooling1D, MaxPooling2D, UpSampling2D, LeakyReLU
+from keras.layers import Dense, Dropout, Flatten, Activation, Merge, Add, merge, Conv1D, MaxPooling1D, LeakyReLU
+from keras.layers import Conv2D, MaxPooling2D, UpSampling2D
 from keras.layers.normalization import BatchNormalization
 from keras.layers.core import Reshape
 from keras.layers.recurrent import LSTM
@@ -134,7 +135,7 @@ def Classifier(input_shape, n_classes, with_softmax = True):
 
     return model
 
-def MotionDetection(input_shape, n_classes, with_softmax = True):
+def MotionDetection(input_shape, n_classes, print_info = False):
     
     model = Sequential()
   
@@ -161,11 +162,11 @@ def MotionDetection(input_shape, n_classes, with_softmax = True):
     model.add(Dense(512))
     model.add(LeakyReLU(alpha=0.3))
     
-    if (with_softmax):
-        # Layer 5
-        model.add(Dense(n_classes, activation = 'softmax'))
+    # Layer 5
+    model.add(Dense(n_classes, activation = 'softmax'))
     
-    model.summary()
+    if print_info:
+        model.summary()
 
     return model
 
@@ -200,5 +201,48 @@ def MotionClassification(input_shape, n_classes, withSoftmax = True):
     if (withSoftmax):
         # Layer 5
         model.add(Dense(n_classes, activation = 'softmax'))
+    
+    return model
+
+def MotionClassification2D(input_shape, classes, print_info = False):
+    
+    model = Sequential()
+  
+    # Layer 0
+    model.add(BatchNormalization(input_shape = input_shape))
+
+    # Layer 1
+    model.add(Conv2D(filters = 50,
+                    kernel_size = (11,1),
+                    activation='relu'))
+    
+    # Layer 2
+    model.add(MaxPooling2D(pool_size=(2,1)))
+        
+    # Layer 3
+    # This layer dimension are automatically scanned in order to avoid updating by hand each time
+    model.add(Reshape((model.layers[2].output_shape[1],model.layers[2].output_shape[2] * model.layers[2].output_shape[3])))  
+
+    # Layer 4
+    model.add(LSTM(300,
+                  return_sequences=True))
+    
+    # Layer 5 
+    model.add(LSTM(300))
+   
+    # Layer 6
+    model.add(Dropout(0.5))
+
+    # Layer 7
+    model.add(Dense(512,activation = 'relu'))
+
+    # Layer 8
+    model.add(Dropout(0.5))
+    
+    # Layer 9
+    model.add(Dense(classes, activation = 'softmax'))
+
+    if print_info:
+        model.summary()
     
     return model
