@@ -8,7 +8,7 @@ from keras.layers.wrappers import Bidirectional
 
 # each of the following methods builds and returns a keras model
 
-def Detector(input_shape, n_classes, with_softmax = True):
+def Convolutional(input_shape, n_classes, print_info = False):
     """"""
 
     model = Sequential()
@@ -70,14 +70,14 @@ def Detector(input_shape, n_classes, with_softmax = True):
     # Layer 5
     model.add(Dense(n_classes))
 
-    if with_softmax:
-        model.add(Activation('softmax'))
+    model.add(Activation('softmax'))
     
-    model.summary()
+    if print_info:
+        model.summary()
     
     return model
 
-def Classifier(input_shape, n_classes, with_softmax = True):
+def ConvolutionlRecurrent(input_shape, n_classes, print_info = False):
 
     model = Sequential()
 
@@ -118,20 +118,20 @@ def Classifier(input_shape, n_classes, with_softmax = True):
                            padding='same'))
 
         # Layer 2
-    model.add(LSTM(600, return_sequences=True))
+    model.add(LSTM(60, return_sequences=True))
     
     # Layer 3
-    model.add(LSTM(600))
+    model.add(LSTM(60))
    
     # Layer 4
     model.add(Dense(512))
     model.add(LeakyReLU(alpha=0.3))
+
+    # Layer 5
+    model.add(Dense(n_classes, activation = 'softmax'))
     
-    if (with_softmax):
-        # Layer 5
-        model.add(Dense(n_classes, activation = 'softmax'))
-    
-    model.summary()
+    if print_info:
+        model.summary()
 
     return model
 
