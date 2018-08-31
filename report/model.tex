@@ -3,17 +3,12 @@
 \section{Processing Pipeline}
 \label{sec:processing_architecture}
 
-\MR{I would start the technical description with a {\it high level} introduction of your processing pipeline. Here you do not have to necessarily go into the technical details of every processing block, this will be done later as the paper develops. What I would like to see here is a description of the general approach, i.e., which processing blocks you used, how these were concatenated, etc. A diagram usually helps.}
-
-
 We start off our analysis by preprocessing the collected signals within the MATLAB framework: we chose that because it makes it simple to deal with matrices. What we do in this first step is then to import the data collected by sensors, which are given as .dat files, select the signals from on-body sensors and discard the others, replacing the missing values by means of interpolation and, at last, store them as .mat files.
 What we do next is to import the stored data, this time using python, and prepare the matrices for the classification task: this consists of concatenating the data, segmenting it into windows, scaling the signals and other common steps.
 Once the data is ready to be classified, a model is defined and trained on the available data. This is done for both the locomotion activity and gestures recognition, i.e. with two different sets of labels. This system, which is forced to learn also the null class together with the actual movements, is then compared to a different system where two models are deployed: the first one has the only purpose of detecting activity, while the second classifies the activity, if present.
 
 \section{Signals and Features}
 \label{sec:model}
-
-\MR{Being a machine learning paper, I would put here a section describing the signals you have been working on. If possible, you should describe, in order, 1) the measurement setup, 2) how the signals were \mbox{pre-processed} (to remove noise, artifacts, fill gaps or represent them through a constant sampling rate, etc.). After this, you should describe how {\it feature vectors} were obtained from the \mbox{pre-processed} signals. If signals are {\it time series} this also implies stating the segmentation / windowing strategy that was adopted, to then describe how you obtained a feature vector for each time window. Also, if you also experiment with previous feature extraction approaches, you may want to list them as well, in addition to (and before) your own (possibly new) proposal.}
 
 The signals that we use to perform HAR are the ones collected in the OPPORTUNITY activity recognition dataset. The measurement setup is then the one presented in \cite{Roggen2010} and \cite{Chavarriaga2015}. Our analysis though is based only on on-body sensor signals, which means that we kept the signals of only a subset of the available sensors: discarding the other signals then, we ended up with 113 signals. During the preprocessing, we discarded also 3 of them, belonging to the same physical device, because there weren't any measurements in most of the cases. This led us to work on 110 signals.
 Since we noticed that the almost all the sensors, at the beginning and at the end of the measurement sessions, have sequences where there isn't any sample recorded, we decided to discard the head and the tail of each session, in such a way that we start and stop with all the measurements being registered.
@@ -25,7 +20,6 @@ Subsequently we scaled the signals by subtracting their means and dividing by th
 \section{Learning Framework}
 \label{sec:learning_framework}
 
-\MR{Here you finally describe the learning strategy / algorithm that you conceived and used to solve the problem at stake. A good diagram to exemplify how learning is carried out is often very useful. In this section, you should describe the learning model, its parameters, any optimization over a given parameter set, etc. You can organize this section in \mbox{sub-sections}. You are free to choose the most appropriate structure.}
 
 One of the main problems in Human Activity Recognition is handling \text{inactivity}.
 

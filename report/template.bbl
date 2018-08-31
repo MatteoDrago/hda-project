@@ -1,4 +1,4 @@
-\begin{thebibliography}{1}
+\begin{thebibliography}{10}
 
 \bibitem{HAR-2013}
 O.~D. Lara and M.~A. Labrador, ``A survey on human activity recognition using
@@ -37,5 +37,31 @@ N.~Japkowicz and S.~Stephen, ``The class imbalance problem: A systematic
 M.~A. Hearst, S.~T. Dumais, E.~Osuna, J.~Platt, and B.~Scholkopf, ``Support
   vector machines,'' {\em IEEE Intelligent Systems and their applications},
   vol.~13, no.~4, pp.~18--28, 1998.
+
+\bibitem{yang2015deep}
+J.~Yang, M.~N. Nguyen, P.~P. San, X.~Li, and S.~Krishnaswamy, ``Deep
+  convolutional neural networks on multichannel time series for human activity
+  recognition.,'' in {\em Ijcai}, vol.~15, pp.~3995--4001, 2015.
+
+\bibitem{bulling2014tutorial}
+A.~Bulling, U.~Blanke, and B.~Schiele, ``A tutorial on human activity
+  recognition using body-worn inertial sensors,'' {\em ACM Computing Surveys
+  (CSUR)}, vol.~46, no.~3, p.~33, 2014.
+
+\bibitem{hammerla2016deep}
+N.~Y. Hammerla, S.~Halloran, and T.~Ploetz, ``Deep, convolutional, and
+  recurrent models for human activity recognition using wearables,'' {\em arXiv
+  preprint arXiv:1604.08880}, 2016.
+
+\bibitem{srivastava2014dropout}
+N.~Srivastava, G.~Hinton, A.~Krizhevsky, I.~Sutskever, and R.~Salakhutdinov,
+  ``Dropout: a simple way to prevent neural networks from overfitting,'' {\em
+  The Journal of Machine Learning Research}, vol.~15, no.~1, pp.~1929--1958,
+  2014.
+
+\bibitem{li2018comparison}
+F.~Li, K.~Shirahama, M.~A. Nisar, L.~K{\"o}ping, and M.~Grzegorzek,
+  ``Comparison of feature learning methods for human activity recognition using
+  wearable sensors,'' {\em Sensors}, vol.~18, no.~2, p.~679, 2018.
 
 \end{thebibliography}
