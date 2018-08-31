@@ -38,31 +38,41 @@ def readData(subject, folder="./", print_info=False):
     return (data1, data2, data3, data4, data5, data6)
 
 def shapeData(X, Y, window_size=15, stride=15, null_class = True, printInfo = False):
-    """Orgnise data into windows to be passed to the model."""
+    """Orgnise data into windows to be passed to the model.
+    
+    X_out: a 3D numpy array of shape [n_windows, window_size, n_features]
+    Y_out: a 2D numpy array, containing one-hot encoded labels, of shape [n_windows, n_classes]
+    n_features: integer, number of features
+    n_classes: integer, number of classes
+    """
 
     # data shapes
     n_samples, n_features = X.shape
     n_classes = Y.shape[1]
 
     # format output shape
-    n_windows = int(n_samples // stride) - int(window_size // stride) + 1
+    n_windows = int(n_samples // stride) - int(window_size // stride) # + 1 # + 2
     X_out = np.zeros([n_windows, window_size, n_features])
     Y_out = np.zeros([n_windows, n_classes])
 
     # write output
     for i in range(n_windows):
+        # compute starting index
         index = int(i * stride)
+        # copy window (data and labels) starting from index
         X_out[i, :, :] = X[index:index+window_size, :].reshape((window_size,n_features))
         temp = Y[index:index+window_size, :]
-        Y_out[i, np.argmax(np.sum(temp, axis=0))] = 1 # hard version      CHECK!
+        # use most recurrent label as window class
+        Y_out[i, np.argmax(np.sum(temp, axis=0))] = 1
 
-    if not(null_class): # 
-        non_null = (Y_out[:,0] == 0) # samples non 0-labeled (Y_out[:,0] is the first column of Y_out)
+    if not(null_class): # discard windows 0-labeled
+        # mask for samples non 0-labeled
+        non_null = (Y_out[:,0] == 0) # (Y_out[:,0] is the first column of Y_out)
+        # keep only non 0-labeled windows and discard first column of labels
         X_out = X_out[non_null]
-        Y_out_new = Y_out[non_null][:,1:]
-        Y_out = Y_out_new
-
-    n_classes = Y_out.shape[1]
+        Y_out = Y_out[non_null][:,1:]
+        # update n_classes
+        n_classes = Y_out.shape[1]
 
     if (printInfo):
         print("\nFeatures:", n_features,\
@@ -75,7 +85,16 @@ def shapeData(X, Y, window_size=15, stride=15, null_class = True, printInfo = Fa
 # mid level methods
 
 def loadData(subject, label, folder="./", window_size=15, stride=15, make_binary=False, null_class=True, print_info=False):
-    """Preprocess data to be ready for classification models."""
+    """Preprocess data to be ready for classification models.
+    
+    X_train_s: 3D numpy array
+    Y_train_s: 1D numpy array
+    X_test_s: 3D nupy array
+    Y_test_s: 1D numpy array
+    n_features: integer
+    n_classes: integer
+    class_weights: 1D numpy array
+    """
 
     # read data
     data1, data2, data3, data4, data5, data6 = readData(subject=subject,
@@ -99,13 +118,13 @@ def loadData(subject, label, folder="./", window_size=15, stride=15, make_binary
     Y_test = np.concatenate((data4['labels_cut'][:,label],\
                              data5['labels_cut'][:,label]), axis=0)
 
-    # hanlding of null columns
+    # set empty columns (NaNs) to 0
     X_train = np.nan_to_num(X_train)
     X_test = np.nan_to_num(X_test)
 
     # features normalization
     scaler = StandardScaler().fit(X_train)
-    X_train =scaler.transform(X_train)
+    X_train = scaler.transform(X_train)
     X_test = scaler.transform(X_test)
 
     # make the problem binary
@@ -133,11 +152,12 @@ def loadData(subject, label, folder="./", window_size=15, stride=15, make_binary
                                                           null_class=null_class,
                                                           printInfo=print_info)
 
-    # class weights
+    # switch labels back to normal 1D array
     Y_train_s = np.argmax(Y_train_s, axis=1)
-    class_weights = class_weight.compute_class_weight('balanced', np.arange(n_classes), Y_train_s)
-    #Y_train_s = onehot_encoder.fit_transform(Y_train_s.reshape(-1, 1))
     Y_test_s = np.argmax(Y_test_s, axis=1)
+
+    # compute class weights
+    class_weights = class_weight.compute_class_weight('balanced', np.arange(n_classes), Y_train_s)
 
     return (X_train_s, Y_train_s, X_test_s, Y_test_s, n_features, n_classes, class_weights)
 
@@ -207,24 +227,16 @@ def loadDataMultiple(label, folder="./", window_size=15, stride=15, make_binary=
     print("\nProcessing data from subject 3")
     X_train_3, Y_train_3, X_test_3, Y_test_3 = loadData(subject=3, label=label, folder=folder, window_size=window_size, stride=stride,
                                                         make_binary=make_binary, null_class=null_class, print_info=print_info)[0:4]
-    print("\nProcessing data from subject 4")
-    X_train_4, Y_train_4, X_test_4, Y_test_4 = loadData(subject=4, label=label, folder=folder, window_size=window_size, stride=stride,
-                                                        make_binary=make_binary, null_class=null_class, print_info=print_info)[0:4]
+    #print("\nProcessing data from subject 4")
+    #X_train_4, Y_train_4, X_test_4, Y_test_4 = loadData(subject=4, label=label, folder=folder, window_size=window_size, stride=stride,
+    #                                                    make_binary=make_binary, null_class=null_class, print_info=print_info)[0:4]
 
     # create training set and test set
-    X_train = np.concatenate((X_train_1,\
-                              X_train_2,\
-                              X_train_3,\
-                              X_train_4,\
-                              X_test_1,\
-                              X_test_4), axis=0)
+    X_train = np.concatenate((X_train_2,\
+                              X_train_3), axis=0)
 
-    Y_train = np.concatenate((Y_train_1,\
-                              Y_train_2,\
-                              Y_train_3,\
-                              Y_train_4,\
-                              Y_test_1,\
-                              Y_test_4), axis=0)
+    Y_train = np.concatenate((Y_train_2,\
+                              Y_train_3), axis=0)
 
     X_test = np.concatenate((X_test_2,\
                              X_test_3), axis=0)

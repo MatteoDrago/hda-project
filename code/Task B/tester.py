@@ -8,16 +8,15 @@ from keras.callbacks import ModelCheckpoint
 from keras.utils import to_categorical
 
 # PARAMETERS #####################################################################
-subject = 1
-label = 6   # default for task B1
+subject = 4
+label = 0
 folder = "../data/full/"
-window_size = 15
-stride = 5
+window_size = 64
+stride = 15
 ##################################################################################
 
 # PREPROCESSING
-X_train, Y_train, X_test, Y_test, n_features, n_classes, class_weights = preprocessing.loadData(subject=subject,
-                                                                                                        label=label,
+X_train, Y_train, X_test, Y_test, n_features, n_classes, class_weights = preprocessing.loadDataMultiple(label=label,
                                                                                                         folder=folder,
                                                                                                         window_size=window_size,
                                                                                                         stride=stride,
@@ -41,7 +40,7 @@ checkpointer = ModelCheckpoint(filepath='./weights_terminal.hdf5', verbose=1, sa
 # TRAINING
 detection_model.fit(x = X_train, 
                     y = to_categorical(Y_train), 
-                    epochs = 10, 
+                    epochs = 5, 
                     batch_size = 256,
                     verbose = 1,
                     validation_data=(X_test, to_categorical(Y_test)),
@@ -54,5 +53,5 @@ print(classification_report(Y_test, Y_pred))
 
 print("Best weights:\n")
 detection_model_best = load_model('./weights_terminal.hdf5')
-Y_pred = detection_model.predict_classes(X_test)
+Y_pred = detection_model_best.predict_classes(X_test)
 print(classification_report(Y_test, Y_pred))
