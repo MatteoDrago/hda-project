@@ -1,3 +1,9 @@
+# In the following cell, we make use of some functions of Keras which have been removed,
+# but of which the code is still available at 
+# https://github.com/keras-team/keras/commit/a56b1a55182acf061b1eb2e2c86b48193a0e88f7.
+# These are used to evaulate the f1 score during training on batches of data:
+# this is only an approximation though, which is the reason why they have been removed.
+
 import keras.backend as K
 from sklearn.metrics import f1_score
 

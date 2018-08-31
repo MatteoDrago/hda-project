@@ -16,7 +16,8 @@ stride = 5
 ##################################################################################
 
 # PREPROCESSING
-X_train, Y_train, X_test, Y_test, n_features, n_classes, class_weights = preprocessing.loadData(subject=subject, label=label,
+X_train, Y_train, X_test, Y_test, n_features, n_classes, class_weights = preprocessing.loadData(subject=subject,
+                                                                                                        label=label,
                                                                                                         folder=folder,
                                                                                                         window_size=window_size,
                                                                                                         stride=stride,
@@ -24,8 +25,12 @@ X_train, Y_train, X_test, Y_test, n_features, n_classes, class_weights = preproc
                                                                                                         null_class=True,
                                                                                                         print_info=True)
 
+# reshaping for 2D convolutional model
+X_train = X_train.reshape(X_train.shape[0], window_size, n_features, 1)
+X_test = X_test.reshape(X_test.shape[0], window_size, n_features, 1)
+
 # MODEL
-detection_model = models.Detector((window_size, n_features), n_classes)
+detection_model = models.MotionClassification2D((window_size, n_features, 1), n_classes, print_info=True)
 
 detection_model.compile(optimizer = Adam(lr=0.0015),
                         loss = "categorical_crossentropy", 
@@ -35,21 +40,19 @@ checkpointer = ModelCheckpoint(filepath='./weights_terminal.hdf5', verbose=1, sa
 
 # TRAINING
 detection_model.fit(x = X_train, 
-                    y = Y_train, 
-                    epochs = 20, 
-                    batch_size = 16,
+                    y = to_categorical(Y_train), 
+                    epochs = 10, 
+                    batch_size = 256,
                     verbose = 1,
-                    validation_data=(X_test, Y_test),
+                    validation_data=(X_test, to_categorical(Y_test)),
                     callbacks=[checkpointer])
 
 # EVALUATION
 print("Last weights:\n")
-Y_pred = detection_model.predict(X_test)
-Y_pred = np.argmax(Y_pred, 1)
-print(classification_report(Y_test, to_categorical(Y_pred)))
+Y_pred = detection_model.predict_classes(X_test)
+print(classification_report(Y_test, Y_pred))
 
 print("Best weights:\n")
 detection_model_best = load_model('./weights_terminal.hdf5')
-Y_pred = detection_model.predict(X_test)
-Y_pred = np.argmax(Y_pred, 1)
-print(classification_report(Y_test, to_categorical(Y_pred)))
+Y_pred = detection_model.predict_classes(X_test)
+print(classification_report(Y_test, Y_pred))
