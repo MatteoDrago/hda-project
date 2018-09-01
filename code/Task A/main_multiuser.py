@@ -11,7 +11,7 @@ from keras.utils import to_categorical
 
 # PARAMETERS #####################################################################
 subject = [23]
-task = "A"                                              # choose between "A" or "B"
+task = "B"                                              # choose between "A" or "B"
 model_names = ["Convolutional", "Convolutional1DRecurrent"]
 data_folder = "../data/full/"
 window_size = 15
