@@ -10,3 +10,4 @@
 code/.floydexpt
 code/floyd.yml
 code/.floydignore
+code/Task A/data/models/*

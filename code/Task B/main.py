@@ -31,24 +31,9 @@ X_train, Y_train, X_test, Y_test, n_features, n_classes, class_weights = preproc
                                                                                                 null_class=True,
                                                                                                 print_info=True)
 
-# create folder to store temporary data
-import os
-if not(os.path.exists("./data")):
-    os.mkdir("./data")
-
-# PREPROCESSING
-X_train, Y_train, X_test, Y_test, n_features, n_classes, class_weights = preprocessing.loadData(subject=subject,
-                                                                                                label=label,
-                                                                                                folder=folder,
-                                                                                                window_size=window_size,
-                                                                                                stride=stride,
-                                                                                                make_binary=False,
-                                                                                                null_class=True,
-                                                                                                print_info=True)
-
 # MODEL
 model_name = "Convolutional" # keep update for automatic name to store the model
-model = models.Convolutional((window_size, n_features), n_classes, print_info=True)
+model = models.ConvolutionalDeepRecurrent_GPU((window_size, n_features), n_classes, print_info=True)
 
 model.compile(optimizer = Adam(lr=0.001),
               loss = "categorical_crossentropy", 
