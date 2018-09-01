@@ -12,7 +12,7 @@ from keras.utils import to_categorical
 # PARAMETERS #####################################################################
 subject = [23]
 task = "B"                                              # choose between "A" or "B"
-model_names = ["Convolutional", "Convolutional1DRecurrent"]
+model_names = ["Convolutional2DRecurrent"]
 data_folder = "../data/full/"
 window_size = 15
 stride = 5
@@ -62,8 +62,11 @@ for model_name in model_names:
             model = models.Convolutional((window_size, n_features), n_classes, print_info=False)
         elif model_name == "Convolutional1DRecurrent":
             model = models.Convolutional1DRecurrent((window_size, n_features), n_classes, GPU=GPU, print_info=False)
-        elif model_name == "Convolutional2DRecurrent": # remember to adapt input shapes
-            model = models.Convolutional2DRecurrent((window_size, n_features), n_classes, GPU=GPU, print_info=False)
+        elif model_name == "Convolutional2DRecurrent":
+            model = models.Convolutional2DRecurrent((window_size, n_features, 1), n_classes, GPU=GPU, print_info=False)
+            # reshaping for 2D convolutional model
+            X_train = X_train.reshape(X_train.shape[0], window_size, n_features, 1)
+            X_test = X_test.reshape(X_test.shape[0], window_size, n_features, 1)
         elif model_name == "ConvolutionalDeepRecurrent":
             model = models.ConvolutionalDeepRecurrent((window_size, n_features), n_classes, GPU=GPU, print_info=False)
         else:
@@ -118,8 +121,11 @@ for model_name in model_names:
             model = models.Convolutional((window_size, n_features), n_classes, print_info=False)
         elif model_name == "Convolutional1DRecurrent":
             model = models.Convolutional1DRecurrent((window_size, n_features), n_classes, GPU=GPU, print_info=False)
-        elif model_name == "Convolutional2DRecurrent": # remember to adapt input shapes
-            model = models.Convolutional2DRecurrent((window_size, n_features), n_classes, GPU=GPU, print_info=False)
+        elif model_name == "Convolutional2DRecurrent":
+            model = models.Convolutional2DRecurrent((window_size, n_features, 1), n_classes, GPU=GPU, print_info=False)
+            # reshaping for 2D convolutional model
+            X_train = X_train.reshape(X_train.shape[0], window_size, n_features, 1)
+            X_test = X_test.reshape(X_test.shape[0], window_size, n_features, 1)
         elif model_name == "ConvolutionalDeepRecurrent":
             model = models.ConvolutionalDeepRecurrent((window_size, n_features), n_classes, GPU=GPU, print_info=False)
         else:
@@ -174,8 +180,11 @@ for model_name in model_names:
             model = models.Convolutional((window_size, n_features), n_classes, print_info=False)
         elif model_name == "Convolutional1DRecurrent":
             model = models.Convolutional1DRecurrent((window_size, n_features), n_classes, GPU=GPU, print_info=False)
-        elif model_name == "Convolutional2DRecurrent": # remember to adapt input shapes
-            model = models.Convolutional2DRecurrent((window_size, n_features), n_classes, GPU=GPU, print_info=False)
+        elif model_name == "Convolutional2DRecurrent":
+            model = models.Convolutional2DRecurrent((window_size, n_features,1), n_classes, GPU=GPU, print_info=False)
+            # reshaping for 2D convolutional model
+            X_train = X_train.reshape(X_train.shape[0], window_size, n_features, 1)
+            X_test = X_test.reshape(X_test.shape[0], window_size, n_features, 1)
         elif model_name == "ConvolutionalDeepRecurrent":
             model = models.ConvolutionalDeepRecurrent((window_size, n_features), n_classes, GPU=GPU, print_info=False)
         else:
