@@ -5,7 +5,7 @@ import numpy as np
 from sklearn.metrics import classification_report, f1_score
 from keras.models import load_model
 from keras.optimizers import Adam
-from keras.callbacks import ModelCheckpoint
+from keras.callbacks import ModelCheckpoint, ReduceLROnPlateau
 from keras.utils import to_categorical
 
 # PARAMETERS #####################################################################
