@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.99996 (MiKTeX 2.9.6210 64-bit) (preloaded format=xelatex 2017.11.6)  31 AUG 2018 09:48
+This is XeTeX, Version 3.14159265-2.6-0.99996 (MiKTeX 2.9.6210 64-bit) (preloaded format=xelatex 2017.11.6)  1 SEP 2018 00:17
 entering extended mode
 **./template.tex
 (template.tex
@@ -765,20 +765,14 @@ Underfull \hbox (badness 10000) in paragraph at lines 69--69
 t-
  []
 
-(Intro.tex) (related.tex [1
+(Intro.tex) (related.tex
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [1
 
 
-]) (model.tex [2]
-
-LaTeX Warning: Citation `Roggen2010' on page 3 undefined on input line 13.
-
-
-LaTeX Warning: Citation `Chavarriaga2015' on page 3 undefined on input line 13.
-
-
-) (results.tex) (conclusions.tex) (template.bbl
-Underfull \vbox (badness 1371) has occurred while \output is active []
-
+])
+(model.tex [2]) (results.tex) (conclusions.tex) (template.bbl
 Invalid UTF-8 byte or sequence at line 15 replaced by U+FFFD.
 Missing character: There is no � in font ptmr8t!
 Invalid UTF-8 byte or sequence at line 20 replaced by U+FFFD.
@@ -803,15 +797,12 @@ Before submitting the final camera ready copy, remember to:
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
-
-LaTeX Warning: There were undefined references.
-
  ) 
 Here is how much of TeX's memory you used:
- 15609 strings out of 427899
- 269686 string characters out of 3153117
- 321284 words of memory out of 3000000
- 19355 multiletter control sequences out of 15000+200000
+ 15607 strings out of 427899
+ 269657 string characters out of 3153117
+ 323284 words of memory out of 3000000
+ 19353 multiletter control sequences out of 15000+200000
  610353 words of font info for 111 fonts, out of 3000000 for 9000
  1328 hyphenation exceptions out of 8191
  36i,10n,38p,10382b,323s stack positions out of 5000i,500n,10000p,200000b,50000s
