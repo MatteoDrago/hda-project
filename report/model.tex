@@ -30,9 +30,10 @@ To conclude the preprocessing phase, finally we decided to follow the same proce
 
 We found in fact that the choice of window size and stride is fundamental in order to obtain good results: we observed that a window too short can't represent a single gesture with fair precision and, on the contrary, if the window is too large we could include two distinct movements (or modes of locomotion), leading to misplaced classes. The choice of the size of the displacement separating two consecutive windows can guarantee a good trade-off between windows diversity and dataset population.
 
+In the first phase of our project we also tried to create a reduced dataset of features: since each accelerometer returns the acceleration value of in the direction of all the three axes, we tried to substitute these three values with a unique value representing the \textit{mean acceleration} measured by the sensors. In our first experiments, however, this led to poor results: with respect to the simulations where all features were fed to the model, the configuration using the reduced dataset was affected by almost a 5\% loss in terms of accuracy performance. 
+
 \section{Learning Framework}
 \label{sec:learning_framework}
-
 
 One of the main problems in Human Activity Recognition is handling \text{inactivity}.
 
