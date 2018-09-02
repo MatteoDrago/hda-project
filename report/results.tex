@@ -3,4 +3,32 @@
 \section{Results}
 \label{sec:results}
 
+As in most of the works mentioned in section \ref{sec:related_work}, besides accuracy, we used $F_1$ measure to estimate the goodness of our models. Defining precision and recall as: 
+\begin{equation}
+	p = \frac{TP}{TP+FP} \qquad r = \frac{TP}{TP+FN}
+\end{equation}
+the $F_1$ measure is the harmonic average between the two (in the previous formula we have \textit{TP = true positive}, \textit{FP = false positive}, \textit{FN = false negative}). In particular, since we deal with a multi-class problem we need to add a measure of weights to the $F_1$ equation:
+\begin{equation}
+	F_1 = \sum_i 2w_i \frac{p_i \cdot r_i}{p_i + r_i}
+\end{equation} 
+where the weights are defined as the number of samples of a particular class divided by the total number of samples $w_i = \frac{n_i}{N}$. The weighted measure can help also with the class imbalance problem that we outlined in the previous section; however we must highlight that our models are still trained on an imbalanced dataset, so in our opinion this could provide only a minor improvement.
 
+In Figures \ref{fig:Anull} and \ref{fig:Anonull} we present the results regarding task A (modes of locomotion, high level movements) for each participant of the experiment: in those configurations we wanted to see if there was one architecture that evidently outperform the others. As we can see, unfortunately that is not the case since among all the frameworks that we tested the differences in terms of weighted $F_1$ measure is negligible. The variation that we can clearly see is among distinct subjects, since they are all studied separately: $S_1$ performs better in both the configurations, while $S_2$ is the worst. Considering that we consistently performed the same procedure independently from the subject, in this case this discrepancy could be due to a problem during data collection. 
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[scale=.4]{figure/A_models_nullclass}
+	\caption{Task A : One-Shot Classification}
+	\label{fig:Anull}
+\end{figure}
+
+With an $F_1$ value of $\sim 0.91$ for the \textit{one-shot} scenario and $\sim 0.94$ in the \textit{two-steps} (if we consider $S_1$), we can definitely say that the results presented in \cite{Chavarriaga2013} are outperformed by these more powerful deep learning models; with respect to the other subjects, we can say that the result that we obtained are state of the art. In particular it's interesting to see that, when we consider the \textit{Null Class}, the best model with $S_2$ is represented by the neural network with one convolutional layer (Figure \ref{fig:Anull}); when the \textit{Null Class} is ignored, instead, the hybrid model that combines convolutional layers and LSTM provides the best results (Figure \ref{fig:Anonull}). In our opinion the reason is that in certain cases the \textit{Null Class} has to be intended as noise, so when the windows assigned to that class are removed the LSTM can exploit and reveal the time correlation among different sample more clearly. In addition, we tried to train our architectures on $S_2$ and $S_3$ jointly, using $ADL_4$ and $ADL_5$ of both subjects as test set: as is shown on the last column on the right in Fig \ref{fig:Anull} and \ref{fig:Anonull}, the results are not brilliant. In fact, we obtained a kind of average performance between the results of $S_2$ and $S_3$, in line again with what presented in \cite{Chavarriaga2013}.
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[scale=.4]{figure/A_models_nonullclass}
+	\caption{Task A : Two Steps Classification}
+	\label{fig:Anonull}
+\end{figure}
+
+Finally, as we can see, for task A we can say that using the \textit{two-step} approach definitely helped performances.

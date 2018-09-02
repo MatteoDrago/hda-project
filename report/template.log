@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.99996 (MiKTeX 2.9.6210 64-bit) (preloaded format=xelatex 2017.11.6)  2 SEP 2018 15:25
+This is XeTeX, Version 3.14159265-2.6-0.99996 (MiKTeX 2.9.6210 64-bit) (preloaded format=xelatex 2017.11.6)  3 SEP 2018 00:02
 entering extended mode
 **./template.tex
 (template.tex
@@ -774,11 +774,13 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 ])
 (model.tex [2]
 File: figure/block_diag.png Graphic file (type QTm)
- <use  "figure/block_diag.png" >) (results.tex) (conclusions.tex) (template.bbl
+ <use  "figure/block_diag.png" >) (results.tex [3]
+File: figure/A_models_nullclass.eps Graphic file (type eps)
 
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [3]
+<figure/A_models_nullclass.eps>
+File: figure/A_models_nonullclass.eps Graphic file (type eps)
+ <figure/A_models_nonullclass.eps>)
+(conclusions.tex) (template.bbl
 Invalid UTF-8 byte or sequence at line 15 replaced by U+FFFD.
 Missing character: There is no � in font ptmr8t!
 Invalid UTF-8 byte or sequence at line 20 replaced by U+FFFD.
@@ -787,7 +789,7 @@ Missing character: There is no � in font ptmr8t!
 Missing character: There is no � in font ptmr8t!
 Invalid UTF-8 byte or sequence at line 23 replaced by U+FFFD.
 Missing character: There is no � in font ptmr8t!
-)
+ [4])
 
 ** Conference Paper **
 Before submitting the final camera ready copy, remember to:
@@ -799,7 +801,7 @@ Before submitting the final camera ready copy, remember to:
  uses only Type 1 fonts and that every step in the generation
  process uses the appropriate paper size.
 
-[4
+[5
 
 ] (template.aux)
 
@@ -807,12 +809,12 @@ LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
  ) 
 Here is how much of TeX's memory you used:
- 15636 strings out of 427899
- 269947 string characters out of 3153117
- 323292 words of memory out of 3000000
- 19370 multiletter control sequences out of 15000+200000
+ 15644 strings out of 427899
+ 270101 string characters out of 3153117
+ 323308 words of memory out of 3000000
+ 19376 multiletter control sequences out of 15000+200000
  610353 words of font info for 111 fonts, out of 3000000 for 9000
  1328 hyphenation exceptions out of 8191
  38i,10n,77p,10382b,353s stack positions out of 5000i,500n,10000p,200000b,50000s
 
-Output written on template.pdf (4 pages).
+Output written on template.pdf (5 pages).
