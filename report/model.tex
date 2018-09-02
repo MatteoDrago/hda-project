@@ -7,7 +7,14 @@ We start off our analysis by preprocessing the collected signals within the MATL
 
 Secondly, we import the preprocessed data in a \textit{Jupyter Notebook} and make the dataset suitable for the classification task: this consists for example of segmenting data into windows, scaling and normalizing raw signals.
 
-Then, after the last step of preprocessing, we define and train a suitable learning model. This is respectively done for both the locomotion activity and gestures recognition, i.e. with two different sets of labels. This system, which is forced to learn also the null class together with the actual movements, is then compared to a different system where two models are deployed: in that case, the first one has the purpose of detecting activity while the second one classifies the type of movement, if detected. \MD{Aggiungere figura pipeline?}
+Then, after the last step of preprocessing, we define and train a suitable learning model. This is respectively done for both the locomotion activity and gestures recognition, i.e. with two different sets of labels. This system, which is forced to learn also the null class together with the actual movements, is then compared to a different system where two models are deployed: in that case, the first one has the purpose of detecting activity while the second one classifies the type of movement, if detected. Figure \ref{fig:pipeline} shows a schematic depiction of the pipeline, which we are going to elaborate on the following sections.
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[scale=.4]{figure/block_diag}
+	\caption{Framework Pipeline}
+	\label{fig:pipeline}
+\end{figure}
 
 \section{Signals and Features}
 \label{sec:model}
@@ -21,8 +28,7 @@ For the purposes of our work, however, we based the analysis only on on-body sen
 
 To conclude the preprocessing phase, finally we decided to follow the same procedure as in several works we cited earlier: we apply in fact the \textit{sliding window} technique on the datasets, obtaining a tensor of windows constituted of \MD{...} samples (\MD{...} ms), using a stride of length \MD{...}. In our case, we decided to assign to each window the most frequent label: this doesn't constitute a problem per se, even when changing the size of the sliding window, as long as it is kept short enough for being representative of a movement.
 
-\MD{ultime considerazioni su come una scelta adeguata di window size e stride possa influire notevolmente sulle performance, poi direi che questa parte è finita. Dovrei aggiungere qualcosa sulle features forse?}
-
+We found in fact that the choice of window size and stride is fundamental in order to obtain good results: we observed that a window too short can't represent a single gesture with fair precision and, on the contrary, if the window is too large we could include two distinct movements (or modes of locomotion), leading to misplaced classes. The choice of the size of the displacement separating two consecutive windows can guarantee a good trade-off between windows diversity and dataset population.
 
 \section{Learning Framework}
 \label{sec:learning_framework}
