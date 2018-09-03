@@ -1,4 +1,4 @@
-% !TEX root = template.tex
+% !TEX root = HDA_MDRL.tex
 
 \section{Processing Pipeline}
 \label{sec:processing_architecture}
@@ -7,7 +7,7 @@ We start off our analysis by preprocessing the collected signals within the MATL
 
 Then, this time with \textit{python}, we import the preprocessed data and make the dataset suitable for the classification task: this consists for example of segmenting data into windows, scaling and normalizing raw signals.
 
-Finally, after the last step of preprocessing, we define and train a suitable learning model. This is respectively done for both the locomotion activity and gestures recognition, i.e. with two different sets of labels. The model, which is forced to learn also the null class together with the actual movements, is then compared to a different system where two configurations are deployed: in that case, the first one has the purpose of detecting activity while the second one classifies the type of movement, if detected. Figure \ref{fig:pipeline} shows a schematic depiction of the pipeline, which we are going to present on the following sections.
+Finally, after the last step of preprocessing, we define and train a suitable learning model. This is respectively done for both the locomotion activity and gestures recognition, i.e. with two different sets of labels. The model, which is forced to learn also the null class together with the actual movements, is then compared to a different system where two stages are carried out; in that case, the first one has the purpose of detecting activity while the second one classifies the type of movement, if detected. Figure \ref{fig:pipeline} shows a schematic depiction of the comprehensive pipeline, which we are going to present on the following sections.
 
 \begin{figure}[ht]
 	\centering
@@ -45,9 +45,6 @@ In the first phase of our project we also tried to create a reduced dataset of f
 \section{Learning Framework}
 \label{sec:learning_framework}
 
-To test our pipelines we implemented 4 different models, named \textit{Convolutional, Convolutional1DRecurrent, Convolutional2DRecurrent} and \textit{ConvolutionalDeepRecurrent}. The four of them, reported by increasing complexity, use some convolutional layers and, exception made for the first one, a couple of recurrent layers with LSTM units. A superficial comparison between their architectures is given in table \ref{tab:models}, where we reported the number of specific layers per framework.
-These models are tested and compared on different tasks so, to use them properly, the last fully connected layer of each one has the number of units required by the specific task, which depends on the pipeline selected.
-
 \begin{table}[]
 	\begin{tabular}{lccc}
 		\textbf{Model name}        & \textbf{Convolutional} & \textbf{Recurrent} & \textbf{Fully connected} \\
@@ -70,4 +67,9 @@ This classification technique uses just one model to predict whether there is ac
 \subsection{Two Steps Classification}
 \label{sub:twosteps}
 
-As an alternative, the process can be split into two steps: one to detect activity and one to recognize it when present. In practice the first step receives signal windows and decides if the subject is active or inactive, performing thus a binary classification; then, only if it’s labelled as active, the signal is passed to a second model which tries to recognize the activity. This approach could be particularly appealing in real-time systems, in particular if the detection phase has a low number of operations: considering that in daily life recordings one is mostly idle, this leads to a decreased energy consumption. A major drawback though is that the final accuracy of the model is affected by the errors made by both the models: even having a good classification model would be inefficient if it were passed, erroneously, mostly inactivity signals. This suggests that there’s a trade-off in activity detection task between accuracy and energy consumption. Luckily enough this phase could also be effective exploiting non deep learning techniques, which anyway aren't explored in our work.
+As an alternative, the process can be split into two steps: one to detect activity and one to recognize it when present. In practice the first step receives signal windows and decides if the subject is active or inactive, performing thus a binary classification; then, only if it’s labelled as active, the signal is passed to a second model which tries to recognize the activity. This approach could be particularly appealing in real-time systems, in particular if the detection phase has a low number of operations: considering that in daily life recordings one is mostly idle, this leads to a decreased energy consumption. A major drawback though is that the final accuracy of the model is affected by the errors made by both the models: even having a good classification model would be inefficient if it were passed, erroneously, mostly inactivity signals. This suggests that there’s a trade-off in activity detection task between accuracy and energy consumption. Luckily enough this phase could also be effective exploiting non deep learning techniques, which anyway aren't explored in our work.\\
+
+To test our pipelines we implemented 4 different models, named \textit{Convolutional, Convolutional1DRecurrent, Convolutional2DRecurrent} and \textit{ConvolutionalDeepRecurrent}. The four of them, reported by increasing complexity, use some convolutional layers and, exception made for the first one, a couple of recurrent layers with LSTM units. A superficial comparison between their architectures is given in table \ref{tab:models}, where we specified the number of layers per type. 
+These models are tested and compared on different tasks so, to use them properly, the last fully connected layer of each one has the number of units required by the specific task, which depends on the pipeline selected. The final choice of all the hyper-parameters (size of convolutional kernels, size of pooling windows, number of cells per LSTM layers, etc) has been done via fine-tuning and consecutive trials: other options could have been grid search or Bayesian learning, however we didn't investigate them in this paper.
+
+Among many experiments, we also tried to add an SVM layer in order to boost our performances: however, considering that we obtained just a slight improvement, the additional computational effort needed to evaluate the features wasn't worth it. 
