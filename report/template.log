@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.99996 (MiKTeX 2.9.6210 64-bit) (preloaded format=xelatex 2017.11.6)  3 SEP 2018 10:46
+This is XeTeX, Version 3.14159265-2.6-0.99996 (MiKTeX 2.9.6210 64-bit) (preloaded format=xelatex 2017.11.6)  3 SEP 2018 11:39
 entering extended mode
 **./template.tex
 (template.tex
@@ -795,7 +795,12 @@ File: figure/A_models_nullclass.eps Graphic file (type eps)
  <figure/A_models_nullclass.eps> [4]
 File: figure/A_models_nonullclass.eps Graphic file (type eps)
 
-<figure/A_models_nonullclass.eps>) (conclusions.tex) (template.bbl
+<figure/A_models_nonullclass.eps>
+File: figure/B_models_nullclass.eps Graphic file (type eps)
+ <figure/B_models_nullclass.eps>
+File: figure/B_models_nonullclass.eps Graphic file (type eps)
+
+<figure/B_models_nonullclass.eps>) (conclusions.tex) (template.bbl
 Invalid UTF-8 byte or sequence at line 15 replaced by U+FFFD.
 Missing character: There is no � in font ptmr8t!
 Invalid UTF-8 byte or sequence at line 20 replaced by U+FFFD.
@@ -822,10 +827,10 @@ LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
  ) 
 Here is how much of TeX's memory you used:
- 15654 strings out of 427899
- 270228 string characters out of 3153117
- 323324 words of memory out of 3000000
- 19384 multiletter control sequences out of 15000+200000
+ 15662 strings out of 427899
+ 270382 string characters out of 3153117
+ 323340 words of memory out of 3000000
+ 19390 multiletter control sequences out of 15000+200000
  610353 words of font info for 111 fonts, out of 3000000 for 9000
  1328 hyphenation exceptions out of 8191
  38i,10n,77p,10382b,353s stack positions out of 5000i,500n,10000p,200000b,50000s
