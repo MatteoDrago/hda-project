@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.99996 (MiKTeX 2.9.6210 64-bit) (preloaded format=xelatex 2017.11.6)  3 SEP 2018 17:12
+This is XeTeX, Version 3.14159265-2.6-0.99996 (MiKTeX 2.9.6210 64-bit) (preloaded format=xelatex 2017.11.6)  3 SEP 2018 23:30
 entering extended mode
 **./HDA_MDRL.tex
 (HDA_MDRL.tex
@@ -765,31 +765,40 @@ Underfull \hbox (badness 10000) in paragraph at lines 69--69
 t-
  []
 
-(Intro.tex) (related.tex [1
+(Intro.tex) (related.tex
+Underfull \vbox (badness 3179) has occurred while \output is active []
+
+ [1
 
 
-]) (model.tex [2]
+])
+(model.tex [2]
 File: figure/block_diag.png Graphic file (type QTm)
  <use  "figure/block_diag.png" >
 File: figure/Fig1Cl.png Graphic file (type QTm)
-
-<use  "figure/Fig1Cl.png" >
+ <use  "figure/Fig1Cl.png" >
 File: figure/Fig1Cr.png Graphic file (type QTm)
- <use  "figure/Fig1Cr.png" >
+
+<use  "figure/Fig1Cr.png" >
 Underfull \vbox (badness 1348) has occurred while \output is active []
 
  [3]
 
 LaTeX Warning: No positions in optional float specifier.
-               Default added (so using `tbp') on input line 51.
+               Default added (so using `tbp') on input line 48.
 
 
-Overfull \hbox (0.67322pt too wide) in paragraph at lines 52--59
+Overfull \hbox (0.67322pt too wide) in paragraph at lines 49--56
 [][] 
  []
 
 Missing character: There is no ’ in font ptmr8t!
 Missing character: There is no ’ in font ptmr8t!
+
+Underfull \hbox (badness 10000) in paragraph at lines 70--71
+
+ []
+
 ) (results.tex
 File: figure/A_models_nullclass.eps Graphic file (type eps)
  <figure/A_models_nullclass.eps> [4]
@@ -800,10 +809,13 @@ File: figure/B_models_nullclass.eps Graphic file (type eps)
  <figure/B_models_nullclass.eps>
 File: figure/B_models_nonullclass.eps Graphic file (type eps)
 
-<figure/B_models_nonullclass.eps>) (conclusions.tex) (HDA_MDRL.bbl
-Underfull \vbox (badness 1810) has occurred while \output is active []
-
+<figure/B_models_nonullclass.eps>) (conclusions.tex
+Missing character: There is no ’ in font ptmr8t!
+Missing character: There is no ’ in font ptmr8t!
  [5]
+Missing character: There is no ’ in font ptmr8t!
+Missing character: There is no ’ in font ptmr8t!
+) (HDA_MDRL.bbl
 Invalid UTF-8 byte or sequence at line 15 replaced by U+FFFD.
 Missing character: There is no � in font ptmr8t!
 Invalid UTF-8 byte or sequence at line 20 replaced by U+FFFD.
@@ -824,9 +836,7 @@ Before submitting the final camera ready copy, remember to:
  uses only Type 1 fonts and that every step in the generation
  process uses the appropriate paper size.
 
-[6
-
-] (HDA_MDRL.aux)
+[6] (HDA_MDRL.aux)
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
