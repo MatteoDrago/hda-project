@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.99996 (MiKTeX 2.9.6210 64-bit) (preloaded format=xelatex 2017.11.6)  3 SEP 2018 11:39
+This is XeTeX, Version 3.14159265-2.6-0.99996 (MiKTeX 2.9.6210 64-bit) (preloaded format=xelatex 2017.11.6)  3 SEP 2018 15:58
 entering extended mode
 **./template.tex
 (template.tex
@@ -800,7 +800,7 @@ File: figure/B_models_nullclass.eps Graphic file (type eps)
  <figure/B_models_nullclass.eps>
 File: figure/B_models_nonullclass.eps Graphic file (type eps)
 
-<figure/B_models_nonullclass.eps>) (conclusions.tex) (template.bbl
+<figure/B_models_nonullclass.eps>) (conclusions.tex) (template.bbl [5]
 Invalid UTF-8 byte or sequence at line 15 replaced by U+FFFD.
 Missing character: There is no � in font ptmr8t!
 Invalid UTF-8 byte or sequence at line 20 replaced by U+FFFD.
@@ -821,7 +821,9 @@ Before submitting the final camera ready copy, remember to:
  uses only Type 1 fonts and that every step in the generation
  process uses the appropriate paper size.
 
-[5] (template.aux)
+[6
+
+] (template.aux)
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
@@ -835,4 +837,4 @@ Here is how much of TeX's memory you used:
  1328 hyphenation exceptions out of 8191
  38i,10n,77p,10382b,353s stack positions out of 5000i,500n,10000p,200000b,50000s
 
-Output written on template.pdf (5 pages).
+Output written on template.pdf (6 pages).
