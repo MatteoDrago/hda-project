@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6630 64-bit) (preloaded format=pdflatex 2018.6.21)  3 SEP 2018 10:57
+=======
+This is XeTeX, Version 3.14159265-2.6-0.99996 (MiKTeX 2.9.6210 64-bit) (preloaded format=xelatex 2017.11.6)  3 SEP 2018 15:58
+>>>>>>> Matteo
 entering extended mode
 **./template.tex
 (template.tex
@@ -1324,6 +1328,23 @@ Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
 or  <return>  to continue without it.
 
+<<<<<<< HEAD
+=======
+<figure/A_models_nonullclass.eps>
+File: figure/B_models_nullclass.eps Graphic file (type eps)
+ <figure/B_models_nullclass.eps>
+File: figure/B_models_nonullclass.eps Graphic file (type eps)
+
+<figure/B_models_nonullclass.eps>) (conclusions.tex) (template.bbl [5]
+Invalid UTF-8 byte or sequence at line 15 replaced by U+FFFD.
+Missing character: There is no � in font ptmr8t!
+Invalid UTF-8 byte or sequence at line 20 replaced by U+FFFD.
+Invalid UTF-8 byte or sequence at line 20 replaced by U+FFFD.
+Missing character: There is no � in font ptmr8t!
+Missing character: There is no � in font ptmr8t!
+Invalid UTF-8 byte or sequence at line 23 replaced by U+FFFD.
+Missing character: There is no � in font ptmr8t!
+>>>>>>> Matteo
 )
 
 ** Conference Paper **
@@ -1336,6 +1357,7 @@ Before submitting the final camera ready copy, remember to:
  uses only Type 1 fonts and that every step in the generation
  process uses the appropriate paper size.
 
+<<<<<<< HEAD
 [5 <./figure/A_models_nonullclass-eps-converted-to.pdf>] (template.aux) ) 
 Here is how much of TeX's memory you used:
  18120 strings out of 493305
@@ -1365,3 +1387,22 @@ PDF statistics:
  0 named destinations out of 1000 (max. 500000)
  26 words of extra memory for PDF output out of 10000 (max. 10000000)
 
+=======
+[6
+
+] (template.aux)
+
+LaTeX Font Warning: Some font shapes were not available, defaults substituted.
+
+ ) 
+Here is how much of TeX's memory you used:
+ 15662 strings out of 427899
+ 270382 string characters out of 3153117
+ 323340 words of memory out of 3000000
+ 19390 multiletter control sequences out of 15000+200000
+ 610353 words of font info for 111 fonts, out of 3000000 for 9000
+ 1328 hyphenation exceptions out of 8191
+ 38i,10n,77p,10382b,353s stack positions out of 5000i,500n,10000p,200000b,50000s
+
+Output written on template.pdf (6 pages).
+>>>>>>> Matteo
