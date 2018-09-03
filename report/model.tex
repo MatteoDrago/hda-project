@@ -45,7 +45,7 @@ In the first phase of our project we also tried to create a reduced dataset of f
 \section{Learning Framework}
 \label{sec:learning_framework}
 
-To test our pipelines we implemented 4 different models, named \textit{Convolutional, Convolutional1DRecurrent, Convolutional2DRecurrent} and \textit{ConvolutionalDeepRecurrent}. The four of them, reported by increasing complexity, use some convolutional layers and, exception made for the first one, a couple of recurrent layers with LSTM units. A superficial comparison between their architectures is given in table \ref{tab:models}, where we specified the number of specific layer per framework.
+To test our pipelines we implemented 4 different models, named \textit{Convolutional, Convolutional1DRecurrent, Convolutional2DRecurrent} and \textit{ConvolutionalDeepRecurrent}. The four of them, reported by increasing complexity, use some convolutional layers and, exception made for the first one, a couple of recurrent layers with LSTM units. A superficial comparison between their architectures is given in table \ref{tab:models}, where we reported the number of specific layers per framework.
 These models are tested and compared on different tasks so, to use them properly, the last fully connected layer of each one has the number of units required by the specific task, which depends on the pipeline selected.
 
 \begin{table}[]
