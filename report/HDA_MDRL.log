@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.99996 (MiKTeX 2.9.6210 64-bit) (preloaded format=xelatex 2017.11.6)  4 SEP 2018 14:06
+This is XeTeX, Version 3.14159265-2.6-0.99996 (MiKTeX 2.9.6210 64-bit) (preloaded format=xelatex 2017.11.6)  4 SEP 2018 17:39
 entering extended mode
 **./HDA_MDRL.tex
 (HDA_MDRL.tex
@@ -833,7 +833,7 @@ LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 Here is how much of TeX's memory you used:
  15647 strings out of 427899
  270198 string characters out of 3153117
- 322653 words of memory out of 3000000
+ 322648 words of memory out of 3000000
  19377 multiletter control sequences out of 15000+200000
  610353 words of font info for 111 fonts, out of 3000000 for 9000
  1328 hyphenation exceptions out of 8191
