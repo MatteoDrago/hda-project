@@ -4,6 +4,8 @@
 /data_temp/*.*
 /prep/*
 /code/data/models/*
+/code/data/full/*
+/code/data/reduced/*
 /code/Task B/data
 /papers/*
 
