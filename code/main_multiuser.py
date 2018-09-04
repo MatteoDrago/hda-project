@@ -9,17 +9,17 @@ from keras.optimizers import Adam
 from keras.callbacks import ModelCheckpoint, ReduceLROnPlateau
 from keras.utils import to_categorical
 
-# PARAMETERS #####################################################################
+# PARAMETERS ########################################################################################################
 subject = [23]
-task = "A"                                              # choose between "A" or "B"
-model_names = ["Convolutional2DRecurrent", "ConvolutionalDeepRecurrent"]
+task = "A"    # choose between "A" or "B"
+model_names = ["Convolutional", "Convolutional1DRecurrent", "Convolutional2DRecurrent", "ConvolutionalDeepRecurrent"]
 data_folder = "../data/full/"
 window_size = 15
 stride = 5
 GPU = True
 epochs = 10
 batch_size = 32
-##################################################################################
+#####################################################################################################################
 
 # create folder to store temporary data and results
 if not(os.path.exists("./data")):
