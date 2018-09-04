@@ -1,0 +1,67 @@
+\begin{thebibliography}{10}
+
+\bibitem{HAR-2013}
+O.~D. Lara and M.~A. Labrador, ``A survey on human activity recognition using
+  wearable sensors,'' {\em IEEE Communications Surveys Tutorials}, vol.~15,
+  pp.~1192--1209, Third 2013.
+
+\bibitem{Chavarriaga2013}
+R.~Chavarriaga, H.~Sagha, A.~Calatroni, S.~T. Digumarti, G.~Tr{\"{o}}ster,
+  J.~del R.~Mill{\'{a}}n, and D.~Roggen, ``The opportunity challenge: A
+  benchmark database for on-body sensor-based activity recognition,'' {\em
+  Pattern Recognition Letters}, 2013.
+
+\bibitem{HAR-COMP2018}
+F.~Li, K.~Shirahama, M.~A. Nisar, L.~Köping, and M.~Grzegorzek, ``Comparison of
+  feature learning methods for human activity recognition using wearable
+  sensors,'' {\em Sensors}, vol.~18, no.~2, 2018.
+
+\bibitem{ComplexAct-2010}
+D.~Roggen, A.~Calatroni, M.~Rossi, T.~Holleczek, K.~Förster, G.~Tröster,
+  P.~Lukowicz, D.~Bannach, G.~Pirkl, A.~Ferscha, J.~Doppler, C.~Holzmann,
+  M.~Kurz, G.~Holl, R.~Chavarriaga, H.~Sagha, H.~Bayati, M.~Creatura, and
+  J.~d.~R.~Millàn, ``Collecting complex activity datasets in highly rich
+  networked sensor environments,'' in {\em 2010 Seventh International
+  Conference on Networked Sensing Systems (INSS)}, pp.~233--240, June 2010.
+
+\bibitem{cao2012integrated}
+H.~Cao, M.~N. Nguyen, C.~Phua, S.~Krishnaswamy, and X.~Li, ``An integrated
+  framework for human activity classification.,'' in {\em UbiComp},
+  pp.~331--340, 2012.
+
+\bibitem{japkowicz2002class}
+N.~Japkowicz and S.~Stephen, ``The class imbalance problem: A systematic
+  study,'' {\em Intelligent data analysis}, vol.~6, no.~5, pp.~429--449, 2002.
+
+\bibitem{hearst1998support}
+M.~A. Hearst, S.~T. Dumais, E.~Osuna, J.~Platt, and B.~Scholkopf, ``Support
+  vector machines,'' {\em IEEE Intelligent Systems and their applications},
+  vol.~13, no.~4, pp.~18--28, 1998.
+
+\bibitem{yang2015deep}
+J.~Yang, M.~N. Nguyen, P.~P. San, X.~Li, and S.~Krishnaswamy, ``Deep
+  convolutional neural networks on multichannel time series for human activity
+  recognition.,'' in {\em Ijcai}, vol.~15, pp.~3995--4001, 2015.
+
+\bibitem{bulling2014tutorial}
+A.~Bulling, U.~Blanke, and B.~Schiele, ``A tutorial on human activity
+  recognition using body-worn inertial sensors,'' {\em ACM Computing Surveys
+  (CSUR)}, vol.~46, no.~3, p.~33, 2014.
+
+\bibitem{hammerla2016deep}
+N.~Y. Hammerla, S.~Halloran, and T.~Ploetz, ``Deep, convolutional, and
+  recurrent models for human activity recognition using wearables,'' {\em arXiv
+  preprint arXiv:1604.08880}, 2016.
+
+\bibitem{srivastava2014dropout}
+N.~Srivastava, G.~Hinton, A.~Krizhevsky, I.~Sutskever, and R.~Salakhutdinov,
+  ``Dropout: a simple way to prevent neural networks from overfitting,'' {\em
+  The Journal of Machine Learning Research}, vol.~15, no.~1, pp.~1929--1958,
+  2014.
+
+\bibitem{li2018comparison}
+F.~Li, K.~Shirahama, M.~A. Nisar, L.~K{\"o}ping, and M.~Grzegorzek,
+  ``Comparison of feature learning methods for human activity recognition using
+  wearable sensors,'' {\em Sensors}, vol.~18, no.~2, p.~679, 2018.
+
+\end{thebibliography}

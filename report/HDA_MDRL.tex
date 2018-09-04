@@ -1,0 +1,99 @@
+\documentclass[10pt, conference, journal]{IEEEtran}
+
+\usepackage{algorithm}
+\usepackage{algorithmicx}
+\usepackage{algpseudocode}
+%\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[T1]{fontenc}
+%\usepackage[utf8]{inputenc} % need UTF-8 encoding if you're under windows or you use TeX Studio
+\usepackage{xcolor}
+\usepackage{mathtools}
+\usepackage{graphicx}
+%\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{import}
+\usepackage{multirow}
+\usepackage{cite}
+\usepackage[export]{adjustbox}
+\usepackage{breqn}
+\usepackage{mathrsfs}
+\usepackage{acronym}
+%\usepackage[keeplastbox]{flushend}
+%\usepackage{setspace}
+\usepackage{stackengine}
+
+\renewcommand{\thetable}{\arabic{table}}
+\renewcommand{\thesubtable}{\alph{subtable}}
+
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\argmax}{arg\,max}
+
+\def\delequal{\mathrel{\ensurestackMath{\stackon[1pt]{=}{\scriptscriptstyle\Delta}}}}
+
+\graphicspath{{./figures/}}
+\setlength{\belowcaptionskip}{0mm}
+\setlength{\textfloatsep}{8pt}
+
+\newcommand{\eq}[1]{Eq.~\eqref{#1}}
+\newcommand{\fig}[1]{Fig.~\ref{#1}}
+\newcommand{\tab}[1]{Tab.~\ref{#1}}
+\newcommand{\secref}[1]{Section~\ref{#1}}
+
+\newcommand{\RomanNumeralCaps}[1]
+{\MakeUppercase{\romannumeral #1}}
+
+\newcommand\MD[1]{\textcolor{blue}{#1}}
+\newcommand\RL[1]{\textcolor{red}{#1}}
+
+%\renewcommand{\baselinestretch}{0.98}
+% \renewcommand{\bottomfraction}{0.8}
+% \setlength{\abovecaptionskip}{0pt}
+\setlength{\columnsep}{0.2in}
+
+% \IEEEoverridecommandlockouts\IEEEpubid{\makebox[\columnwidth]{PUT COPYRIGHT NOTICE HERE \hfill} \hspace{\columnsep}\makebox[\columnwidth]{ }} 
+
+\title{Deep Learning Techniques for Activity Recognition: Dealing with Inactivity}
+
+\author{Matteo Drago, Riccardo Lincetto$^\dag$
+\thanks{$^\dag$Department of Information Engineering, email: \{matteo.drago,riccardo.lincetto\}@studenti.unipd.it}
+%\thanks{$^\ddag$Department of Information Engineering, email: \{riccardo .lincetto\}@studenti.unipd.it}
+%\thanks{Special thanks / acknowledgement go here.}
+} 
+
+\IEEEoverridecommandlockouts
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+	
+With the increasing interest in deep learning techniques and its applications, also Human Activity Recognition (HAR) saw significant improvements; before neural networks were put into practice, most of the research activities on the field relied on hand-crafted features which, however, couldn't represent nor distinguish well enough complex and articulated movements. Moreover, the use of smart devices and wearable sensors brought the challenge to another level: dealing with high-dimensional and noisy time series while assuring optimal performances requires a detailed study and, most of all, a considerable computational effort.
+
+In our paper we present the design of an HAR architecture which implements convolutional layers in order to extract significant features from windows of samples, along with Long-Short Term Memory (LSTM) layers, suitable to exploit time dependencies among consecutive samples. For our study, we tried to minimize the collection of layers per network and thus the amount of parameters to train, which could be of great advantage in real time applications. In addition, we also decided to study how performances change if we split the process into two distinct phases: the first one that performs \textit{activity detection} while the last one \textit{activity classification}. The dataset that we used to assess the efficiency of our architectures is the OPPORTUNITY dataset.
+
+\end{abstract}
+
+\IEEEkeywords
+Human Activity Recognition, Machine Learning, Neural Networks, Motion Detection. 
+\endIEEEkeywords
+
+
+\input{Intro}
+
+\input{related}
+
+\input{model}
+
+\input{results}
+
+\input{conclusions}
+
+\bibliography{biblio}
+\bibliographystyle{ieeetr}
+
+\end{document}
+
+

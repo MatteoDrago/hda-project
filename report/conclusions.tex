@@ -1,12 +1,12 @@
-% !TEX root = template.tex
+% !TEX root = HDA_MDRL.tex
 
 \section{Concluding Remarks}
 \label{sec:conclusions}
 
-\red{This section should take max half a page.}
+In our project we realized from scratch two different pipelines to perform activity recognition. A comparison between the two is carried out using different models, which are inspired to the best ones in literature. This helped us understanding that there isn't a clear best choice from an accuracy point of view; in fact, in locomotion classification, results were slightly worse when the \textit{Null Class} was considered, while in gesture recognition it was the opposite, with a sensible decrease in accuracy when inactivity wasn't considered. Despite our deep study, still one must examine case by case when to use one model or the other, with respect to the discussion that we developed in section \ref{sec:model}.
 
-\MR{In many papers, here you find a summary of what done. It is basically an abstract where instead of using the present tense you use the past participle, as you refer to something that you have already developed in the previous sections. While I did it myself in the past, I now find it rather useless.}\\ 
+Future works could try to implement effectively the Two-Steps classification pipeline, by placing the classification model after the detection one: we tried ourselves, but results weren’t satisfactory enough to be reported here. A good approach to the problem could be trying to understand how the accuracies of the two single models add up when in cascade. In this paper in fact, when comparing the two pipelines, we didn’t keep into account the precision of the detection model in the Two-Step architecture; we considered instead only the classification performances without the \textit{Null Class} to provide an estimate of the accuracies achieved using only deep learning models. 
 
-\MR{\textbf{What I would like to see here is:} 1) a very short summary of what done, 2) some (possibly) intelligent observations on the relevance and {\it applicability} of your algorithms / findings, 3) what is still missing, and can be done in the future to extend your work. The idea is that this section should be {\it useful} and not just a repetition of the abstract (just \mbox{re-phrased} and written using a different tense...).}\\
+Another thing that is left to be done, is to try to overcome the class imbalance problem; a good proposal could be trying to replicate what has been done in \cite{japkowicz2002class}. In our work we only dealt with it for evaluation purposes, but something could be done also to improve the training phase.
 
-\MR{\textbf{Moreover:} being a project report, I would also like to see a specific paragraph specifying: 1) what you have learned, and 2) any difficulties you may have encountered.}
+This project was very helpful to us because we actually learned to code in python, we had to face different obstacles and learned that results are never what one would expect: we hoped in better results, for the advanced techniques used, and expected similar networks to have almost equal performances, which wasn't the case throughout our work.

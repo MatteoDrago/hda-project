@@ -1,17 +1,26 @@
-% !TEX root = template.tex
+% !TEX root = HDA_MDRL.tex
 
 \section{Introduction}
 \label{sec:introduction}
 
-\red{Maximum length for the whole report is 9 pages. Abstract, introduction and related works should take max two pages.}\\
+During the past decade, time series classification has captured growing interest thanks to the introduction of deep learning mechanisms, such as neural networks. These tools are indeed capable of identifying and learning signal features, which are then exploited for classification, without the need of human domain-knowledge: this is a huge step forward considering that features were traditionally hand-crafted.
+Human Activity Recognition (HAR) in particular has been fostered by the spread of powerful, efficient and affordable sensors, which nowadays are commonly found in mobile phones and wearable devices, with multiple applications, ranging from health care to gaming and virtual reality \cite{HAR-2013}.
+Wearable sensors allow us to collect and process a huge amount of signals, which are essential for deep neural networks (DNN) to work properly: in fact, in order for them to learn and for being accurate enough to be preferred over standard machine learning approaches, we need the input training set to be heterogeneous, meaningful and representative of the problem.
+For these reasons, HAR is not an easy classification problem: when dealing with on-body sensors, system performances heavily depends on human behaviour, which is a source of high variability; moreover, data collected from sensors is typically high-dimensional, multi-modal and subjected to noise, making the problem even more difficult from a machine learning perspective. 
 
-\MR{A good way of structuring the introduction is as follows: 
+In recent years, several ways of performing activity detection and classification have been proposed: in the literature there's no shortage of models.
+The trend has been to expand the power of networks, adding more and more layers: this resulted in more accurate models, that had to face though an increasing computational complexity. The computational power however is limited in real applications and excessive complexity might translate into impracticability. Moreover, as pointed out in \cite{Chavarriaga2013} and \cite{HAR-COMP2018}, despite the proliferation of models to perform activity detection and classification, the lack of common benchmarking data, and of detailed descriptions of the proposed models, prevented a fair comparison between different solutions.
+
+Considering also that the activity recognition problem has been already widely addressed by many authors, we decided to present a systematic comparison between two different commonly proposed types of pipeline.
+The two differ on how inactivity is handled: the first one tries to learn a representation of the signals where no action is performed, adding a \textit{Null Class} to the other activities; the second one instead splits the classification into two tasks, first deploying an activity detector that filters out inactivity signals and then classifying the remaining activities.
+Our study is meant to provide a baseline for future work, giving an idea on which system could be more appealing.
+In order to assess the efficiency of our models, that have been designed against the trend trying to minimize the number of trainable parameters, we used the OPPORTUNITY dataset \cite{Chavarriaga2013, ComplexAct-2010} which will be described in details in the following sections.
+
+In conclusion, the contributions of this paper are:
 \begin{itemize}
-\item one paragraph to introduce your work, describing the scenario {\it at large}, its relevance, to prepare the reader to what follows and convince her/him that the paper focuses on an important setup / problem. 
-\item a second paragraph where you immediately delve into the specific problem that is still to be faced, starting to point the finger towards your contribution. Here, you describe the importance of such problem, providing examples (through references) of previous solutions attempts, and of why these failed {\it to provide a complete answer}. This second paragraph should not be too long, as otherwise the reader will get bored and will abandon your paper... It should be concisely written, something like 4 to 5 lines.
-\item a third paragraph were you state what you do in the paper, this should also be concisely written and to the point. A good rule of thumb is to make it max 10 lines. Here, you should state up front 1) the problem you solve, 2) its importance, 3) the technique you use, 4) stress the novelty of such technique / what you do. 5) comment on how your work / results can be reused / exploited to achieve further technical or practical goals.
-\item after this, you provide an itemized list to summarize the paper contributions: maximum six items, maximum four lines each.
-\item you finish up by reporting the paper structure, this should be three to four lines. It is customary to do so, although I admit it may be of little use.\\
-\end{itemize}}
-
-\MR{Lately, I tend to write introduction plus abstract within a single page. This forces me to focus on the important messages that I want to deliver about the paper, leaving out all the blah blah. \textbf{Remember:} 1) {\it less is more}, 2) writing a compact ({\it snappy}) piece of technical text is much more difficult than writing with no space constraints.}
+	\item overview of the latest progresses of the state of the art;
+	\item implementation of those solutions;
+	\item comparison of two different approaches. 
+\end{itemize}
+ 
+The paper is organized as follows: section \ref{sec:related_work} provides a summary of the latest and more important works related to our studies; in section \ref{sec:processing_architecture} we start delving into the details of how we organized our HAR architecture, step by step; section \ref{sec:model} is dedicated to the description of the dataset and to the decisions we made in the preprocessing phase; finally in section \ref{sec:learning_framework} we are ready to describe meticulously the learning framework, while sections \ref{sec:results} and \ref{sec:conclusions} are for discussion of results and for drawing our conclusions. 
