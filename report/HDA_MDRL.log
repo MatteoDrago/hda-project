@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6630 64-bit) (preloaded format=pdflatex 2018.6.21)  3 SEP 2018 21:47
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6630 64-bit) (preloaded format=pdflatex 2018.6.21)  4 SEP 2018 08:52
 entering extended mode
 **./HDA_MDRL.tex
 (HDA_MDRL.tex
@@ -1188,11 +1188,85 @@ Underfull \hbox (badness 10000) in paragraph at lines 69--69
 t-
  []
 
-(Intro.tex) (related.tex [1{C:/Users/Riccardo/AppData/Local/MiKTeX/2.9/pdftex/c
-onfig/pdftex.map}
+(Intro.tex
+
+LaTeX Warning: Citation `HAR-2013' on page 1 undefined on input line 7.
 
 
-]) (model.tex [2]
+LaTeX Warning: Citation `Chavarriaga2013' on page 1 undefined on input line 12.
+
+
+
+LaTeX Warning: Citation `HAR-COMP2018' on page 1 undefined on input line 12.
+
+
+LaTeX Warning: Citation `Chavarriaga2013' on page 1 undefined on input line 17.
+
+
+
+LaTeX Warning: Citation `ComplexAct-2010' on page 1 undefined on input line 17.
+
+
+) (related.tex
+
+LaTeX Warning: Citation `ComplexAct-2010' on page 1 undefined on input line 5.
+
+
+LaTeX Warning: Citation `Chavarriaga2013' on page 1 undefined on input line 5.
+
+
+LaTeX Warning: Citation `Chavarriaga2013' on page 1 undefined on input line 6.
+
+
+Underfull \vbox (badness 2903) has occurred while \output is active []
+
+ [1{C:/Users/Riccardo/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}
+
+
+]
+
+LaTeX Warning: Citation `cao2012integrated' on page 2 undefined on input line 8
+.
+
+
+LaTeX Warning: Citation `japkowicz2002class' on page 2 undefined on input line 
+8.
+
+
+LaTeX Warning: Citation `hearst1998support' on page 2 undefined on input line 8
+.
+
+
+LaTeX Warning: Citation `yang2015deep' on page 2 undefined on input line 10.
+
+
+LaTeX Warning: Citation `bulling2014tutorial' on page 2 undefined on input line
+ 10.
+
+
+LaTeX Warning: Citation `hammerla2016deep' on page 2 undefined on input line 12
+.
+
+
+LaTeX Warning: Citation `srivastava2014dropout' on page 2 undefined on input li
+ne 12.
+
+
+LaTeX Warning: Citation `li2018comparison' on page 2 undefined on input line 14
+.
+
+
+LaTeX Warning: Citation `hammerla2016deep' on page 2 undefined on input line 14
+.
+
+
+LaTeX Warning: Citation `yang2015deep' on page 2 undefined on input line 14.
+
+
+LaTeX Warning: Citation `li2018comparison' on page 2 undefined on input line 16
+.
+
+) (model.tex [2]
 <figure/block_diag.png, id=17, 583.17876pt x 422.57875pt>
 File: figure/block_diag.png Graphic file (type png)
 <use figure/block_diag.png>
@@ -1215,11 +1289,16 @@ Underfull \vbox (badness 1152) has occurred while \output is active []
 .png (PNG copy)>]
 
 LaTeX Warning: No positions in optional float specifier.
-               Default added (so using `tbp') on input line 51.
+               Default added (so using `tbp') on input line 48.
 
 
-Overfull \hbox (0.67322pt too wide) in paragraph at lines 52--59
+Overfull \hbox (0.67322pt too wide) in paragraph at lines 49--56
 [][] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 70--71
+
  []
 
 ) (results.tex
@@ -1241,7 +1320,16 @@ File: figure/A_models_nullclass-eps-converted-to.pdf Graphic file (type pdf)
 Package pdftex.def Info: figure/A_models_nullclass-eps-converted-to.pdf  used o
 n input line 20.
 (pdftex.def)             Requested size: 156.18073pt x 143.33296pt.
- [4]
+
+
+LaTeX Warning: Citation `Chavarriaga2013' on page 4 undefined on input line 25.
+
+
+
+LaTeX Warning: Citation `Chavarriaga2013' on page 4 undefined on input line 25.
+
+
+[4]
 Package epstopdf Info: Source file: <figure/A_models_nonullclass.eps>
 (epstopdf)                    date: 2018-09-03 10:50:21
 (epstopdf)                    size: 37771 bytes
@@ -1278,6 +1366,14 @@ File: figure/B_models_nullclass-eps-converted-to.pdf Graphic file (type pdf)
 Package pdftex.def Info: figure/B_models_nullclass-eps-converted-to.pdf  used o
 n input line 40.
 (pdftex.def)             Requested size: 156.18073pt x 143.33296pt.
+
+
+LaTeX Warning: Citation `Chavarriaga2013' on page 5 undefined on input line 45.
+
+
+
+LaTeX Warning: Citation `HAR-COMP2018' on page 5 undefined on input line 47.
+
 Package epstopdf Info: Source file: <figure/B_models_nonullclass.eps>
 (epstopdf)                    date: 2018-09-03 10:50:21
 (epstopdf)                    size: 38140 bytes
@@ -1296,63 +1392,12 @@ File: figure/B_models_nonullclass-eps-converted-to.pdf Graphic file (type pdf)
 Package pdftex.def Info: figure/B_models_nonullclass-eps-converted-to.pdf  used
  on input line 51.
 (pdftex.def)             Requested size: 156.18073pt x 143.33296pt.
-) (conclusions.tex) (HDA_MDRL.bbl [5 <./figure/A_models_nullclass-eps-converted
--to.pdf> <./figure/A_models_nonullclass-eps-converted-to.pdf> <./figure/B_model
-s_nullclass-eps-converted-to.pdf> <./figure/B_models_nonullclass-eps-converted-
-to.pdf>]
+) (conclusions.tex [5 <./figure/A_models_nullclass-eps-converted-to.pdf> <./fig
+ure/A_models_nonullclass-eps-converted-to.pdf> <./figure/B_models_nullclass-eps
+-converted-to.pdf>]
 
-! Package inputenc Error: Keyboard character used is undefined
-(inputenc)                in inputencoding `utf8'.
-
-See the inputenc package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.15 F.~Li, K.~Shirahama, M.~A. Nisar, L.~Kö
-                                            ping, and M.~Grzegorzek, ``Compa...
-
-You need to provide a definition with \DeclareInputText 
-or \DeclareInputMath before using this key.
-
-
-! Package inputenc Error: Keyboard character used is undefined
-(inputenc)                in inputencoding `utf8'.
-
-See the inputenc package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.20 ....~Calatroni, M.~Rossi, T.~Holleczek, K.~Fö
-                                                  rster, G.~Tröster,
-You need to provide a definition with \DeclareInputText 
-or \DeclareInputMath before using this key.
-
-
-! Package inputenc Error: Keyboard character used is undefined
-(inputenc)                in inputencoding `utf8'.
-
-See the inputenc package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.20 ...M.~Rossi, T.~Holleczek, K.~Förster, G.~Trö
-                                                  ster,
-You need to provide a definition with \DeclareInputText 
-or \DeclareInputMath before using this key.
-
-
-! Package inputenc Error: Unicode char àn, (U+9A)
-(inputenc)                not set up for use with LaTeX.
-
-See the inputenc package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.23   J.~d.~R.~Millàn,
-                        ``Collecting complex activity datasets in highly rich
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
+LaTeX Warning: Citation `japkowicz2002class' on page 6 undefined on input line 
+10.
 
 )
 
@@ -1368,30 +1413,33 @@ Before submitting the final camera ready copy, remember to:
 
 [6
 
-] (HDA_MDRL.aux) ) 
-Here is how much of TeX's memory you used:
- 18135 strings out of 493305
- 308863 string characters out of 3138865
- 361079 words of memory out of 3000000
- 21429 multiletter control sequences out of 15000+200000
- 643303 words of font info for 152 fonts, out of 3000000 for 9000
- 1141 hyphenation exceptions out of 8191
- 42i,10n,77p,1571b,347s stack positions out of 5000i,500n,10000p,200000b,50000s
-{C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/base/8r.enc}<C:/
-Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Program 
-Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Program Files/Mi
-KTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi5.pfb><C:/Program Files/MiKTeX 2.9/
-fonts/type1/public/amsfonts/cm/cmmi7.pfb><C:/Program Files/MiKTeX 2.9/fonts/typ
-e1/public/amsfonts/cm/cmr10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public
-/amsfonts/cm/cmr7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/
-cm/cmsy10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy6
-.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy7.pfb><C:/
-Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy8.pfb><C:/Program F
-iles/MiKTeX 2.9/fonts/type1/urw/times/utmb8a.pfb><C:/Program Files/MiKTeX 2.9/f
-onts/type1/urw/times/utmbi8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/t
-imes/utmr8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/times/utmri8a.pfb>
+ <./figure/B_models_nonullclass-eps-converted-to.pdf>] (HDA_MDRL.aux)
 
-Output written on HDA_MDRL.pdf (6 pages, 474789 bytes).
+LaTeX Warning: There were undefined references.
+
+ ) 
+Here is how much of TeX's memory you used:
+ 18119 strings out of 493305
+ 308564 string characters out of 3138865
+ 362040 words of memory out of 3000000
+ 21416 multiletter control sequences out of 15000+200000
+ 643274 words of font info for 152 fonts, out of 3000000 for 9000
+ 1141 hyphenation exceptions out of 8191
+ 42i,10n,77p,1567b,347s stack positions out of 5000i,500n,10000p,200000b,50000s
+{C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/base/8r.enc}<C:/Program Files/Mi
+KTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Program Files/MiKTeX 2.9
+/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Program Files/MiKTeX 2.9/fonts/t
+ype1/public/amsfonts/cm/cmmi5.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/publ
+ic/amsfonts/cm/cmmi7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfon
+ts/cm/cmr10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr
+7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C
+:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy6.pfb><C:/Program
+ Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy7.pfb><C:/Program Files/Mi
+KTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy8.pfb><C:/Program Files/MiKTeX 2.9/
+fonts/type1/urw/times/utmb8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/t
+imes/utmbi8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/times/utmr8a.pfb>
+<C:/Program Files/MiKTeX 2.9/fonts/type1/urw/times/utmri8a.pfb>
+Output written on HDA_MDRL.pdf (6 pages, 471659 bytes).
 PDF statistics:
  271 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
