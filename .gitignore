@@ -2,3 +2,12 @@
 .ipynb_checkpoints/HDA_P3-checkpoint.ipynb
 /data_temp
 /data_temp/*.*
+/prep/*
+/code/data/*
+/code/Task B/data
+/papers/*
+
+code/.floydexpt
+code/floyd.yml
+code/.floydignore
+code/Task A/data/models/*
