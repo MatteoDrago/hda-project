@@ -13,7 +13,7 @@ from keras.utils import to_categorical
 subject = [1,2,3,4]
 task = "A"    # choose between "A" or "B"
 model_names = ["Convolutional", "Convolutional1DRecurrent", "Convolutional2DRecurrent", "ConvolutionalDeepRecurrent"]
-data_folder = "../data/full/"
+data_folder = "./data/full/"
 window_size = 15
 stride = 5
 GPU = True
