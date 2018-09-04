@@ -99,7 +99,7 @@ for model_name in model_names:
         # keep highest f1-score
         if score_OS_best > score_OS:
             score_OS = score_OS_best
-            print("\nResults for best "+ save_model_name + ":\n", classification_report(Y_test, Y_pred))
+            print("\nResults for best "+ save_model_name + ":\n", classification_report(Y_test, Y_pred_best))
         else:
             print("\nResults for last "+ save_model_name + ":\n", classification_report(Y_test, Y_pred))
 
@@ -158,7 +158,7 @@ for model_name in model_names:
         # keep highest f1-score
         if score_TSD_best > score_TSD:
             score_TSD = score_TSD_best
-            print("\nResults for best "+ save_model_name + ":\n", classification_report(Y_test, Y_pred))
+            print("\nResults for best "+ save_model_name + ":\n", classification_report(Y_test, Y_pred_best))
         else:
             print("\nResults for last "+ save_model_name + ":\n", classification_report(Y_test, Y_pred))
 
@@ -217,7 +217,7 @@ for model_name in model_names:
         # keep highest f1-score
         if score_TSC_best > score_TSC:
             score_TSC = score_TSC_best
-            print("\nResults for best "+ save_model_name + ":\n", classification_report(Y_test, Y_pred))
+            print("\nResults for best "+ save_model_name + ":\n", classification_report(Y_test, Y_pred_best))
         else:
             print("\nResults for last "+ save_model_name + ":\n", classification_report(Y_test, Y_pred))
 
