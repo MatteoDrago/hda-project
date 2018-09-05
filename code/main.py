@@ -11,8 +11,8 @@ from keras.utils import to_categorical
 
 # PARAMETERS ########################################################################################################
 subject = [1,2,3,4]
-tasks = ["A","B"]
-model_names = ["Convolutional2DRecurrent", "ConvolutionalDeepRecurrent"] #"Convolutional", "Convolutional1DRecurrent", 
+tasks = ["B"]
+model_names = ["ConvolutionalDeepRecurrent"]#["Convolutional", "Convolutional1DRecurrent", "Convolutional2DRecurrent", "ConvolutionalDeepRecurrent"]
 data_folder = "./data/full/"
 window_size = 15
 stride = 5
