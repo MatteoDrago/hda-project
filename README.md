@@ -4,7 +4,7 @@ Human Data Analytics project - Matteo Drago, Riccardo Lincetto
 ## Deep Learning Techniques for Gersute Recognition: Dealing with Inactivity
 
 To run the code download the OPPORTUNITY activity recognition dataset at:
-https://archive.ics.uci.edu/ml/datasets/opportunity+activity+recognition
+https://archive.ics.uci.edu/ml/datasets/opportunity+activity+recognition <br />
 The position of the dataset then has to be provided to the code in preprocessing phase.
 
 The repository is organised as follows:
