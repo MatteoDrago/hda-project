@@ -1,6 +1,7 @@
 import preprocessing
 import models
 import utils
+import launch
 import os
 import numpy as np
 from sklearn.metrics import classification_report, f1_score
@@ -10,15 +11,16 @@ from keras.callbacks import ModelCheckpoint, ReduceLROnPlateau
 from keras.utils import to_categorical
 
 # PARAMETERS ########################################################################################################
-subject = [1,2,3,4]
-tasks = ["B"]
-model_names = ["ConvolutionalDeepRecurrent"]#["Convolutional", "Convolutional1DRecurrent", "Convolutional2DRecurrent", "ConvolutionalDeepRecurrent"]
+subjects = [23]#[1,2,3,4,23]
+tasks = ["A","B"]
+model_names = ["Convolutional", "Convolutional1DRecurrent", "Convolutional2DRecurrent", "ConvolutionalDeepRecurrent"]
 data_folder = "./data/full/"
-window_size = 15
+window_size = 10
 stride = 5
 GPU = True
-epochs = 10
+epochs = 5
 batch_size = 32
+print_info = False
 #####################################################################################################################
 
 # create folder to store temporary data and results
@@ -29,7 +31,9 @@ if not(os.path.exists("./data/models")):
 if not(os.path.exists("./data/results")):
     os.mkdir("./data/results")
 
+# loop through tasks, models and subjects
 for task in tasks:
+
     # select labels according to the task selected
     if task == "A":
         label = 0
@@ -38,57 +42,18 @@ for task in tasks:
     else:
         print("Error: invalid task.")
 
-    # the program is repeated for all models in the list
     for model_name in model_names:
 
-        # and for all subjects in the list
-        for s in subject:
-            print("\n\nSubcject", str(s))
+        for subject in subjects:
+            print("\n\nSubcject", str(subject))
 
 
             # ONE-SHOT CLASSIFICATION
             print("One-shot classification")
 
-            # preprocessing
-            X_train, Y_train, X_test, Y_test, n_features, n_classes, class_weights = preprocessing.loadData(subject=s,
-                                                                                                            label=label,
-                                                                                                            folder=data_folder,
-                                                                                                            window_size=window_size,
-                                                                                                            stride=stride,
-                                                                                                            make_binary=False,
-                                                                                                            null_class=True,
-                                                                                                            print_info=False)
-
-            # model
-            if model_name == "Convolutional":
-                model = models.Convolutional((window_size, n_features), n_classes, print_info=False)
-            elif model_name == "Convolutional1DRecurrent":
-                model = models.Convolutional1DRecurrent((window_size, n_features), n_classes, GPU=GPU, print_info=False)
-            elif model_name == "Convolutional2DRecurrent":
-                model = models.Convolutional2DRecurrent((window_size, n_features, 1), n_classes, GPU=GPU, print_info=False)
-                # reshaping for 2D convolutional model
-                X_train = X_train.reshape(X_train.shape[0], window_size, n_features, 1)
-                X_test = X_test.reshape(X_test.shape[0], window_size, n_features, 1)
-            elif model_name == "ConvolutionalDeepRecurrent":
-                model = models.ConvolutionalDeepRecurrent((window_size, n_features), n_classes, GPU=GPU, print_info=False)
-            else:
-                print("Model not found.")
-                break
-            model.compile(optimizer = Adam(lr=0.001), loss = "categorical_crossentropy", metrics = ["accuracy"])
-            save_model_name = task + "_" + model_name + "_OS_" + str(s)
-            filepath = './data/models/'+save_model_name+'.hdf5'
-            print("Model:", save_model_name, "\nLocation:", filepath, "\n")
-
-            # training
-            checkpointer = ModelCheckpoint(filepath=filepath, verbose=1, save_best_only=True)
-            lr_reducer = ReduceLROnPlateau(factor=0.1, patience=5, min_lr=0.00001, verbose=1)
-            model.fit(x = X_train, 
-                    y = to_categorical(Y_train), 
-                    epochs = epochs, 
-                    batch_size = batch_size,
-                    verbose = 1,
-                    validation_data=(X_test, to_categorical(Y_test)),
-                    callbacks=[checkpointer, lr_reducer])
+            model, X_test, Y_test, filepath, save_model_name, n_features = launch.oneshot_classification(subject, task, model_name, data_folder,
+                                                                                                         window_size=window_size, stride=stride, epochs=epochs,
+                                                                                                         batch_size=batch_size, GPU=GPU, print_info=print_info)
 
             # results
             # last model
@@ -115,46 +80,9 @@ for task in tasks:
             # TWO-STEPS CLASSIFICATION - DETECTION
             print("Two-steps classification - detecion")
 
-            # preprocessing
-            X_train, Y_train, X_test, Y_test, n_features, n_classes, class_weights = preprocessing.loadData(subject=s,
-                                                                                                            label=label,
-                                                                                                            folder=data_folder,
-                                                                                                            window_size=window_size,
-                                                                                                            stride=stride,
-                                                                                                            make_binary=True,
-                                                                                                            null_class=True,
-                                                                                                            print_info=False)
-
-            # model
-            if model_name == "Convolutional":
-                model = models.Convolutional((window_size, n_features), n_classes, print_info=False)
-            elif model_name == "Convolutional1DRecurrent":
-                model = models.Convolutional1DRecurrent((window_size, n_features), n_classes, GPU=GPU, print_info=False)
-            elif model_name == "Convolutional2DRecurrent":
-                model = models.Convolutional2DRecurrent((window_size, n_features, 1), n_classes, GPU=GPU, print_info=False)
-                # reshaping for 2D convolutional model
-                X_train = X_train.reshape(X_train.shape[0], window_size, n_features, 1)
-                X_test = X_test.reshape(X_test.shape[0], window_size, n_features, 1)
-            elif model_name == "ConvolutionalDeepRecurrent":
-                model = models.ConvolutionalDeepRecurrent((window_size, n_features), n_classes, GPU=GPU, print_info=False)
-            else:
-                print("Model not found.")
-                break
-            model.compile(optimizer = Adam(lr=0.001), loss = "categorical_crossentropy", metrics = ["accuracy"])
-            save_model_name = task + "_" + model_name + "_TSD_" + str(s)
-            filepath = './data/models/'+save_model_name+'.hdf5'
-            print("Model:", save_model_name, "\nLocation:", filepath, "\n")
-
-            # training
-            checkpointer = ModelCheckpoint(filepath=filepath, verbose=1, save_best_only=True)
-            lr_reducer = ReduceLROnPlateau(factor=0.1, patience=5, min_lr=0.00001, verbose=1)
-            model.fit(x = X_train, 
-                    y = to_categorical(Y_train), 
-                    epochs = epochs, 
-                    batch_size = batch_size,
-                    verbose = 1,
-                    validation_data=(X_test, to_categorical(Y_test)),
-                    callbacks=[checkpointer, lr_reducer])
+            model, X_test, Y_test, filepath, save_model_name, n_features = launch.cascade_detection(subject, task, model_name, data_folder,
+                                                                                                    window_size=window_size, stride=stride, epochs=epochs,
+                                                                                                    batch_size=batch_size, GPU=GPU, print_info=False)
 
             # results
             # last model
@@ -179,46 +107,9 @@ for task in tasks:
             # TWO-STEPS CLASSIFICATION - CLASSIFICATION
             print("Two-steps classification - classification")
 
-            # preprocessing
-            X_train, Y_train, X_test, Y_test, n_features, n_classes, class_weights = preprocessing.loadData(subject=s,
-                                                                                                            label=label,
-                                                                                                            folder=data_folder,
-                                                                                                            window_size=window_size,
-                                                                                                            stride=stride,
-                                                                                                            make_binary=False,
-                                                                                                            null_class=False,
-                                                                                                            print_info=False)
-
-            # model
-            if model_name == "Convolutional":
-                model = models.Convolutional((window_size, n_features), n_classes, print_info=False)
-            elif model_name == "Convolutional1DRecurrent":
-                model = models.Convolutional1DRecurrent((window_size, n_features), n_classes, GPU=GPU, print_info=False)
-            elif model_name == "Convolutional2DRecurrent":
-                model = models.Convolutional2DRecurrent((window_size, n_features, 1), n_classes, GPU=GPU, print_info=False)
-                # reshaping for 2D convolutional model
-                X_train = X_train.reshape(X_train.shape[0], window_size, n_features, 1)
-                X_test = X_test.reshape(X_test.shape[0], window_size, n_features, 1)
-            elif model_name == "ConvolutionalDeepRecurrent":
-                model = models.ConvolutionalDeepRecurrent((window_size, n_features), n_classes, GPU=GPU, print_info=False)
-            else:
-                print("Model not found.")
-                break
-            model.compile(optimizer = Adam(lr=0.001), loss = "categorical_crossentropy", metrics = ["accuracy"])
-            save_model_name = task + "_" + model_name + "_TSC_" + str(s)
-            filepath = './data/models/'+save_model_name+'.hdf5'
-            print("Model:", save_model_name, "\nLocation:", filepath, "\n")
-
-            # training
-            checkpointer = ModelCheckpoint(filepath=filepath, verbose=1, save_best_only=True)
-            lr_reducer = ReduceLROnPlateau(factor=0.1, patience=5, min_lr=0.00001, verbose=1)
-            model.fit(x = X_train, 
-                    y = to_categorical(Y_train), 
-                    epochs = epochs, 
-                    batch_size = batch_size,
-                    verbose = 1,
-                    validation_data=(X_test, to_categorical(Y_test)),
-                    callbacks=[checkpointer, lr_reducer])
+            model, X_test, Y_test, filepath, save_model_name, n_features = launch.cascade_classification(subject, task, model_name, data_folder,
+                                                                                                         window_size=window_size, stride=stride, epochs=epochs,
+                                                                                                         batch_size=batch_size, GPU=GPU, print_info=False)
 
             # results
             # last model
@@ -239,7 +130,7 @@ for task in tasks:
             # CASCADE (Two Steps classification)
 
             # get test set
-            X_test = preprocessing.loadData(subject=s,
+            X_test = preprocessing.loadData(subject=subject,
                                             label=label,
                                             folder=data_folder,
                                             window_size=window_size,
@@ -259,5 +150,5 @@ for task in tasks:
             score_TS = f1_score(Y_true, Y_TS, average='weighted')
             print("Two-Steps results:\n", classification_report(Y_true, Y_TS))
 
-            # store results
-            np.savetxt("./data/results/"+task+"_"+model_name+"_"+str(s)+".txt", [score_OS, score_TSD, score_TSC, score_TS], fmt="%1.4f")  # try saving as text
+            # store results as text
+            np.savetxt("./data/results/"+task+"_"+model_name+"_"+str(subject)+".txt", [score_OS, score_TSD, score_TSC, score_TS], fmt="%1.4f")

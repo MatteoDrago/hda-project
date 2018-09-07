@@ -21,14 +21,24 @@ def oneshot_classification(subject, task, model_name, data_folder, window_size=1
         label = 6
     else:
         print("Error: invalid task.")
-    X_train, Y_train, X_test, Y_test, n_features, n_classes, class_weights = preprocessing.loadData(subject=subject,
-                                                                                                    label=label,
-                                                                                                    folder=data_folder,
-                                                                                                    window_size=window_size,
-                                                                                                    stride=stride,
-                                                                                                    make_binary=False,
-                                                                                                    null_class=True,
-                                                                                                    print_info=print_info)
+    
+    if subject == 23:
+        X_train, Y_train, X_test, Y_test, n_features, n_classes, class_weights = preprocessing.loadDataMultiple(label=label,
+                                                                                                                folder=data_folder,
+                                                                                                                window_size=window_size,
+                                                                                                                stride=stride,
+                                                                                                                make_binary=False,
+                                                                                                                null_class=True,
+                                                                                                                print_info=print_info)
+    else:
+        X_train, Y_train, X_test, Y_test, n_features, n_classes, class_weights = preprocessing.loadData(subject=subject,
+                                                                                                        label=label,
+                                                                                                        folder=data_folder,
+                                                                                                        window_size=window_size,
+                                                                                                        stride=stride,
+                                                                                                        make_binary=False,
+                                                                                                        null_class=True,
+                                                                                                        print_info=print_info)
 
     # model
     if model_name == "Convolutional":
@@ -71,14 +81,23 @@ def cascade_detection(subject, task, model_name, data_folder, window_size=15, st
         label = 6
     else:
         print("Error: invalid task.")
-    X_train, Y_train, X_test, Y_test, n_features, n_classes, class_weights = preprocessing.loadData(subject=subject,
-                                                                                                    label=label,
-                                                                                                    folder=data_folder,
-                                                                                                    window_size=window_size,
-                                                                                                    stride=stride,
-                                                                                                    make_binary=True,
-                                                                                                    null_class=True,
-                                                                                                    print_info=False)
+    if subject == 23:
+        X_train, Y_train, X_test, Y_test, n_features, n_classes, class_weights = preprocessing.loadDataMultiple(label=label,
+                                                                                                                folder=data_folder,
+                                                                                                                window_size=window_size,
+                                                                                                                stride=stride,
+                                                                                                                make_binary=True,
+                                                                                                                null_class=True,
+                                                                                                                print_info=print_info)
+    else:
+        X_train, Y_train, X_test, Y_test, n_features, n_classes, class_weights = preprocessing.loadData(subject=subject,
+                                                                                                        label=label,
+                                                                                                        folder=data_folder,
+                                                                                                        window_size=window_size,
+                                                                                                        stride=stride,
+                                                                                                        make_binary=True,
+                                                                                                        null_class=True,
+                                                                                                        print_info=False)
 
     # model
     if model_name == "Convolutional":
@@ -121,14 +140,23 @@ def cascade_classification(subject, task, model_name, data_folder, window_size=1
         label = 6
     else:
         print("Error: invalid task.")
-    X_train, Y_train, X_test, Y_test, n_features, n_classes, class_weights = preprocessing.loadData(subject=subject,
-                                                                                                    label=label,
-                                                                                                    folder=data_folder,
-                                                                                                    window_size=window_size,
-                                                                                                    stride=stride,
-                                                                                                    make_binary=False,
-                                                                                                    null_class=False,
-                                                                                                    print_info=False)
+    if subject == 23:
+        X_train, Y_train, X_test, Y_test, n_features, n_classes, class_weights = preprocessing.loadDataMultiple(label=label,
+                                                                                                                folder=data_folder,
+                                                                                                                window_size=window_size,
+                                                                                                                stride=stride,
+                                                                                                                make_binary=False,
+                                                                                                                null_class=True,
+                                                                                                                print_info=print_info)
+    else:
+        X_train, Y_train, X_test, Y_test, n_features, n_classes, class_weights = preprocessing.loadData(subject=subject,
+                                                                                                        label=label,
+                                                                                                        folder=data_folder,
+                                                                                                        window_size=window_size,
+                                                                                                        stride=stride,
+                                                                                                        make_binary=False,
+                                                                                                        null_class=False,
+                                                                                                        print_info=False)
 
     # model
     if model_name == "Convolutional":
