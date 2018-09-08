@@ -11,7 +11,7 @@ from keras.callbacks import ModelCheckpoint, ReduceLROnPlateau
 from keras.utils import to_categorical
 
 # PARAMETERS ########################################################################################################
-subjects = [23]#[1,2,3,4,23]
+subjects = [1,2,3,4,23]
 tasks = ["A","B"]
 model_names = ["Convolutional", "Convolutional1DRecurrent", "Convolutional2DRecurrent", "ConvolutionalDeepRecurrent"]
 data_folder = "./data/full/"
@@ -20,6 +20,7 @@ stride = 5
 GPU = True
 epochs = 5
 batch_size = 32
+balcance_classes = False
 print_info = False
 #####################################################################################################################
 
@@ -45,90 +46,48 @@ for task in tasks:
     for model_name in model_names:
 
         for subject in subjects:
-            print("\n\nSubcject", str(subject))
-
 
             # ONE-SHOT CLASSIFICATION
+            print("\n\nCurrent configuration:  Task " + task + ";  Model " + model_name + ";  Subject", str(subject))
             print("One-shot classification")
-
-            model, X_test, Y_test, filepath, save_model_name, n_features = launch.oneshot_classification(subject, task, model_name, data_folder,
-                                                                                                         window_size=window_size, stride=stride, epochs=epochs,
-                                                                                                         batch_size=batch_size, GPU=GPU, print_info=print_info)
-
+            # preprocessing, model creation and training
+            model, X_test, Y_test, filepath, save_model_name = launch.oneshot_classification(subject, task, model_name, data_folder,
+                                                                                             window_size=window_size, stride=stride, epochs=epochs,
+                                                                                             batch_size=batch_size, balcance_classes=False,
+                                                                                             GPU=GPU, print_info=print_info)
             # results
-            # last model
-            Y_pred = model.predict_classes(X_test)
-            score_OS = f1_score(Y_test, Y_pred, average='weighted')
-            # best model
-            model_best = load_model(filepath)
-            Y_pred_best = model_best.predict_classes(X_test)
-            score_OS_best = f1_score(Y_test, Y_pred_best, average='weighted')
-            # keep highest f1-score
-            if score_OS_best > score_OS:
-                score_OS = score_OS_best
-                print("\nResults for best "+ save_model_name + ":\n", classification_report(Y_test, Y_pred_best))
-                # save for future use
-                Y_true = Y_test
-                Y_OS = Y_pred_best
-            else:
-                print("\nResults for last "+ save_model_name + ":\n", classification_report(Y_test, Y_pred))
-                # save for future use
-                Y_true = Y_test
-                Y_OS = Y_pred
+            Y_pred_os, score_os = launch.evaluation(model, X_test, Y_test, filepath, save_model_name)
+            # save for future use
+            Y_true = Y_test
 
 
-            # TWO-STEPS CLASSIFICATION - DETECTION
-            print("Two-steps classification - detecion")
-
-            model, X_test, Y_test, filepath, save_model_name, n_features = launch.cascade_detection(subject, task, model_name, data_folder,
-                                                                                                    window_size=window_size, stride=stride, epochs=epochs,
-                                                                                                    batch_size=batch_size, GPU=GPU, print_info=False)
-
+            # ACTIVITY DETECTION
+            print("\n\nCurrent configuration:  Task " + task + ";  Model " + model_name + ";  Subject", str(subject))
+            print("Activity detecion")
+            # preprocessing, model creation and training
+            model, X_test, Y_test, filepath, save_model_name = launch.cascade_detection(subject, task, model_name, data_folder,
+                                                                                        window_size=window_size, stride=stride, epochs=epochs,
+                                                                                        batch_size=batch_size, balcance_classes=balcance_classes,
+                                                                                        GPU=GPU, print_info=False)
             # results
-            # last model
-            Y_pred = model.predict_classes(X_test)
-            score_TSD = f1_score(Y_test, Y_pred, average='weighted')
-            # best model
-            model_best = load_model(filepath)
-            Y_pred_best = model_best.predict_classes(X_test)
-            score_TSD_best = f1_score(Y_test, Y_pred_best, average='weighted')
-            # keep highest f1-score
-            if score_TSD_best > score_TSD:
-                score_TSD = score_TSD_best
-                print("\nResults for best "+ save_model_name + ":\n", classification_report(Y_test, Y_pred_best))
-                # save for future use
-                Y_det = Y_pred_best
-            else:
-                print("\nResults for last "+ save_model_name + ":\n", classification_report(Y_test, Y_pred))
-                # save for future use
-                Y_det = Y_pred
+            Y_pred_ad, score_ad = launch.evaluation(model, X_test, Y_test, filepath, save_model_name)
 
             
-            # TWO-STEPS CLASSIFICATION - CLASSIFICATION
-            print("Two-steps classification - classification")
-
-            model, X_test, Y_test, filepath, save_model_name, n_features = launch.cascade_classification(subject, task, model_name, data_folder,
-                                                                                                         window_size=window_size, stride=stride, epochs=epochs,
-                                                                                                         batch_size=batch_size, GPU=GPU, print_info=False)
-
+            # ACTIVITY CLASSIFICATION
+            print("\n\nCurrent configuration:  Task " + task + ";  Model " + model_name + ";  Subject", str(subject))
+            print("Activity classification")
+            # preprocessing, model creation and training
+            model, X_test, Y_test, filepath, save_model_name = launch.cascade_classification(subject, task, model_name, data_folder,
+                                                                                             window_size=window_size, stride=stride, epochs=epochs,
+                                                                                             batch_size=batch_size, balcance_classes=balcance_classes,
+                                                                                             GPU=GPU, print_info=False)
             # results
-            # last model
-            Y_pred = model.predict_classes(X_test)
-            score_TSC = f1_score(Y_test, Y_pred, average='weighted')
-            # best model
-            model_best = load_model(filepath)
-            Y_pred_best = model_best.predict_classes(X_test)
-            score_TSC_best = f1_score(Y_test, Y_pred_best, average='weighted')
-            # keep highest f1-score
-            if score_TSC_best > score_TSC:
-                score_TSC = score_TSC_best
-                print("\nResults for best "+ save_model_name + ":\n", classification_report(Y_test, Y_pred_best))
-            else:
-                print("\nResults for last "+ save_model_name + ":\n", classification_report(Y_test, Y_pred))
+            Y_pred_ac, score_ac = launch.evaluation(model, X_test, Y_test, filepath, save_model_name)
 
             
-            # CASCADE (Two Steps classification)
-
+            # CASCADE: DETECTION + CLASSIFICATION
+            print("\n\nCurrent configuration:  Task " + task + ";  Model " + model_name + ";  Subject", str(subject))
+            print("Cascade: detecion + classification")
             # get test set
             if subject == 23:
                 X_test = preprocessing.loadDataMultiple(label=label,
@@ -147,17 +106,16 @@ for task in tasks:
                                                 make_binary=False,
                                                 null_class=True,
                                                 print_info=print_info)[2]
-
             # mask
-            mask = (Y_det == 1)
+            mask = (Y_pred_ad == 1)
             activity_windows = X_test[mask, :, :]
             if model_name == "Convolutional2DRecurrent":
-                activity_windows = activity_windows.reshape(activity_windows.shape[0], window_size, n_features, 1)
-            Y_clas = model_best.predict_classes(activity_windows) + 1
-            Y_TS = Y_det
-            Y_TS[mask] = Y_clas
-            score_TS = f1_score(Y_true, Y_TS, average='weighted')
-            print("Two-Steps results:\n", classification_report(Y_true, Y_TS))
+                activity_windows = activity_windows.reshape(activity_windows.shape[0], window_size, X_test.shape[1], 1)
+            Y_casc_ac = model.predict_classes(activity_windows) + 1  # last model saved is "activity classification"
+            Y_casc = Y_pred_ad
+            Y_casc[mask] = Y_casc_ac
+            score_casc = f1_score(Y_true, Y_casc, average='weighted')
+            print("Two-Steps results:\n", classification_report(Y_true, Y_casc))
 
             # store results as text
-            np.savetxt("./data/results/"+task+"_"+model_name+"_"+str(subject)+".txt", [score_OS, score_TSD, score_TSC, score_TS], fmt="%1.4f")
+            np.savetxt("./data/results/"+task+"_"+model_name+"_"+str(subject)+".txt", [score_os, score_ad, score_ac, score_casc], fmt="%1.4f")

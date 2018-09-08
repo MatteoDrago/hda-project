@@ -1,13 +1,18 @@
-# This script contains functions that can be used to launch preprocessing and training 
+# This script contains functions that can be used to launch preprocessing and training and testing
 # of the three different types of classifications described in the paper.
 
 import preprocessing
 import models
 import utils
+import os
+import numpy as np
 from sklearn.metrics import classification_report, f1_score
+from keras.models import load_model
 from keras.optimizers import Adam
 from keras.callbacks import ModelCheckpoint, ReduceLROnPlateau
 from keras.utils import to_categorical
+
+# Methods for preprocessing, model compilation and training
 
 def oneshot_classification(subject, task, model_name, data_folder, window_size=15, stride=5, epochs=15, batch_size=32, balcance_classes=False, GPU=False, print_info=False):
 
@@ -67,7 +72,7 @@ def oneshot_classification(subject, task, model_name, data_folder, window_size=1
               validation_data=(X_test, to_categorical(Y_test)),
               callbacks=[checkpointer, lr_reducer])
 
-    return model, X_test, Y_test, filepath, save_model_name, n_features
+    return model, X_test, Y_test, filepath, save_model_name
 
 def cascade_detection(subject, task, model_name, data_folder, window_size=15, stride=5, epochs=15, batch_size=32, balcance_classes=False, GPU=False, print_info=False):
 
@@ -126,7 +131,7 @@ def cascade_detection(subject, task, model_name, data_folder, window_size=15, st
               validation_data=(X_test, to_categorical(Y_test)),
               callbacks=[checkpointer, lr_reducer])
     
-    return model, X_test, Y_test, filepath, save_model_name, n_features
+    return model, X_test, Y_test, filepath, save_model_name
 
 def cascade_classification(subject, task, model_name, data_folder, window_size=15, stride=5, epochs=15, batch_size=32, balcance_classes=False, GPU=False, print_info=False):
 
@@ -186,4 +191,25 @@ def cascade_classification(subject, task, model_name, data_folder, window_size=1
               callbacks=[checkpointer, lr_reducer])
 
     
-    return model, X_test, Y_test, filepath, save_model_name, n_features
+    return model, X_test, Y_test, filepath, save_model_name
+
+# Method for testing and evaluating results
+
+def evaluation(model, X_test, Y_test, filepath, save_model_name):
+
+    # last model
+    Y_pred = model.predict_classes(X_test)
+    score = f1_score(Y_test, Y_pred, average='weighted')
+
+    # best model
+    model_best = load_model(filepath)
+    Y_pred_best = model_best.predict_classes(X_test)
+    score_best = f1_score(Y_test, Y_pred_best, average='weighted')
+
+    # keep highest f1-score
+    if score_best > score:
+        print("\nResults for best "+ save_model_name + ":\n", classification_report(Y_test, Y_pred_best))
+        return Y_pred_best, score_best
+    else:
+        print("\nResults for last "+ save_model_name + ":\n", classification_report(Y_test, Y_pred))
+        return Y_pred, score
