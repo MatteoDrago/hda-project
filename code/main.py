@@ -130,14 +130,23 @@ for task in tasks:
             # CASCADE (Two Steps classification)
 
             # get test set
-            X_test = preprocessing.loadData(subject=subject,
-                                            label=label,
-                                            folder=data_folder,
-                                            window_size=window_size,
-                                            stride=stride,
-                                            make_binary=False,
-                                            null_class=True,
-                                            print_info=False)[2]
+            if subject == 23:
+                X_test = preprocessing.loadDataMultiple(label=label,
+                                                        folder=data_folder,
+                                                        window_size=window_size,
+                                                        stride=stride,
+                                                        make_binary=False,
+                                                        null_class=True,
+                                                        print_info=print_info)[2]
+            else:
+                X_test = preprocessing.loadData(subject=subject,
+                                                label=label,
+                                                folder=data_folder,
+                                                window_size=window_size,
+                                                stride=stride,
+                                                make_binary=False,
+                                                null_class=True,
+                                                print_info=print_info)[2]
 
             # mask
             mask = (Y_det == 1)

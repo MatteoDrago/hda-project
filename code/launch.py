@@ -4,15 +4,12 @@
 import preprocessing
 import models
 import utils
-import os
-import numpy as np
 from sklearn.metrics import classification_report, f1_score
-from keras.models import load_model
 from keras.optimizers import Adam
 from keras.callbacks import ModelCheckpoint, ReduceLROnPlateau
 from keras.utils import to_categorical
 
-def oneshot_classification(subject, task, model_name, data_folder, window_size=15, stride=5, epochs=15, batch_size=32, GPU=False, print_info=False):
+def oneshot_classification(subject, task, model_name, data_folder, window_size=15, stride=5, epochs=15, batch_size=32, balcance_classes=False, GPU=False, print_info=False):
 
     # preprocessing
     if task == "A":
@@ -23,22 +20,22 @@ def oneshot_classification(subject, task, model_name, data_folder, window_size=1
         print("Error: invalid task.")
     
     if subject == 23:
-        X_train, Y_train, X_test, Y_test, n_features, n_classes, class_weights = preprocessing.loadDataMultiple(label=label,
-                                                                                                                folder=data_folder,
-                                                                                                                window_size=window_size,
-                                                                                                                stride=stride,
-                                                                                                                make_binary=False,
-                                                                                                                null_class=True,
-                                                                                                                print_info=print_info)
+        X_train, Y_train, X_test, Y_test, n_features, n_classes = preprocessing.loadDataMultiple(label=label,
+                                                                                                 folder=data_folder,
+                                                                                                 window_size=window_size,
+                                                                                                 stride=stride,
+                                                                                                 make_binary=False,
+                                                                                                 null_class=True,
+                                                                                                 print_info=print_info)
     else:
-        X_train, Y_train, X_test, Y_test, n_features, n_classes, class_weights = preprocessing.loadData(subject=subject,
-                                                                                                        label=label,
-                                                                                                        folder=data_folder,
-                                                                                                        window_size=window_size,
-                                                                                                        stride=stride,
-                                                                                                        make_binary=False,
-                                                                                                        null_class=True,
-                                                                                                        print_info=print_info)
+        X_train, Y_train, X_test, Y_test, n_features, n_classes = preprocessing.loadData(subject=subject,
+                                                                                         label=label,
+                                                                                         folder=data_folder,
+                                                                                         window_size=window_size,
+                                                                                         stride=stride,
+                                                                                         make_binary=False,
+                                                                                         null_class=True,
+                                                                                         print_info=print_info)
 
     # model
     if model_name == "Convolutional":
@@ -72,7 +69,7 @@ def oneshot_classification(subject, task, model_name, data_folder, window_size=1
 
     return model, X_test, Y_test, filepath, save_model_name, n_features
 
-def cascade_detection(subject, task, model_name, data_folder, window_size=15, stride=5, epochs=15, batch_size=32, GPU=False, print_info=False):
+def cascade_detection(subject, task, model_name, data_folder, window_size=15, stride=5, epochs=15, batch_size=32, balcance_classes=False, GPU=False, print_info=False):
 
     # preprocessing
     if task == "A":
@@ -82,22 +79,22 @@ def cascade_detection(subject, task, model_name, data_folder, window_size=15, st
     else:
         print("Error: invalid task.")
     if subject == 23:
-        X_train, Y_train, X_test, Y_test, n_features, n_classes, class_weights = preprocessing.loadDataMultiple(label=label,
-                                                                                                                folder=data_folder,
-                                                                                                                window_size=window_size,
-                                                                                                                stride=stride,
-                                                                                                                make_binary=True,
-                                                                                                                null_class=True,
-                                                                                                                print_info=print_info)
+        X_train, Y_train, X_test, Y_test, n_features, n_classes = preprocessing.loadDataMultiple(label=label,
+                                                                                                 folder=data_folder,
+                                                                                                 window_size=window_size,
+                                                                                                 stride=stride,
+                                                                                                 make_binary=True,
+                                                                                                 null_class=True,
+                                                                                                 print_info=print_info)
     else:
-        X_train, Y_train, X_test, Y_test, n_features, n_classes, class_weights = preprocessing.loadData(subject=subject,
-                                                                                                        label=label,
-                                                                                                        folder=data_folder,
-                                                                                                        window_size=window_size,
-                                                                                                        stride=stride,
-                                                                                                        make_binary=True,
-                                                                                                        null_class=True,
-                                                                                                        print_info=False)
+        X_train, Y_train, X_test, Y_test, n_features, n_classes = preprocessing.loadData(subject=subject,
+                                                                                         label=label,
+                                                                                         folder=data_folder,
+                                                                                         window_size=window_size,
+                                                                                         stride=stride,
+                                                                                         make_binary=True,
+                                                                                         null_class=True,
+                                                                                         print_info=False)
 
     # model
     if model_name == "Convolutional":
@@ -131,7 +128,7 @@ def cascade_detection(subject, task, model_name, data_folder, window_size=15, st
     
     return model, X_test, Y_test, filepath, save_model_name, n_features
 
-def cascade_classification(subject, task, model_name, data_folder, window_size=15, stride=5, epochs=15, batch_size=32, GPU=False, print_info=False):
+def cascade_classification(subject, task, model_name, data_folder, window_size=15, stride=5, epochs=15, batch_size=32, balcance_classes=False, GPU=False, print_info=False):
 
     # preprocessing
     if task == "A":
@@ -141,22 +138,22 @@ def cascade_classification(subject, task, model_name, data_folder, window_size=1
     else:
         print("Error: invalid task.")
     if subject == 23:
-        X_train, Y_train, X_test, Y_test, n_features, n_classes, class_weights = preprocessing.loadDataMultiple(label=label,
-                                                                                                                folder=data_folder,
-                                                                                                                window_size=window_size,
-                                                                                                                stride=stride,
-                                                                                                                make_binary=False,
-                                                                                                                null_class=True,
-                                                                                                                print_info=print_info)
+        X_train, Y_train, X_test, Y_test, n_features, n_classes = preprocessing.loadDataMultiple(label=label,
+                                                                                                 folder=data_folder,
+                                                                                                 window_size=window_size,
+                                                                                                 stride=stride,
+                                                                                                 make_binary=False,
+                                                                                                 null_class=False,
+                                                                                                 print_info=print_info)
     else:
-        X_train, Y_train, X_test, Y_test, n_features, n_classes, class_weights = preprocessing.loadData(subject=subject,
-                                                                                                        label=label,
-                                                                                                        folder=data_folder,
-                                                                                                        window_size=window_size,
-                                                                                                        stride=stride,
-                                                                                                        make_binary=False,
-                                                                                                        null_class=False,
-                                                                                                        print_info=False)
+        X_train, Y_train, X_test, Y_test, n_features, n_classes = preprocessing.loadData(subject=subject,
+                                                                                         label=label,
+                                                                                         folder=data_folder,
+                                                                                         window_size=window_size,
+                                                                                         stride=stride,
+                                                                                         make_binary=False,
+                                                                                         null_class=False,
+                                                                                         print_info=False)
 
     # model
     if model_name == "Convolutional":
