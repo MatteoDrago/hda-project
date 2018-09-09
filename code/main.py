@@ -1,6 +1,4 @@
 import preprocessing
-import models
-import utils
 import launch
 import os
 import numpy as np
@@ -11,17 +9,19 @@ from keras.callbacks import ModelCheckpoint, ReduceLROnPlateau
 from keras.utils import to_categorical
 
 # PARAMETERS ########################################################################################################
+# Note: running the code for too many configurations (subjects, tasks, models) might lead to a runtime error
+# due to memory allocation.
 subjects = [1,2,3,4,23]
 tasks = ["A","B"]
-model_names = ["Convolutional", "Convolutional1DRecurrent", "Convolutional2DRecurrent", "ConvolutionalDeepRecurrent"]
+model_names = ["Convolutional","Convolutional1DRecurrent","Convolutional2DRecurrent","ConvolutionalDeepRecurrent"]
 data_folder = "./data/full/"
-window_size = 10
+window_size = 15
 stride = 5
 GPU = True
-epochs = 5
-batch_size = 32
+epochs = 20
+batch_size = 64
 balcance_classes = False
-print_info = False
+print_info = True
 #####################################################################################################################
 
 # create folder to store temporary data and results
@@ -110,7 +110,7 @@ for task in tasks:
             mask = (Y_pred_ad == 1)
             activity_windows = X_test[mask, :, :]
             if model_name == "Convolutional2DRecurrent":
-                activity_windows = activity_windows.reshape(activity_windows.shape[0], window_size, X_test.shape[1], 1)
+                activity_windows = activity_windows.reshape(activity_windows.shape[0], window_size, X_test.shape[2], 1)
             Y_casc_ac = model.predict_classes(activity_windows) + 1  # last model saved is "activity classification"
             Y_casc = Y_pred_ad
             Y_casc[mask] = Y_casc_ac

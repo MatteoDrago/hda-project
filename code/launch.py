@@ -41,7 +41,6 @@ def oneshot_classification(subject, task, model_name, data_folder, window_size=1
                                                                                          make_binary=False,
                                                                                          null_class=True,
                                                                                          print_info=print_info)
-
     # model
     if model_name == "Convolutional":
         model = models.Convolutional((window_size, n_features), n_classes, print_info=print_info)

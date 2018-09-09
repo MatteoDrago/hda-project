@@ -81,7 +81,7 @@ def shapeData(X, Y, window_size=15, stride=15, null_class = True, printInfo = Fa
     if (printInfo):
         print("\nFeatures:", n_features,\
               "\nClasses:", n_classes,\
-            "\nFraction of labels:  ", np.sum(Y_out, axis=0) / Y_out.shape[0])
+              "\nFraction of labels:  ", np.sum(Y_out, axis=0) / Y_out.shape[0])
     
     # switch labels back to normal 1D array
     Y_out = np.argmax(Y_out, axis=1)
