@@ -98,20 +98,20 @@ def cascade_detection(subject, task, model_name, data_folder, window_size=15, st
                                                                                          stride=stride,
                                                                                          make_binary=True,
                                                                                          null_class=True,
-                                                                                         print_info=False)
+                                                                                         print_info=print_info)
 
     # model
     if model_name == "Convolutional":
-        model = models.Convolutional((window_size, n_features), n_classes, print_info=False)
+        model = models.Convolutional((window_size, n_features), n_classes, print_info=print_info)
     elif model_name == "Convolutional1DRecurrent":
-        model = models.Convolutional1DRecurrent((window_size, n_features), n_classes, GPU=GPU, print_info=False)
+        model = models.Convolutional1DRecurrent((window_size, n_features), n_classes, GPU=GPU, print_info=print_info)
     elif model_name == "Convolutional2DRecurrent":
-        model = models.Convolutional2DRecurrent((window_size, n_features, 1), n_classes, GPU=GPU, print_info=False)
+        model = models.Convolutional2DRecurrent((window_size, n_features, 1), n_classes, GPU=GPU, print_info=print_info)
         # reshaping for 2D convolutional model
         X_train = X_train.reshape(X_train.shape[0], window_size, n_features, 1)
         X_test = X_test.reshape(X_test.shape[0], window_size, n_features, 1)
     elif model_name == "ConvolutionalDeepRecurrent":
-        model = models.ConvolutionalDeepRecurrent((window_size, n_features), n_classes, GPU=GPU, print_info=False)
+        model = models.ConvolutionalDeepRecurrent((window_size, n_features), n_classes, GPU=GPU, print_info=print_info)
     else:
         print("Model not found.")
     model.compile(optimizer = Adam(lr=0.001), loss = "categorical_crossentropy", metrics = ["accuracy"])
@@ -157,20 +157,20 @@ def cascade_classification(subject, task, model_name, data_folder, window_size=1
                                                                                          stride=stride,
                                                                                          make_binary=False,
                                                                                          null_class=False,
-                                                                                         print_info=False)
+                                                                                         print_info=print_info)
 
     # model
     if model_name == "Convolutional":
-        model = models.Convolutional((window_size, n_features), n_classes, print_info=False)
+        model = models.Convolutional((window_size, n_features), n_classes, print_info=print_info)
     elif model_name == "Convolutional1DRecurrent":
-        model = models.Convolutional1DRecurrent((window_size, n_features), n_classes, GPU=GPU, print_info=False)
+        model = models.Convolutional1DRecurrent((window_size, n_features), n_classes, GPU=GPU, print_info=print_info)
     elif model_name == "Convolutional2DRecurrent":
-        model = models.Convolutional2DRecurrent((window_size, n_features, 1), n_classes, GPU=GPU, print_info=False)
+        model = models.Convolutional2DRecurrent((window_size, n_features, 1), n_classes, GPU=GPU, print_info=print_info)
         # reshaping for 2D convolutional model
         X_train = X_train.reshape(X_train.shape[0], window_size, n_features, 1)
         X_test = X_test.reshape(X_test.shape[0], window_size, n_features, 1)
     elif model_name == "ConvolutionalDeepRecurrent":
-        model = models.ConvolutionalDeepRecurrent((window_size, n_features), n_classes, GPU=GPU, print_info=False)
+        model = models.ConvolutionalDeepRecurrent((window_size, n_features), n_classes, GPU=GPU, print_info=print_info)
     else:
         print("Model not found.")
     model.compile(optimizer = Adam(lr=0.001), loss = "categorical_crossentropy", metrics = ["accuracy"])

@@ -32,34 +32,44 @@
 \newlabel{sec:model}{{IV}{3}}
 \@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Sensor Locations. The two images show the locations of on-body sensors for the measurements of the OPPORTUNITY dataset. The first image shows complete \textit  {Inertial Measurement Units}, while the second shows \textit  {Triaxial Accelerometers}.\relax }}{3}}
 \newlabel{fig:sensors}{{2}{3}}
-\citation{Chavarriaga2013}
-\citation{Chavarriaga2013}
-\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Model architectures. The number of different layers stacked in each models is here reported. 'Conv' stands for 'Convolutional'.\relax }}{4}}
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Model architectures. The number of different layers stacked in each models is here reported. For spacial requirements, the following abbreviations are used: 'Conv' stands for 'Convolutional' and 'Rec' for 'Recurrent'. An approximation of the number of (trainable) parameters for each model is reported aside, in millions (M).\relax }}{4}}
 \newlabel{tab:models}{{1}{4}}
 \@writefile{toc}{\contentsline {section}{\numberline {V}Learning Framework}{4}}
 \newlabel{sec:learning_framework}{{V}{4}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {V-A}}One Shot Classification}{4}}
 \newlabel{sub:oneshot}{{\unhbox \voidb@x \hbox {V-A}}{4}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {V-B}}Two Steps Classification}{4}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {V-B}}Cascade Classification}{4}}
 \newlabel{sub:twosteps}{{\unhbox \voidb@x \hbox {V-B}}{4}}
+\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Comparison of results on modes of locomotion (task A), with and without the \textit  {Null} class. For each of the baseline, contributed and our models, here are reported only the best scores achieved.\relax }}{4}}
+\newlabel{tab:res_A}{{2}{4}}
+\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces Comparison of results on gesture recognition (task B), with and without the \textit  {Null} class. For each of the baseline, contributed and our models, here are reported only the best scores achieved.\relax }}{4}}
+\newlabel{tab:res_B}{{3}{4}}
 \@writefile{toc}{\contentsline {section}{\numberline {VI}Results}{4}}
 \newlabel{sec:results}{{VI}{4}}
 \citation{Chavarriaga2013}
-\citation{HAR-COMP2018}
+\citation{Chavarriaga2013}
+\citation{Chavarriaga2013}
 \@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Task A : One-Shot Classification\relax }}{5}}
-\newlabel{fig:Anull}{{3}{5}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Task A : Two Steps Classification\relax }}{5}}
-\newlabel{fig:Anonull}{{4}{5}}
+\newlabel{fig:A_os}{{3}{5}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Task A : Cascade Classification\relax }}{5}}
+\newlabel{fig:A_casc}{{4}{5}}
 \@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces Task B : One-Shot Classification\relax }}{5}}
-\newlabel{fig:Bnull}{{5}{5}}
-\@writefile{toc}{\contentsline {section}{\numberline {VII}Concluding Remarks}{5}}
-\newlabel{sec:conclusions}{{VII}{5}}
-\citation{japkowicz2002class}
+\newlabel{fig:B_os}{{5}{5}}
+\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces Task B : Cascade Classification\relax }}{5}}
+\newlabel{fig:B_casc}{{6}{5}}
+\citation{cao2012integrated}
 \bibdata{biblio}
 \bibcite{HAR-2013}{1}
 \bibcite{Chavarriaga2013}{2}
 \bibcite{HAR-COMP2018}{3}
 \bibcite{ComplexAct-2010}{4}
+\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces Task A : One-Shot and Cascade comparison\relax }}{6}}
+\newlabel{fig:A_comp}{{7}{6}}
+\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces Task B : One-Shot and Cascade comparison\relax }}{6}}
+\newlabel{fig:B_comp}{{8}{6}}
+\@writefile{toc}{\contentsline {section}{\numberline {VII}Concluding Remarks}{6}}
+\newlabel{sec:conclusions}{{VII}{6}}
+\@writefile{toc}{\contentsline {section}{References}{6}}
 \bibcite{cao2012integrated}{5}
 \bibcite{japkowicz2002class}{6}
 \bibcite{hearst1998support}{7}
@@ -69,6 +79,3 @@
 \bibcite{srivastava2014dropout}{11}
 \bibcite{li2018comparison}{12}
 \bibstyle{ieeetr}
-\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces Task B : Two Steps Classification\relax }}{6}}
-\newlabel{fig:Bnonull}{{6}{6}}
-\@writefile{toc}{\contentsline {section}{References}{6}}

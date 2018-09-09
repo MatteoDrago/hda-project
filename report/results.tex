@@ -3,52 +3,98 @@
 \section{Results}
 \label{sec:results}
 
+\begin{table}[]
+	\begin{tabular}{lccccc}
+		\textbf{Task A}				& S1	& S2	& S3	& [S2 S3]	& S4	\\
+									&		&		&		&			&		\\
+		F1-measure (with Null class)&		& 		&		&			& 		\\
+		Baseline					& 0.85	& 0.86	& 0.83	& 0.85		& 0.77	\\
+		Contributed					& -		& 0.85	& 0.81	& 0.83 		& - 	\\
+		Our results					& 0.91	& 0.76	& 0.83	& 0.88		& 0.79	\\
+									&		&		&		&			&		\\
+		F1-measure (no Null class)	&		&		&		&			&		\\
+		Baseline					& 0.86	& 0.86	& 0.85	& 0.85		& 0.76	\\
+		Contributed					& -		& 0.90	& 0.87	& 0.87 		& - 	\\
+		Our results					& 0.94	& 0.78	& 0.90	& 0.84		& 0.89	\\
+	\end{tabular}
+	\caption{Comparison of results on modes of locomotion (task A), with and without the \textit{Null} class. For each of the baseline, contributed and our models, here are reported only the best scores achieved.}
+	\label{tab:res_A}
+\end{table}
+\begin{table}[]
+	\begin{tabular}{lccccc}
+		\textbf{Task B}				& S1	& S2	& S3	& [S2 S3]	& S4	\\
+									&		&		&		&			&		\\
+		F1-measure (with Null class)&		& 		&		&			& 		\\
+		Baseline					& 0.85	& 0.89	& 0.86	& 0.87		& 0.88	\\
+		Contributed					& -		& 0.88	& 0.87	& 0.88 		& 0.71 	\\
+		Our results					& 0.89	& 0.81	& 0.88	& 0.84		& 0.85	\\
+									&		&		&		&			&		\\
+		F-measure (no Null class)	&		&		&		&			&		\\
+		Baseline					& 0.55	& 0.53	& 0.58	& 0.56		& 0.48	\\
+		Contributed					& -		& 0.72	& 0.80	& 0.77 		& 0.17 	\\
+		Our results					& 0.81	& 0.40	& 0.82	& 0.64		& 0.70	\\
+	\end{tabular}
+	\caption{Comparison of results on gesture recognition (task B), with and without the \textit{Null} class. For each of the baseline, contributed and our models, here are reported only the best scores achieved.}
+	\label{tab:res_B}
+\end{table}
+
 As in most of the works mentioned in section \ref{sec:related_work}, besides accuracy, we used $F_1$ measure to estimate the goodness of our models. Defining precision and recall as: 
 \begin{equation}
 	p = \frac{TP}{TP+FP} \qquad r = \frac{TP}{TP+FN}
 \end{equation}
-the $F_1$ measure is evaluated as the harmonic average between the two (in the previous formula we have \textit{TP = true positive}, \textit{FP = false positive}, \textit{FN = false negative}). In particular, since we deal with a multi-class problem we need to add a measure of weights to the $F_1$ equation:
+where \textit{TP = true positives}, \textit{FP = false positives} and \textit{FN = false negatives}, the $F_1$ measure is evaluated as the harmonic average between the two. In particular, since we deal with a multi-class problem we need to add a measure of weight to the $F_1$ equation:
 \begin{equation}
 	F_1 = \sum_i 2w_i \frac{p_i \cdot r_i}{p_i + r_i}
 \end{equation} 
 where the weights are defined as the number of samples of a particular class divided by the total number of samples $w_i = \frac{n_i}{N}$. The weighted measure can help also with the class imbalance problem; we must highlight however that our models are still trained on an imbalanced dataset, so in our opinion this could provide only a minor improvement.
 
-In Figures \ref{fig:Anull} and \ref{fig:Anonull} we present the results regarding task A (modes of locomotion, high level movements) for each participant of the experiment: in those configurations we wanted to see if there was one architecture that evidently outperforms the others. As we can see, unfortunately that is not the case since among all the frameworks that we tested the differences in terms of weighted $F_1$ measure are negligible. The variation that we can clearly see is among distinct subjects, since they are all studied separately: $S_1$ for example performs better in both the configurations, while $S_2$ is typically the worst. Considering that we consistently performed the same procedure independently from the subject, in this case this discrepancy could be due to a problem occurred during data collection. 
-
-\begin{figure}[ht]
+\begin{figure}[t]
 	\centering
 	\includegraphics[scale=.4]{figure/A_models_nullclass}
 	\caption{Task A : One-Shot Classification}
-	\label{fig:Anull}
+	\label{fig:A_os}
 \end{figure}
-
-With an $F_1$ value of $\sim 0.91$ for the \textit{one-shot} scenario and $\sim 0.94$ in the \textit{two-steps} (if we just consider $S_1$), we can definitely say that the results presented in \cite{Chavarriaga2013} are outperformed by these more powerful deep learning models; with respect to the other subjects, we can say that we still obtained state of the art results. In particular it's interesting to see that, when we consider the \textit{Null Class}, the best model with $S_2$ is represented by the neural network without recurrent layers (Figure \ref{fig:Anull}); when the \textit{Null Class} is discarded, instead, all the models provide better and similar results (Figure \ref{fig:Anonull}). In our opinion the reason is that in certain cases the \textit{Null Class} has to be intended as noise so, when the windows assigned to that class are removed, the LSTM can exploit and reveal the time correlation among different samples more clearly. In addition, we tried to train our architectures on $S_2$ and $S_3$ jointly, using $ADL_4$ and $ADL_5$ of both subjects as test set: as is shown on the last column on the right in Fig \ref{fig:Anull} and \ref{fig:Anonull}, the results are not brilliant. In fact, we obtained a kind of average performance between the results of $S_2$ and $S_3$, in line again with what presented in \cite{Chavarriaga2013}. Finally, as we can see, for task A the use of the \textit{two-step} approach definitely improved performances for all users. 
-
-\begin{figure}[ht]
+\begin{figure}[t]
 	\centering
-	\includegraphics[scale=.4]{figure/A_models_nonullclass}
-	\caption{Task A : Two Steps Classification}
-	\label{fig:Anonull}
+	\includegraphics[scale=.4]{figure/A_models_cascade}
+	\caption{Task A : Cascade Classification}
+	\label{fig:A_casc}
 \end{figure}
 
-Despite the promising results on high-level movement classification, when we used our models to do the more precise and low-level classification of task B, the \textit{two-steps} configuration wasn't effective as we hoped - Figure \ref{fig:Bnonull}. Still, in both architectures, $S_2$ is the one that performs the worst, while with $S_1$ we are able to extract the best results; moreover, even in this case we haven't noticed considerable differences among the different neural network set-ups that we used: this suggests us, as we briefly outlined in previous sections, increasing the complexity of the architecture in order to obtain astonishing results, isn't the right path to follow. 
+Since in \cite{Chavarriaga2013} results from the contributed methods have been compared to some baseline approaches, here we do the same by displaying only the best result for each type. In tables \ref{tab:res_A} and \ref{tab:res_B}
+are reported respectively the results on task A and B, with and without the \textit{Null} class. Our results are taken then, for both tasks, from \textit{One-Shot Classification} and \textit{Activity Classification}, keeping only the best among the scores of the four models used.
+We can see that sometimes our models perform better, particularly on \{S1, S3, S4\}, in other cases instead our score drops, as for \{S2\}, or is very similar to the others, as for \{[S2 S3]\}: it seems in fact that we have better results for those subjects for which contributed models in \cite{Chavarriaga2013} are worse, and viceversa. This is not though totally unexpected to us, since contributed models had to focus on \{S2, S3, [S2 S3]\}, while our attention has been more uniformly distributed.
+What's surprising instead is what we obtained for S4, whose signals have been artificially affected by some rotational noise (task C in \cite{Chavarriaga2013}): we had good scores, compared to the others, but what's unexpected is that our performances for S4 are regularly better that the ones for S2.
 
-We can see in Figure \ref{fig:Bnull} that implementing one convolutional layer jointly with 2 LSTM followed by 2 fully connected layers, contributed positively on the performances of \textit{one-shot} model, for all subjects considered. The considerations done for Task A, regarding the behaviour of the models fed with $S_2$ and $S_3$ together, remains valid also for Task B. 
+In Figures \ref{fig:A_os} and \ref{fig:A_casc} we present the results regarding task A (modes of locomotion, high level movements) for each participant in the experiment: in those configurations we wanted to see if there was one architecture that evidently outperforms the others. As we can see, unfortunately, this is not the case since, among all the frameworks that we tested, the differences in terms of weighted $F_1$ measure are negligible: this suggests that the best model could be the simplest one, which is "Convolutional".
+What we can clearly see instead are the variations among distinct subjects, since they are all investigated separately: $S1$ and $S4$ for example perform better in both the configurations, while $S2$ is typically the worst, as previously noticed.
+The same considerations just discussed for task A are still valid for task B, as can be seen from the results showed in figures \ref{fig:B_os} and \ref{fig:B_casc}.
 
-\begin{figure}[ht]
+\begin{figure}[t]
 	\centering
 	\includegraphics[scale=.4]{figure/B_models_nullclass}
 	\caption{Task B : One-Shot Classification}
-	\label{fig:Bnull}
+	\label{fig:B_os}
 \end{figure}
-
-In general however, despite $S_2$, the results for the configuration in Figure \ref{fig:Bnonull} are better with respect to what presented by Chavarriaga in \cite{Chavarriaga2013}; regarding what shown in Figure \ref{fig:Bnull} we can say that the results are compatible with the state of art, reaching a value of $\sim 90\%$ for $S_1$. 
-
-In conclusion we found out that, even with powerful deep learning models, if we discard the \textit{Null Class} the results are not appealing when we have to deal with many classes (in addition, affected by the imbalance problem); this, however, shouldn't discourage researchers to go down this path. Considering that for Task B we reached almost $\sim 0.92$ in the detection step for $S_1$, this suggests us that building two distinct models for detection and classification respectively could lead to promising results: the design of a specific model for each step could focus the effort on a single purpose, in this way leading to ad-hoc and less complex networks. In our work however we wanted to see how the problem could be tackled with the solutions proposed by the state of the art, still trying to reduce computational effort. Just to make some numeric comparison, while the Hybrid model proposed in \cite{HAR-COMP2018} counts 17 millions of trainable parameters, our most complex model reduced this number more than an half. 
-
-\begin{figure}[ht]
+\begin{figure}[t]
 	\centering
-	\includegraphics[scale=.4]{figure/B_models_nonullclass}
-	\caption{Task B : Two Steps Classification}
-	\label{fig:Bnonull}
+	\includegraphics[scale=.4]{figure/B_models_cascade}
+	\caption{Task B : Cascade Classification}
+	\label{fig:B_casc}
 \end{figure}
+
+Focusing instead on the differences between the two pipelines, i.e. One-Shot and Cascade classifications, we see that also in this case that performances are very similar: splitting the pipeline into a detection and a classification gives a slight improvement on both tasks, in the order of $1\%$. For ease of assessment we report the results in figures \ref{fig:A_comp} and \ref{fig:B_comp}.
+\begin{figure}[t]
+	\centering
+	\includegraphics[scale=.6]{figure/A_pipeline_comparison}
+	\caption{Task A : One-Shot and Cascade comparison}
+	\label{fig:A_comp}
+\end{figure}
+\begin{figure}[t]
+	\centering
+	\includegraphics[scale=.6]{figure/B_pipeline_comparison}
+	\caption{Task B : One-Shot and Cascade comparison}
+	\label{fig:B_comp}
+\end{figure}
+Even though results for the Cascade classification don't seem to be that exciting, we can stay positive about them, keeping in mind that in our tests we always performed detection and classification with the same model, but there should be an increase in performances when using the best available model for each of the two tasks.
+
