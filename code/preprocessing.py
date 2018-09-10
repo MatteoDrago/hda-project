@@ -46,6 +46,10 @@ def shapeData(X, Y, window_size=15, stride=15, null_class = True, printInfo = Fa
     n_classes: integer, number of classes
     """
 
+    # switch to one hot encoded labels
+    onehot_encoder = OneHotEncoder(sparse=False)
+    Y = onehot_encoder.fit_transform(Y.reshape(-1, 1))
+
     # data shapes
     n_samples, n_features = X.shape
     n_classes = Y.shape[1]
@@ -77,14 +81,17 @@ def shapeData(X, Y, window_size=15, stride=15, null_class = True, printInfo = Fa
     if (printInfo):
         print("\nFeatures:", n_features,\
               "\nClasses:", n_classes,\
-            "\nFraction of labels:  ", np.sum(Y_out, axis=0) / Y_out.shape[0])
+              "\nFraction of labels:  ", np.sum(Y_out, axis=0) / Y_out.shape[0])
+    
+    # switch labels back to normal 1D array
+    Y_out = np.argmax(Y_out, axis=1)
 
     return (X_out, Y_out, n_features, n_classes)
 
 
 # mid level methods
 
-def loadData(subject, label, folder="./", window_size=15, stride=15, make_binary=False, null_class=True, print_info=False):
+def loadData(subject, label, folder="./", window_size=15, stride=15, make_binary=False, null_class=True, balcance_classes=False, print_info=False):
     """Preprocess data to be ready for classification models.
     
     X_train_s: 3D numpy array
@@ -97,11 +104,9 @@ def loadData(subject, label, folder="./", window_size=15, stride=15, make_binary
     """
 
     # read data
-    data1, data2, data3, data4, data5, data6 = readData(subject=subject,
-                                                        folder=folder,
-                                                        print_info=print_info)
+    data1, data2, data3, data4, data5, data6 = readData(subject=subject, folder=folder, print_info=print_info)
 
-    # create training set and test set
+    # create training set and test sets
     X_train = np.concatenate((data1['features_interp'],\
                               data2['features_interp'],\
                               data3['features_interp'],\
@@ -132,39 +137,46 @@ def loadData(subject, label, folder="./", window_size=15, stride=15, make_binary
         Y_train[Y_train != 0] = 1
         Y_test[Y_test != 0] = 1
 
-    # switch to one hot encoded labels
-    onehot_encoder = OneHotEncoder(sparse=False)
-    Y_train_oh = onehot_encoder.fit_transform(Y_train.reshape(-1, 1))
-    Y_test_oh = onehot_encoder.fit_transform(Y_test.reshape(-1, 1))
-
     # shape data
-    X_train_s, Y_train_s, n_features, n_classes = shapeData(X_train,
-                                                            Y_train_oh,
-                                                            window_size,
-                                                            stride,
-                                                            null_class=null_class,
-                                                            printInfo=print_info)
+    X_train, Y_train, n_features, n_classes = shapeData(X_train, Y_train, window_size, stride, null_class=null_class, printInfo=print_info)
+    X_test, Y_test, n_features, n_classes = shapeData(X_test, Y_test, window_size, stride, null_class=null_class, printInfo=print_info)    
 
-    X_test_s, Y_test_s, n_features, n_classes = shapeData(X_test,
-                                                          Y_test_oh,
-                                                          window_size,
-                                                          stride,
-                                                          null_class=null_class,
-                                                          printInfo=print_info)
+    # balance data
+    if balcance_classes:
+        class_weights = class_weight.compute_class_weight('balanced', np.arange(n_classes), Y_train)
+        class_weights = np.floor(class_weights / np.min(class_weights))
+        class_weights
+        elenco = []
+        elenco2 = []
+        for l in enumerate(class_weights):
+            print("\n",l)
+            mask = (Y_train == l[0])
+            print(mask)
+            print(X_train[mask,:,:].shape, Y_train[mask].shape)
+            X_train_bal = np.tile(X_train[mask,:,:], (int(l[1]),1,1))
+            Y_train_bal = np.tile(Y_train[mask], int(l[1]))
+            print(X_train_bal.shape, Y_train_bal.shape)
+            for i in range(X_train_bal.shape[0]):
+                elenco.append(X_train_bal[i,:,:] + np.random.normal(scale=0.1)) # add here normal distributed noise
+                elenco2.append(Y_train_bal[i])
+            print(len(elenco), len(elenco2))
+        X_train = np.asarray(elenco)
+        print(X_train.shape, type(X_train))
+        del elenco
+        Y_train = np.asarray(elenco2)
+        print(Y_train.shape, type(Y_train))
+        del elenco2
+        rng_state = np.random.get_state()
+        np.random.shuffle(X_train)
+        np.random.set_state(rng_state)
+        np.random.shuffle(Y_train)
 
-    # switch labels back to normal 1D array
-    Y_train_s = np.argmax(Y_train_s, axis=1)
-    Y_test_s = np.argmax(Y_test_s, axis=1)
-
-    # compute class weights
-    class_weights = class_weight.compute_class_weight('balanced', np.arange(n_classes), Y_train_s)
-
-    return (X_train_s, Y_train_s, X_test_s, Y_test_s, n_features, n_classes, class_weights)
+    return X_train, Y_train, X_test, Y_test, n_features, n_classes
 
 
 # high level methods
 
-def loadDataAll(label, folder="./", window_size=15, stride=15, make_binary=False, null_class=True, print_info=False):
+def loadDataAll(label, folder="./", window_size=15, stride=15, make_binary=False, null_class=True, balcance_classes=False, print_info=False):
     """Process data all subjects to be ready for classification models."""
 
     print("\nProcessing data from subject 1")
@@ -208,28 +220,21 @@ def loadDataAll(label, folder="./", window_size=15, stride=15, make_binary=False
               "\nX_test: ", X_test.shape,
               "\nY_test: ", Y_test.shape)
 
-    # class weights
-    class_weights = class_weight.compute_class_weight('balanced', np.arange(n_classes), Y_train)
-    if print_info:
-        print("\nClass weights:\n", class_weights)
+    return X_train, Y_train, X_test, Y_test, n_features, n_classes
 
-    return X_train, Y_train, X_test, Y_test, n_features, n_classes, class_weights
-
-def loadDataMultiple(label, folder="./", window_size=15, stride=15, make_binary=False, null_class=True, print_info=False):
+def loadDataMultiple(label, folder="./", window_size=15, stride=15, make_binary=False, null_class=True, balcance_classes=False, print_info=False):
     """Process data of a list of subjects to be ready for classification models."""
 
-    #print("\nProcessing data from subject 1")
-    #X_train_1, Y_train_1, X_test_1, Y_test_1,  = loadData(subject=1, label=label, folder=folder, window_size=window_size, stride=stride,
-    #                                                                           make_binary=make_binary, null_class=null_class, print_info=print_info)[0:4]
-    print("\nProcessing data from subject 2")
+    if print_info:
+        print("Processing data from subject 2")
     X_train_2, Y_train_2, X_test_2, Y_test_2, n_features, n_classes = loadData(subject=2, label=label, folder=folder, window_size=window_size, stride=stride,
-                                                                               make_binary=make_binary, null_class=null_class, print_info=print_info)[0:6]
-    print("\nProcessing data from subject 3")
+                                                                               make_binary=make_binary, null_class=null_class,
+                                                                               balcance_classes=balcance_classes, print_info=print_info)[0:6]
+    if print_info:
+        print("Processing data from subject 3")
     X_train_3, Y_train_3, X_test_3, Y_test_3 = loadData(subject=3, label=label, folder=folder, window_size=window_size, stride=stride,
-                                                        make_binary=make_binary, null_class=null_class, print_info=print_info)[0:4]
-    #print("\nProcessing data from subject 4")
-    #X_train_4, Y_train_4, X_test_4, Y_test_4 = loadData(subject=4, label=label, folder=folder, window_size=window_size, stride=stride,
-    #                                                    make_binary=make_binary, null_class=null_class, print_info=print_info)[0:4]
+                                                        make_binary=make_binary, null_class=null_class,
+                                                        balcance_classes=balcance_classes, print_info=print_info)[0:4]
 
     # create training set and test set
     X_train = np.concatenate((X_train_2,\
@@ -251,9 +256,4 @@ def loadDataMultiple(label, folder="./", window_size=15, stride=15, make_binary=
               "\nX_test: ", X_test.shape,
               "\nY_test: ", Y_test.shape)
 
-    # class weights
-    class_weights = class_weight.compute_class_weight('balanced', np.arange(n_classes), Y_train)
-    if print_info:
-        print("\nClass weights:\n", class_weights)
-
-    return X_train, Y_train, X_test, Y_test, n_features, n_classes, class_weights
+    return X_train, Y_train, X_test, Y_test, n_features, n_classes

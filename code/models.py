@@ -122,6 +122,9 @@ def Convolutional1DRecurrent(input_shape, n_classes, GPU=False, print_info = Fal
     
     # Layer 5
     model.add(Dense(n_classes, activation='softmax'))
+
+    if print_info:
+        model.summary()
     
     return model
 
